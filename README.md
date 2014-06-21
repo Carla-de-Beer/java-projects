@@ -1,4 +1,4 @@
 Java
 ====
 
-Linked lists, binary search trees, graphs
+Linked lists, binary search trees, graphs, recusrive functions and the like.

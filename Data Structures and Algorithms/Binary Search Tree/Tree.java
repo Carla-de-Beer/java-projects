@@ -1,5 +1,4 @@
 // Carla de Beer
-// Binary Search Tree implementation
 // Date created: 25/02/2014
 
 public class Tree<T extends Comparable<? super T>> {
@@ -131,4 +130,28 @@ public class Tree<T extends Comparable<? super T>> {
 			return node;
 		}
 	}
+
+	public int countLeaves() {
+		return countLeaves(root);
+	}
+
+	protected int countLeaves(TreeNode<T> node) {
+		if (node == null)
+			return 0;
+		if (node.left == null && node.right == null)
+			return 1;
+		else
+			return countLeaves(node.left) + countLeaves(node.right);
+	}
+
+	public int nodeCount() {
+		return nodeCount(root);
+	}
+
+	private int nodeCount(TreeNode<T> node) {
+		if (node == null)
+			return 0;
+		return 1 + nodeCount(node.left) + nodeCount(node.right);
+	}
+
 }

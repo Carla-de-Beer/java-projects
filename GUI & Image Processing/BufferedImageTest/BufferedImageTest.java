@@ -3,7 +3,7 @@
 // A Java BufferedImages class experiment based on code found at 
 // http://alvinalexander.com/blog/post/java/getting-rgb-values-for-each-pixel-in-image-using-java-bufferedi
 // Class that gets the RGB values of an image and calculates the bin classes for each image, 
-// stored inside an ArrayList
+// stored inside an ArrayList. Used as a base study for a larger artificial neural network project.
 
 import java.awt.Component;
 import java.awt.image.BufferedImage;

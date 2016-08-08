@@ -1,7 +1,7 @@
 
-// Program to calculate the number of iterations needed 
-// in order to find the Kaprekar constant for a 4-digit number with 
-// at least three different digits
+// Program to calculate the number of iterations needed in order to find the Kaprekar constant 
+// for a 4-digit number with at least three different digits. 
+// For simplicity's sake, only number starting with a non-zero value were accepted.
 // 01.08.2016
 // Carla de Beer
 // Kapekar's constant: https://en.wikipedia.org/wiki/6174_(number)

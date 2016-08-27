@@ -1,9 +1,7 @@
 // Carla de Beer
-// 95151835
-// COS 314: Project 2
 // 20 April 2015
 // Genetic Algorithm, and Hill Climber optimiser, to determine the best stock market trader 
-// based on historic trading data from a set of four companies.
+// based on historic renko chart trading data from a set of four companies.
 
 import java.io.IOException;
 import java.util.Scanner;

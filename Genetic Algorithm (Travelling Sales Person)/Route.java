@@ -18,8 +18,10 @@ public class Route {
 
 	public double calculateFitness() {
 		double sum = sumDistance(chromosome);
-		fitness = 1.0 / sum;
-		fitness *= 100000;
+
+		fitness = sum;
+		// fitness *= 100000;
+		// System.out.println("fitness: " + fitness);
 		return fitness;
 	}
 

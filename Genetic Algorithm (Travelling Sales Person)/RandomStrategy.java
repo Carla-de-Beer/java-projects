@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class RandomStrategy {
 
-	private static int NUM_CITIES = 20;
+	private static int NUM_CITIES = 100;
 	private int numPop;
 	private int maxIter;
 	private double crossoverRate;
@@ -117,11 +117,13 @@ public class RandomStrategy {
 			StringBuilder sb = new StringBuilder(NUM_CITIES);
 			for (int i = 0; i < NUM_CITIES; ++i) {
 				sb.append(optimalRoute.getChromosome().get(i).getName());
+				sb.append("->");
 			}
 
 			String str = sb.toString();
 
-			System.out.println(getBestFitness() + ": " + str);
+			// System.out.println(getBestFitness() + ": " + str);
+			System.out.println(getBestFitness());
 			sum += getBestFitness();
 
 			// Apply elitism, only if the generation gap > 0

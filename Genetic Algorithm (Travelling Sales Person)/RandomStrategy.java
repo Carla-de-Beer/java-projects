@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 public class RandomStrategy {
 
-	private static int NUM_CITIES = 100;
+	private static int NUM_CITIES = 20;
 	private int numPop;
 	private int maxIter;
 	private double crossoverRate;
@@ -15,6 +14,7 @@ public class RandomStrategy {
 	private Route optimalRoute;
 	public double optimalValue;
 	public double average = 0.0;
+	private MyRandom myRandom = new MyRandom();
 
 	private ArrayList<City> path = new ArrayList<>();
 
@@ -41,15 +41,15 @@ public class RandomStrategy {
 		this.optimalValue = Double.POSITIVE_INFINITY;
 	}
 
-	public void runGA() {
+	public Route runGA() {
 		// Start with a clean slate
 		newPopulationList.clear();
 
 		// Initialise ArrayList of routes
 		for (int i = 0; i < numPop; ++i) {
 			currentPopulationList.add(new Route(this.path));
-			Route route = currentPopulationList.get(i);
-			// for (int j = 0; j < 20; ++j) {
+			// Route route = currentPopulationList.get(i);
+			// for (int j = 0; j < NUM_CITIES; ++j) {
 			// System.out.print(route.getChromosome().get(j).getName());
 			// }
 			// System.out.println();
@@ -63,7 +63,6 @@ public class RandomStrategy {
 
 			// Inner while loop that fills the newPopulationList ArrayList
 			// before elitism is applied
-
 			while (newPopulationList.size() < numPop) {
 
 				ArrayList<City> parentA = new ArrayList<>();
@@ -73,8 +72,8 @@ public class RandomStrategy {
 
 				// Randomly select two parents from the population of
 				// Routes
-				int rand1 = randomInt(numPop);
-				int rand2 = randomInt(numPop);
+				int rand1 = myRandom.randomInt(numPop);
+				int rand2 = myRandom.randomInt(numPop);
 
 				parentA = (currentPopulationList.get(rand1).getChromosome());
 				parentB = (currentPopulationList.get(rand2).getChromosome());
@@ -82,9 +81,32 @@ public class RandomStrategy {
 				double crossRand = Math.random();
 				double muteRand = Math.random();
 
+				// System.out.println();
+
 				// Crossover, if applicable
 				if (crossoverRate > crossRand) {
+
 					crossover(parentA, parentB, childA, childB);
+					// System.out.println("Parent: ");
+					// for (int i = 0; i < parentA.size(); ++i) {
+					// System.out.print(parentA.get(i).getName());
+					// }
+					//
+					// System.out.println();
+					// for (int i = 0; i < parentA.size(); ++i) {
+					// System.out.print(parentB.get(i).getName());
+					// }
+					// System.out.println();
+					// System.out.println("Child: ");
+					// for (int i = 0; i < childA.size(); ++i) {
+					// System.out.print(childA.get(i).getName());
+					// }
+					//
+					// System.out.println();
+					// for (int i = 0; i < childB.size(); ++i) {
+					// System.out.print(childB.get(i).getName());
+					// }
+					// System.out.println();
 				} else {
 					for (int i = 0; i < parentA.size(); ++i) {
 						childA.add(parentA.get(i));
@@ -100,7 +122,6 @@ public class RandomStrategy {
 
 				// Populate the ArrayList newPopulation
 				// with the offspring
-
 				Route new1 = new Route(this.path);
 				Route new2 = new Route(this.path);
 
@@ -117,12 +138,12 @@ public class RandomStrategy {
 			StringBuilder sb = new StringBuilder(NUM_CITIES);
 			for (int i = 0; i < NUM_CITIES; ++i) {
 				sb.append(optimalRoute.getChromosome().get(i).getName());
-				sb.append("->");
+				if (i < NUM_CITIES - 1) {
+					sb.append("->");
+				}
 			}
 
-			String str = sb.toString();
-
-			// System.out.println(getBestFitness() + ": " + str);
+			// System.out.println(getBestFitness() + ": " + sb.toString());
 			System.out.println(getBestFitness());
 			sum += getBestFitness();
 
@@ -145,8 +166,8 @@ public class RandomStrategy {
 					newlistRouteArray[i] = newPopulationList.get(i);
 				}
 
-				// selectionSort(listArray, listRouterArray);
-				// selectionSort(newListArray, newlistRouteArray);
+				selectionSort(listArray, listRouterArray);
+				selectionSort(newListArray, newlistRouteArray);
 
 				currentPopulationList = new ArrayList<>(Arrays.asList(listRouterArray));
 				newPopulationList = new ArrayList<>(Arrays.asList(newlistRouteArray));
@@ -179,23 +200,20 @@ public class RandomStrategy {
 		average = sum / (maxIter);
 		System.out.println();
 		printEndInfo();
+		return optimalRoute;
 
 	};
 
 	// The crossover strategy makes use of Modified Order Crossover (MOX),
 	// as described in:
 	// http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.91.9167&rep=rep1&type=pdf
-
 	private void crossover(ArrayList<City> parentA, ArrayList<City> parentB, ArrayList<City> childA,
 			ArrayList<City> childB) {
-
-		ArrayList<Integer> numsA = new ArrayList<>();
-		ArrayList<Integer> numsB = new ArrayList<>();
 
 		ArrayList<City> endA = new ArrayList<>();
 		ArrayList<City> endB = new ArrayList<>();
 
-		int rand = randomInt(NUM_CITIES);
+		int rand = myRandom.randomInt(NUM_CITIES);
 
 		// Copy over first part of the chromosome
 		for (int i = 0; i < rand; ++i) {
@@ -209,28 +227,48 @@ public class RandomStrategy {
 			endB.add(parentB.get(i));
 		}
 
+		int[] numsA = new int[endA.size()];
+		int[] numsB = new int[endB.size()];
+
 		// get index values
 		for (int i = 0; i < endA.size(); ++i) {
-			if (endA.get(i) == parentB.get(i)) {
-				numsA.add(i);
-			}
-			if (endB.get(i) == parentA.get(i)) {
-				numsB.add(i);
+			City x = endA.get(i);
+			City y = endB.get(i);
+
+			for (int j = 0; j < parentB.size(); ++j) {
+				if (x == parentB.get(j)) {
+					numsA[i] = j;
+				}
+				if (y == parentA.get(j)) {
+					numsB[i] = j;
+				}
 			}
 		}
 
-		selectionSort(numsA, endA);
-		selectionSort(numsB, endB);
+		City[] strA = new City[endA.size()];
+		endA.toArray(strA);
+		City[] strB = new City[endB.size()];
+		endB.toArray(strB);
+
+		selectionSort(numsA, strA);
+		selectionSort(numsB, strB);
+
+		endA.clear();
+		endB.clear();
+
+		for (int i = 0; i < strA.length; ++i) {
+			endA.add(strA[i]);
+			endB.add(strB[i]);
+		}
 
 		// concatenate the two parts
 		childA.addAll(endA);
 		childB.addAll(endB);
-
 	}
 
 	private void mutate(ArrayList<City> path) {
-		int rand1 = randomInt(NUM_CITIES);
-		int rand2 = randomInt(NUM_CITIES);
+		int rand1 = myRandom.randomInt(NUM_CITIES);
+		int rand2 = myRandom.randomInt(NUM_CITIES);
 		Collections.swap(path, rand1, rand2);
 	}
 
@@ -247,12 +285,6 @@ public class RandomStrategy {
 
 	public Route getOptimalRoute() {
 		return optimalRoute;
-	}
-
-	private static int randomInt(int max) {
-		Random rand = new Random();
-		int randomNum = rand.nextInt((max));
-		return randomNum;
 	}
 
 	public final ArrayList<City> getBestSolution() {
@@ -283,40 +315,57 @@ public class RandomStrategy {
 		return newListFitness;
 	}
 
-	/**
-	 * Selection sort algorithm, used by the cross-over method to allow for the
-	 * in-place sorting of city nodes.
-	 * 
-	 * @param arr1
-	 *            ArrayList<Integer>
-	 * @param arr2
-	 *            ArrayList<Integer>
-	 */
-	private void selectionSort(ArrayList<Integer> arr1, ArrayList<City> arr2) {
+	public void selectionSort(int[] arr1, City[] arr2) {
 		int i, j, minIndex;
 		int tmp1;
 		City tmp2;
-		int n = arr1.size();
+		int n = arr1.length;
 
 		for (i = 0; i < n - 1; i++) {
-
 			minIndex = i;
-
-			for (j = i + 1; j < n; j++)
-
-				// Checks by value of the double array
-				if (arr1.get(j) < arr1.get(minIndex))
+			for (j = i + 1; j < n; j++) {
+				if (arr1[j] < arr1[minIndex]) {
 					minIndex = j;
+				}
+			}
 
 			if (minIndex != i) {
-				tmp1 = arr1.get(i);
-				tmp2 = arr2.get(i);
+				tmp1 = arr1[i];
+				tmp2 = arr2[i];
 
-				arr1.add(arr1.get(minIndex));
-				arr2.add(arr2.get(minIndex));
+				arr1[i] = arr1[minIndex];
+				arr2[i] = arr2[minIndex];
 
-				arr1.add(minIndex, tmp1);
-				arr2.add(minIndex, tmp2);
+				arr1[minIndex] = tmp1;
+				arr2[minIndex] = tmp2;
+			}
+		}
+	}
+
+	public void selectionSort(double[] arr1, Route[] arr2) {
+		int i, j, minIndex;
+		double tmp1;
+		Route tmp2;
+		int n = arr1.length;
+
+		for (i = 0; i < n - 1; i++) {
+			minIndex = i;
+			for (j = i + 1; j < n; j++) {
+
+				if (arr1[j] < arr1[minIndex]) {
+					minIndex = j;
+				}
+			}
+
+			if (minIndex != i) {
+				tmp1 = arr1[i];
+				tmp2 = arr2[i];
+
+				arr1[i] = arr1[minIndex];
+				arr2[i] = arr2[minIndex];
+
+				arr1[minIndex] = tmp1;
+				arr2[minIndex] = tmp2;
 			}
 		}
 	}

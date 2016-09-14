@@ -3,27 +3,30 @@ import java.util.Collections;
 
 public class Route {
 
-	public ArrayList<City> chromosome;
-	public double fitness;
-	public double normFitness;
+	private ArrayList<City> chromosome;
+	private double fitness;
+	private double normFitness;
 
-	public Route(ArrayList<City> path) {
-		this.chromosome = new ArrayList<>();
-		for (City c : path) {
-			this.chromosome.add(c);
+	public Route(ArrayList<City> path, boolean isShuffle) {
+		this.chromosome = new ArrayList<City>(path);
+		if (isShuffle) {
+			Collections.shuffle(chromosome);
 		}
-		// Shuffle the ArrayList to obtain different permutations
-		Collections.shuffle(chromosome);
+	}
+
+	public Route(Route other) {
+		this.chromosome = new ArrayList<City>(other.getChromosome());
 	}
 
 	public double calculateFitness() {
 		double sum = sumDistance(chromosome);
-		fitness = sum;
-		return fitness;
+		// fitness = 1.0 / sum;
+		// fitness = Math.pow(fitness, 4);
+		return sum;// fitness;
 	}
 
 	private double sumDistance(ArrayList<City> path) {
-		double sum = 0;
+		double sum = 0.0;
 		for (int i = 0; i < path.size() - 1; ++i) {
 			City a = path.get(i);
 			City b = path.get(i + 1);
@@ -45,8 +48,15 @@ public class Route {
 		return chromosome;
 	}
 
+	public final double getNormFitness() {
+		return normFitness;
+	}
+
+	public void setNormFitness(double input) {
+		normFitness = input;
+	}
+
 	public void setChromosome(ArrayList<City> chromosome) {
 		this.chromosome = chromosome;
 	}
-
 }

@@ -1,52 +1,135 @@
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
-
 import org.junit.Test;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestJUnit {
 
-	ArrayList<City> path = new ArrayList<>();
-	RandomStrategy randomStrategy;
-	Route route;
+	@Test
+	public void testMyRandom() {
+
+		MyRandom myRandom = new MyRandom();
+
+		int rand1 = myRandom.randomInt(5);
+		int rand2 = myRandom.randomInt(1, 5);
+		double rand3 = myRandom.randomDouble();
+
+		System.out.println("0 <= RandomInt < 5: " + rand1);
+		System.out.println("1 <= RandomInt < 5: " + rand2);
+		System.out.println("0 < RandomDble < 1: " + rand3);
+
+		for (int i = 0; i < 100; ++i) {
+			int randTest = myRandom.randomInt(5);
+			assertNotEquals(randTest, 5);
+		}
+
+		int high = 5;
+		int low = 1;
+		for (int i = 0; i < 100; ++i) {
+			int randTest = myRandom.randomInt(1, 5);
+			assertTrue("Error, random is too high", randTest < high);
+			assertTrue("Error, random is too high", randTest >= low);
+		}
+
+		for (int i = 0; i < 100; ++i) {
+			double randTest = myRandom.randomDouble();
+			assertTrue("Error, random is too high", randTest < 1);
+			assertTrue("Error, random is too high", randTest >= 0);
+		}
+
+	}
 
 	@Test
 	public void testRouteLength() {
 
-		ArrayList<City> path = new ArrayList<>();
-		String[] names = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-				"S", "T" };
-		double[] lat = { 10.05, 27.03, 81.87, 33.67, 82.98, 24.34, 77.35, 73.82, 12.36, 63.25, 23.83, 65.83, 23.46,
-				67.21, 48.39, 24.89, 74.35, 25.87, 36.78, 76.37 };
-		double[] lon = { 67.33, 73.23, 83.48, 72.62, 26.78, 87.88, 65.78, 89.52, 31.24, 56.87, 18.94, 45.89, 34.76,
-				63.67, 34.82, 76.51, 78.35, 23.78, 38.23, 54.27 };
-		for (int i = 0; i < names.length; ++i) {
-			double x = lat[i];
-			double y = lon[i];
-			path.add(new City(x, y, names[i]));
+		Route route1, route2;
+		ArrayList<City> path1 = new ArrayList<City>();
+		ArrayList<City> path2 = new ArrayList<City>();
+
+		String[] names1 = { "F", "E", "C", "A", "B", "D" };
+		double[] lat1 = { 10.6, 10.5, 10.3, 10.1, 10.2, 10.4 };
+		double[] lon1 = { 20.6, 20.5, 20.3, 20.1, 20.2, 20.4 };
+		for (int i = 0; i < names1.length; ++i) {
+			double x1 = lat1[i];
+			double y1 = lon1[i];
+			path1.add(new City(x1, y1, names1[i]));
 		}
 
-		route = new Route(path);
+		String[] names2 = { "D", "C", "B", "A", "F", "E" };
+		double[] lat2 = { 10.4, 10.3, 10.2, 10.1, 10.6, 10.5 };
+		double[] lon2 = { 20.4, 20.3, 20.2, 20.1, 20.6, 20.5 };
+		for (int i = 0; i < names2.length; ++i) {
+			double x2 = lat2[i];
+			double y2 = lon2[i];
+			path2.add(new City(x2, y2, names2[i]));
+		}
 
-		int lengthDNA = route.getChromosome().size();
-		assertEquals(lengthDNA, 20);
+		route1 = new Route(path1, false);
+		route2 = new Route(path2, false);
 
-		route.setChromosome(path);
-		assertEquals(route.getChromosome(), path);
-		assertEquals(route.getChromosome().get(0).getName(), "A");
-		assertEquals(route.getChromosome().get(1).getName(), "B");
-		assertEquals(route.getChromosome().get(2).getName(), "C");
-		assertEquals(route.getChromosome().get(19).getName(), "T");
+		int lengthDNA = route1.getChromosome().size();
+		assertEquals(lengthDNA, 6);
 
-		assertEquals(route.getChromosome().get(0).getLat(), 10.05, 0.01);
-		assertEquals(route.getChromosome().get(1).getLat(), 27.03, 0.01);
-		assertEquals(route.getChromosome().get(2).getLat(), 81.87, 0.01);
-		assertEquals(route.getChromosome().get(19).getLat(), 76.37, 0.01);
+		route1.setChromosome(path1);
+		route2.setChromosome(path2);
 
-		assertEquals(route.getChromosome().get(0).getLon(), 67.33, 0.01);
-		assertEquals(route.getChromosome().get(1).getLon(), 73.23, 0.01);
-		assertEquals(route.getChromosome().get(2).getLon(), 83.48, 0.01);
-		assertEquals(route.getChromosome().get(19).getLon(), 54.27, 0.01);
+		ArrayList<City> routeList = new ArrayList<City>(route1.getChromosome());
+
+		assertEquals(routeList, path1);
+		assertEquals(routeList.get(0).getName(), "F");
+		assertEquals(routeList.get(1).getName(), "E");
+		assertEquals(routeList.get(2).getName(), "C");
+
+		assertEquals(routeList.get(0).getLat(), 10.6, 0.01);
+		assertEquals(routeList.get(1).getLat(), 10.5, 0.01);
+		assertEquals(routeList.get(2).getLat(), 10.3, 0.01);
+
+		assertEquals(routeList.get(0).getLon(), 20.6, 0.01);
+		assertEquals(routeList.get(1).getLon(), 20.5, 0.01);
+		assertEquals(routeList.get(2).getLon(), 20.3, 0.01);
+
+		ArrayList<City> parentA, parentB;
+		ArrayList<City> child = new ArrayList<City>();
+
+		parentA = new ArrayList<City>(route1.getChromosome());
+		parentB = new ArrayList<City>(route2.getChromosome());
+
+		// Print results
+		System.out.print("ParentA: ");
+		for (int i = 0; i < parentA.size(); ++i) {
+			System.out.print(parentA.get(i).getName());
+		}
+
+		System.out.println();
+		System.out.print("ParentB: ");
+		for (int i = 0; i < parentB.size(); ++i) {
+			System.out.print(parentB.get(i).getName());
+		}
+
+		ArrayList<Route> populationList = new ArrayList<Route>();
+		for (int i = 0; i < 50; ++i) {
+			populationList.add(new Route(path1, false));
+		}
+
+		Population population = new Population(populationList, 5, 10, 80.0, 10.0, 6);
+		population.crossover(parentA, parentB, child);
+
+		// Print results
+		System.out.println();
+		System.out.print("Child: ");
+		for (int i = 0; i < child.size(); ++i) {
+			System.out.print(child.get(i).getName());
+		}
+
+		// This works if crossover point is at 3
+		// StringBuilder sb = new StringBuilder();
+		// for (int i = 0; i < child.size(); ++i) {
+		// sb.append(child.get(i).getName());
+		// }
+		// String childName = sb.toString();
+		// assertEquals(childName, "FECDBA");
+
 	}
 
 }

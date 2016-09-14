@@ -112,7 +112,7 @@ public class TestJUnit {
 			populationList.add(new Route(path1, false));
 		}
 
-		Population population = new Population(populationList, 5, 10, 80.0, 10.0, 6);
+		Population population = new Population(populationList, 5, 10, 80.0, 10.0, 10.0, 6);
 		population.crossover(parentA, parentB, child);
 
 		// Print results

@@ -7,31 +7,36 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 public class Population {
 
-	public int numCities;
-	public int numPop;
-	public int maxIter;
-	public double crossoverRate;
-	public double mutationRate;
-	public double percentageGap;
-	public Route optimalRoute;
-	public double optimalValue;
-	public double average = 0.0;
-	public MyRandom myRandom = new MyRandom();
-	public ArrayList<Route> populationList = new ArrayList<Route>();
-	public ArrayList<City> bestEverRoute = new ArrayList<City>();
-	public ArrayList<City> overallBestRoute = new ArrayList<City>();
-	public double overallBestFitness = Double.POSITIVE_INFINITY;
+	private int numCities;
+	private int numPop;
+	private int maxIter;
+	private double crossoverRate;
+	private double mutationRate;
+	private Route optimalRoute;
+	private double optimalValue;
+	private int numElite;
+	private MyRandom myRandom = new MyRandom();
+	private ArrayList<Route> populationList = new ArrayList<Route>();
+	private ArrayList<City> overallBestRoute = new ArrayList<City>();
+	private double overallBestFitness = Double.POSITIVE_INFINITY;
 
 	public Population(ArrayList<Route> populationList, int numPop, int maxIter, double crossoverRate,
-			double mutationRate, int numCities) {
+			double mutationRate, double generationGap, int numCities) {
 		this.numCities = numCities;
 		this.numPop = numPop;
 		this.maxIter = maxIter;
 		this.crossoverRate = crossoverRate / 100;
 		this.mutationRate = mutationRate / 100;
+		numElite = (int) (this.numPop * generationGap / 100);
 		this.populationList = new ArrayList<Route>(populationList);
 		this.optimalRoute = null;
 		this.optimalValue = Double.POSITIVE_INFINITY;
@@ -43,6 +48,7 @@ public class Population {
 		int counter = 0;
 
 		// Outer while loop that runs for the number of generations required
+		// while (optimalValue > 610.00) {
 		while (counter < maxIter) {
 			calculateOptimal();
 			System.out.println(getBestFitness());
@@ -89,6 +95,50 @@ public class Population {
 		}
 
 		populationList = new ArrayList<Route>(newPopulationList);
+
+		// Apply elitism if required;
+		// makes use of hashmaps sorted by value
+		if (numElite > 0) {
+
+			HashMap<Route, Double> map = new HashMap<Route, Double>();
+			for (int i = 0; i < populationList.size(); ++i) {
+				map.put(populationList.get(i), populationList.get(i).calculateFitness());
+			}
+
+			Set<Entry<Route, Double>> set = map.entrySet();
+			List<Entry<Route, Double>> ascendingList = new ArrayList<Entry<Route, Double>>(set);
+			List<Entry<Route, Double>> descendingList = new ArrayList<Entry<Route, Double>>(set);
+
+			// Sort ascending
+			Collections.sort(ascendingList, new Comparator<Map.Entry<Route, Double>>() {
+				public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
+					return (value1.getValue()).compareTo(value2.getValue());
+				}
+			});
+
+			// Sort descending
+			Collections.sort(descendingList, new Comparator<Map.Entry<Route, Double>>() {
+				public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
+					return (value2.getValue()).compareTo(value1.getValue());
+				}
+			});
+
+			// for (Map.Entry<Route, Double> entry : list) {
+			// System.out.println(entry.getKey() + " => " + entry.getValue());
+			// }
+
+			ArrayList<Route> eliteList = new ArrayList<Route>();
+			for (int i = 0; i < numElite; ++i) {
+				descendingList.set(i, ascendingList.get(i));
+			}
+
+			for (Map.Entry<Route, Double> entry : descendingList) {
+				eliteList.add(entry.getKey());
+			}
+
+			populationList.clear();
+			populationList = new ArrayList<Route>(eliteList);
+		}
 	}
 
 	public void crossover(ArrayList<City> parentA, ArrayList<City> parentB, ArrayList<City> child) {

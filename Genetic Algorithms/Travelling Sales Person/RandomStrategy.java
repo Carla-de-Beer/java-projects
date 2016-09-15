@@ -14,22 +14,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-public class Population {
+public class RandomStrategy {
 
-	private int numCities;
 	private int numPop;
 	private int maxIter;
 	private double crossoverRate;
 	private double mutationRate;
-	private Route optimalRoute;
-	private double optimalValue;
-	private int numElite;
 	private MyRandom myRandom = new MyRandom();
+
+	private int numCities;
 	private ArrayList<Route> populationList = new ArrayList<Route>();
 	private ArrayList<City> overallBestRoute = new ArrayList<City>();
 	private double overallBestFitness = Double.POSITIVE_INFINITY;
+	private Route optimalRoute;
+	private double optimalValue;
+	private int numElite;
 
-	public Population(ArrayList<Route> populationList, int numPop, int maxIter, double crossoverRate,
+	public RandomStrategy(ArrayList<Route> populationList, int numPop, int maxIter, double crossoverRate,
 			double mutationRate, double generationGap, int numCities) {
 		this.numCities = numCities;
 		this.numPop = numPop;
@@ -43,12 +44,10 @@ public class Population {
 	}
 
 	public void runGA() {
-
 		printStartInfo();
 		int counter = 0;
 
 		// Outer while loop that runs for the number of generations required
-		// while (optimalValue > 610.00) {
 		while (counter < maxIter) {
 			calculateOptimal();
 			System.out.println(getBestFitness());
@@ -61,6 +60,7 @@ public class Population {
 	public void generatePopulation() {
 
 		ArrayList<Route> newPopulationList = new ArrayList<Route>();
+		ArrayList<Route> nextPopulationList = new ArrayList<Route>();
 
 		while (newPopulationList.size() < numPop) {
 			ArrayList<City> parentA = new ArrayList<City>();
@@ -79,66 +79,28 @@ public class Population {
 			// Crossover, if applicable
 			if (crossoverRate > cProb) {
 				crossover(parentA, parentB, child);
-			} else {
-				child = new ArrayList<City>(parentA);
+				// if you are crossing over, mutate
+				// Mutate, if applicable
+				if (mutationRate > mRand) {
+					mutate(child);
+				}
+				// Populate the ArrayList newPopulation
+				// with the offspring
+				Route newRoute = new Route(child, false);
+				newPopulationList.add(newRoute);
 			}
-
-			// Mutate, if applicable
-			if (mutationRate > mRand) {
-				mutate(child);
-			}
-
-			// Populate the ArrayList newPopulation
-			// with the offspring
-			Route newRoute = new Route(child, false);
-			newPopulationList.add(newRoute);
 		}
 
-		populationList = new ArrayList<Route>(newPopulationList);
+		nextPopulationList = new ArrayList<Route>(newPopulationList);
 
-		// Apply elitism if required;
-		// makes use of hashmaps sorted by value
+		// Apply elitism if required; sort hashmaps by value
 		if (numElite > 0) {
-
-			HashMap<Route, Double> map = new HashMap<Route, Double>();
-			for (int i = 0; i < populationList.size(); ++i) {
-				map.put(populationList.get(i), populationList.get(i).calculateFitness());
-			}
-
-			Set<Entry<Route, Double>> set = map.entrySet();
-			List<Entry<Route, Double>> ascendingList = new ArrayList<Entry<Route, Double>>(set);
-			List<Entry<Route, Double>> descendingList = new ArrayList<Entry<Route, Double>>(set);
-
-			// Sort ascending
-			Collections.sort(ascendingList, new Comparator<Map.Entry<Route, Double>>() {
-				public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
-					return (value1.getValue()).compareTo(value2.getValue());
-				}
-			});
-
-			// Sort descending
-			Collections.sort(descendingList, new Comparator<Map.Entry<Route, Double>>() {
-				public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
-					return (value2.getValue()).compareTo(value1.getValue());
-				}
-			});
-
-			// for (Map.Entry<Route, Double> entry : list) {
-			// System.out.println(entry.getKey() + " => " + entry.getValue());
-			// }
-
-			ArrayList<Route> eliteList = new ArrayList<Route>();
-			for (int i = 0; i < numElite; ++i) {
-				descendingList.set(i, ascendingList.get(i));
-			}
-
-			for (Map.Entry<Route, Double> entry : descendingList) {
-				eliteList.add(entry.getKey());
-			}
-
-			populationList.clear();
-			populationList = new ArrayList<Route>(eliteList);
+			populationList = new ArrayList<Route>(createEliteList(nextPopulationList));
+		} else {
+			// else, if no elitism applied, carry new population over as is
+			populationList = new ArrayList<Route>(newPopulationList);
 		}
+		newPopulationList.clear();
 	}
 
 	public void crossover(ArrayList<City> parentA, ArrayList<City> parentB, ArrayList<City> child) {
@@ -185,6 +147,55 @@ public class Population {
 		Collections.swap(path, rand1, rand2);
 	}
 
+	public ArrayList<Route> createEliteList(ArrayList<Route> nextPopulationList) {
+
+		HashMap<Route, Double> mapNext = new HashMap<Route, Double>();
+		for (int i = 0; i < nextPopulationList.size(); ++i) {
+			mapNext.put(nextPopulationList.get(i), nextPopulationList.get(i).calculateFitness());
+		}
+
+		HashMap<Route, Double> mapCurrent = new HashMap<Route, Double>();
+		for (int i = 0; i < populationList.size(); ++i) {
+			mapCurrent.put(populationList.get(i), populationList.get(i).calculateFitness());
+		}
+
+		Set<Entry<Route, Double>> setCurrent = mapCurrent.entrySet();
+		List<Entry<Route, Double>> ascendingList = new ArrayList<Entry<Route, Double>>(setCurrent);
+
+		Set<Entry<Route, Double>> setNext = mapNext.entrySet();
+		List<Entry<Route, Double>> descendingList = new ArrayList<Entry<Route, Double>>(setNext);
+
+		// Sort ascending
+		Collections.sort(ascendingList, new Comparator<Map.Entry<Route, Double>>() {
+			public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
+				return (value1.getValue()).compareTo(value2.getValue());
+			}
+		});
+
+		// Sort descending
+		Collections.sort(descendingList, new Comparator<Map.Entry<Route, Double>>() {
+			public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
+				return (value2.getValue()).compareTo(value1.getValue());
+			}
+		});
+
+		// System.out.println("ascendingList: ");
+		// for (Map.Entry<Route, Double> entry : ascendingList) {
+		// System.out.println(entry.getKey() + " => " + entry.getValue());
+		// }
+
+		ArrayList<Route> eliteList = new ArrayList<Route>();
+		for (int i = 0; i < numElite; ++i) {
+			descendingList.set(i, ascendingList.get(i));
+		}
+
+		for (Map.Entry<Route, Double> entry : descendingList) {
+			eliteList.add(entry.getKey());
+		}
+
+		return eliteList;
+	}
+
 	public void calculateOptimal() {
 		double fitnessValue = 0.0;
 		for (int i = 0; i < populationList.size(); ++i) {
@@ -196,7 +207,7 @@ public class Population {
 		}
 	}
 
-	private void calculateBestEver() {
+	public void calculateBestEver() {
 		ArrayList<City> currentBestRoute = optimalRoute.getChromosome();
 		double currentBestFitness = optimalValue;
 		if (currentBestFitness < overallBestFitness) {

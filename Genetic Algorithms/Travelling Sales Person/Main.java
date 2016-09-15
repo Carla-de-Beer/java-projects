@@ -7,10 +7,9 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,17 +19,17 @@ public class Main {
 
 	public static final int NUM_CITIES = 10;
 	private static ArrayList<City> path = new ArrayList<City>();
-	private static Population population;
+	private static RandomStrategy randomStrategy;
 	private static ArrayList<Route> populationList = new ArrayList<Route>();
 	private static double sumHaversine = 0.0;
 
 	public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
 
 		int maxIter = 50;
-		int numPop = 1000;
+		int numPop = 750;
 		double crossoverRate = 80.0;
 		double mutationRate = 15.0;
-		double generationGap = 5.0;
+		double generationGap = 3.0;
 
 		// Read city.json file
 		JSONParser parser = new JSONParser();
@@ -50,25 +49,17 @@ public class Main {
 			populationList.add(new Route(path, true));
 		}
 
-		population = new Population(populationList, numPop, maxIter, crossoverRate, mutationRate, generationGap,
+		randomStrategy = new RandomStrategy(populationList, numPop, maxIter, crossoverRate, mutationRate, generationGap,
 				NUM_CITIES);
-		population.runGA();
+		randomStrategy.runGA();
 		System.out.println();
-		population.printResult();
+		randomStrategy.printResult();
 
-		calculateHaversine(population.getBestSolution());
+		calculateHaversine(randomStrategy.getBestSolution());
 		System.out.println();
-		System.out.println("Haversine distance: " + sumHaversine);
 
-		// HashMap<String, Double> hm = new HashMap<String, Double>();
-		// String name1 = path.get(0).getName();
-		// String name2 = path.get(1).getName();
-		// hm.put(name1, new Double(3434.34));
-		// hm.put(name2, new Double(2338.12));
-		// // etc
-		//
-		// System.out.println(hm.get(name1));
-		// System.out.println(hm.get(name2));
+		NumberFormat formatter = new DecimalFormat("#0.000");
+		System.out.println("Haversine distance: " + formatter.format(sumHaversine) + "km");
 
 	}
 

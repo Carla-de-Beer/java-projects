@@ -15,9 +15,12 @@ public class TestJUnit {
 		int rand2 = myRandom.randomInt(1, 5);
 		double rand3 = myRandom.randomDouble();
 
+		System.out.println("**************************************");
+		System.out.println("1. Testing the MyRandom functonality:\n");
 		System.out.println("0 <= RandomInt < 5: " + rand1);
 		System.out.println("1 <= RandomInt < 5: " + rand2);
 		System.out.println("0 < RandomDble < 1: " + rand3);
+		System.out.println();
 
 		for (int i = 0; i < 100; ++i) {
 			int randTest = myRandom.randomInt(5);
@@ -95,6 +98,8 @@ public class TestJUnit {
 		parentA = new ArrayList<City>(route1.getChromosome());
 		parentB = new ArrayList<City>(route2.getChromosome());
 
+		System.out.println("**************************************");
+		System.out.println("2. Testing the crossover functonality:\n");
 		// Print results
 		System.out.print("ParentA: ");
 		for (int i = 0; i < parentA.size(); ++i) {
@@ -112,8 +117,8 @@ public class TestJUnit {
 			populationList.add(new Route(path1, false));
 		}
 
-		Population population = new Population(populationList, 5, 10, 80.0, 10.0, 10.0, 6);
-		population.crossover(parentA, parentB, child);
+		RandomStrategy randomStrategy = new RandomStrategy(populationList, 5, 10, 80.0, 10.0, 10.0, 6);
+		randomStrategy.crossover(parentA, parentB, child);
 
 		// Print results
 		System.out.println();

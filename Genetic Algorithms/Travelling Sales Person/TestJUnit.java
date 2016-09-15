@@ -126,15 +126,5 @@ public class TestJUnit {
 		for (int i = 0; i < child.size(); ++i) {
 			System.out.print(child.get(i).getName());
 		}
-
-		// This works if crossover point is at 3
-		// StringBuilder sb = new StringBuilder();
-		// for (int i = 0; i < child.size(); ++i) {
-		// sb.append(child.get(i).getName());
-		// }
-		// String childName = sb.toString();
-		// assertEquals(childName, "FECDBA");
-
 	}
-
 }

@@ -7,8 +7,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,9 +17,7 @@ public class Main {
 
 	public static final int NUM_CITIES = 10;
 	private static ArrayList<City> path = new ArrayList<City>();
-	private static RandomStrategy randomStrategy;
 	private static ArrayList<Route> populationList = new ArrayList<Route>();
-	private static double sumHaversine = 0.0;
 
 	public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
 
@@ -49,32 +45,12 @@ public class Main {
 			populationList.add(new Route(path, true));
 		}
 
-		randomStrategy = new RandomStrategy(populationList, numPop, maxIter, crossoverRate, mutationRate, generationGap,
-				NUM_CITIES);
-		randomStrategy.runGA();
-		System.out.println();
-		randomStrategy.printResult();
+		Genetics GA = new Genetics(new RandomStrategy(populationList, numPop, maxIter, crossoverRate, mutationRate,
+				generationGap, NUM_CITIES));
 
-		calculateHaversine(randomStrategy.getBestSolution());
-		System.out.println();
+		GA.start();
+		GA.printDistanceTravelled();
 
-		NumberFormat formatter = new DecimalFormat("#0.000");
-		System.out.println("Haversine distance: " + formatter.format(sumHaversine) + "km");
-
-	}
-
-	private static double haversine(double lat1, double lat2, double lon1, double lon2) {
-		double p = 0.017453292519943295;
-		double a = 0.5 - Math.cos((lat2 - lat1) * p) / 2
-				+ Math.cos(lat1 * p) * Math.cos(lat2 * p) * (1 - Math.cos((lon2 - lon1) * p)) / 2;
-		return 12742 * Math.asin(Math.sqrt(a));
-	}
-
-	private static void calculateHaversine(ArrayList<City> path) {
-		for (int i = 0; i < NUM_CITIES - 1; ++i) {
-			sumHaversine += haversine(path.get(i).getLat(), path.get(i + 1).getLat(), path.get(i).getLon(),
-					path.get(i + 1).getLon());
-		}
 	}
 
 }

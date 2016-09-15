@@ -5,50 +5,23 @@
  */
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
 
-public class RandomStrategy {
+public class RandomStrategy extends Strategy {
 
-	private int numPop;
-	private int maxIter;
-	private double crossoverRate;
-	private double mutationRate;
 	private MyRandom myRandom = new MyRandom();
-
-	private int numCities;
-	private ArrayList<Route> populationList = new ArrayList<Route>();
-	private ArrayList<City> overallBestRoute = new ArrayList<City>();
-	private double overallBestFitness = Double.POSITIVE_INFINITY;
-	private Route optimalRoute;
-	private double optimalValue;
-	private int numElite;
 
 	public RandomStrategy(ArrayList<Route> populationList, int numPop, int maxIter, double crossoverRate,
 			double mutationRate, double generationGap, int numCities) {
-		this.numCities = numCities;
-		this.numPop = numPop;
-		this.maxIter = maxIter;
-		this.crossoverRate = crossoverRate / 100;
-		this.mutationRate = mutationRate / 100;
-		numElite = (int) (this.numPop * generationGap / 100);
-		this.populationList = new ArrayList<Route>(populationList);
-		this.optimalRoute = null;
-		this.optimalValue = Double.POSITIVE_INFINITY;
+		super(populationList, numPop, maxIter, crossoverRate, mutationRate, generationGap, numCities);
 	}
 
+	@Override
 	public void runGA() {
 		printStartInfo();
 		int counter = 0;
 
 		// Outer while loop that runs for the number of generations required
-		while (counter < maxIter) {
+		while (counter < getMaxIter()) {
 			calculateOptimal();
 			System.out.println(getBestFitness());
 			calculateBestEver();
@@ -57,31 +30,32 @@ public class RandomStrategy {
 		}
 	}
 
+	@Override
 	public void generatePopulation() {
 
 		ArrayList<Route> newPopulationList = new ArrayList<Route>();
 		ArrayList<Route> nextPopulationList = new ArrayList<Route>();
 
-		while (newPopulationList.size() < numPop) {
+		while (newPopulationList.size() < getNumPop()) {
 			ArrayList<City> parentA = new ArrayList<City>();
 			ArrayList<City> parentB = new ArrayList<City>();
 			ArrayList<City> child = new ArrayList<City>();
 
 			// Randomly select two parents from the population
-			int randA = myRandom.randomInt(numPop);
-			int randB = myRandom.randomInt(numPop);
-			parentA = (populationList.get(randA).getChromosome());
-			parentB = (populationList.get(randB).getChromosome());
+			int randA = myRandom.randomInt(getNumPop());
+			int randB = myRandom.randomInt(getNumPop());
+			parentA = (getPopulationList().get(randA).getChromosome());
+			parentB = (getPopulationList().get(randB).getChromosome());
 
 			double cProb = Math.random();
 			double mRand = Math.random();
 
 			// Crossover, if applicable
-			if (crossoverRate > cProb) {
+			if (getCrossOverRate() > cProb) {
 				crossover(parentA, parentB, child);
 				// if you are crossing over, mutate
 				// Mutate, if applicable
-				if (mutationRate > mRand) {
+				if (getMutationRate() > mRand) {
 					mutate(child);
 				}
 				// Populate the ArrayList newPopulation
@@ -94,162 +68,43 @@ public class RandomStrategy {
 		nextPopulationList = new ArrayList<Route>(newPopulationList);
 
 		// Apply elitism if required; sort hashmaps by value
-		if (numElite > 0) {
-			populationList = new ArrayList<Route>(createEliteList(nextPopulationList));
+		if (getnumElite() > 0) {
+			// populationList = new
+			// ArrayList<Route>(createEliteList(nextPopulationList));
+			setPopulationList(createEliteList(nextPopulationList));
 		} else {
 			// else, if no elitism applied, carry new population over as is
-			populationList = new ArrayList<Route>(newPopulationList);
+			// populationList = new ArrayList<Route>(newPopulationList);
+			setPopulationList(newPopulationList);
 		}
 		newPopulationList.clear();
 	}
 
-	public void crossover(ArrayList<City> parentA, ArrayList<City> parentB, ArrayList<City> child) {
-
-		ArrayList<City> end = new ArrayList<City>();
-		int rand = myRandom.randomInt(numCities);
-
-		// Copy over first part of the chromosome
-		for (int i = 0; i < rand; ++i) {
-			child.add(parentA.get(i));
-		}
-
-		// Copy over second part of the chromosome
-		for (int i = rand; i < parentA.size(); ++i) {
-			end.add(parentA.get(i));
-		}
-
-		int[] nums = new int[end.size()];
-
-		// get index values
-		for (int i = 0; i < end.size(); ++i) {
-			City x = end.get(i);
-			for (int j = 0; j < parentB.size(); ++j) {
-				if (x.getName().equals(parentB.get(j).getName())) {
-					nums[i] = j;
-				}
-			}
-		}
-
-		Arrays.sort(nums);
-		ArrayList<City> res = new ArrayList<City>();
-
-		for (int i = 0; i < nums.length; ++i) {
-			res.add(parentB.get(nums[i]));
-		}
-
-		// concatenate the two parts
-		child.addAll(res);
-	}
-
-	public void mutate(ArrayList<City> path) {
-		int rand1 = myRandom.randomInt(numCities);
-		int rand2 = myRandom.randomInt(numCities);
-		Collections.swap(path, rand1, rand2);
-	}
-
-	public ArrayList<Route> createEliteList(ArrayList<Route> nextPopulationList) {
-
-		HashMap<Route, Double> mapNext = new HashMap<Route, Double>();
-		for (int i = 0; i < nextPopulationList.size(); ++i) {
-			mapNext.put(nextPopulationList.get(i), nextPopulationList.get(i).calculateFitness());
-		}
-
-		HashMap<Route, Double> mapCurrent = new HashMap<Route, Double>();
-		for (int i = 0; i < populationList.size(); ++i) {
-			mapCurrent.put(populationList.get(i), populationList.get(i).calculateFitness());
-		}
-
-		Set<Entry<Route, Double>> setCurrent = mapCurrent.entrySet();
-		List<Entry<Route, Double>> ascendingList = new ArrayList<Entry<Route, Double>>(setCurrent);
-
-		Set<Entry<Route, Double>> setNext = mapNext.entrySet();
-		List<Entry<Route, Double>> descendingList = new ArrayList<Entry<Route, Double>>(setNext);
-
-		// Sort ascending
-		Collections.sort(ascendingList, new Comparator<Map.Entry<Route, Double>>() {
-			public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
-				return (value1.getValue()).compareTo(value2.getValue());
-			}
-		});
-
-		// Sort descending
-		Collections.sort(descendingList, new Comparator<Map.Entry<Route, Double>>() {
-			public int compare(Map.Entry<Route, Double> value1, Map.Entry<Route, Double> value2) {
-				return (value2.getValue()).compareTo(value1.getValue());
-			}
-		});
-
-		// System.out.println("ascendingList: ");
-		// for (Map.Entry<Route, Double> entry : ascendingList) {
-		// System.out.println(entry.getKey() + " => " + entry.getValue());
-		// }
-
-		ArrayList<Route> eliteList = new ArrayList<Route>();
-		for (int i = 0; i < numElite; ++i) {
-			descendingList.set(i, ascendingList.get(i));
-		}
-
-		for (Map.Entry<Route, Double> entry : descendingList) {
-			eliteList.add(entry.getKey());
-		}
-
-		return eliteList;
-	}
-
-	public void calculateOptimal() {
-		double fitnessValue = 0.0;
-		for (int i = 0; i < populationList.size(); ++i) {
-			fitnessValue = populationList.get(i).calculateFitness();
-			if (fitnessValue < optimalValue) {
-				optimalRoute = new Route(populationList.get(i));
-				optimalValue = fitnessValue;
-			}
-		}
-	}
-
-	public void calculateBestEver() {
-		ArrayList<City> currentBestRoute = optimalRoute.getChromosome();
-		double currentBestFitness = optimalValue;
-		if (currentBestFitness < overallBestFitness) {
-			overallBestRoute = new ArrayList<City>(currentBestRoute);
-			overallBestFitness = currentBestFitness;
-		}
-	}
-
-	public final Route getOptimalRoute() {
-		return optimalRoute;
-	}
-
-	public final ArrayList<City> getBestSolution() {
-		return optimalRoute.getChromosome();
-	}
-
-	public final double getBestFitness() {
-		return optimalValue;
-	}
-
+	@Override
 	public void printStartInfo() {
 		System.out.println("GENETIC ALGORITHM\n");
-		System.out.println("Population size: " + numPop);
-		System.out.println("Max number generations: " + maxIter);
+		System.out.println("Population size: " + getNumPop());
+		System.out.println("Max number generations: " + getMaxIter());
 		System.out.println("Strategy: Random");
-		System.out.println("1-point cross-over: Yes");
-		System.out.println("Cross-over rate: " + crossoverRate * 100 + "%");
-		System.out.println("Mutation rate: " + mutationRate * 100 + "%");
+		System.out.println("1-point crossover strategy: MOX");
+		System.out.println("Crossover rate: " + getCrossOverRate() * 100 + "%");
+		System.out.println("Mutation rate: " + getMutationRate() * 100 + "%");
 		System.out.println("\nRESULTS:\n");
 	}
 
+	@Override
 	public void printResult() {
 		System.out.println("\nProcessing complete.\n");
 		System.out.println("\n****************************************************");
 		System.out.println();
-		System.out.println("Optimal fitness value: " + overallBestFitness);
+		System.out.println("Optimal fitness value: " + getOverallBestFitness());
 		System.out.print("Optimal route: ");
-		for (int i = 0; i < numCities; ++i) {
-			System.out.print(overallBestRoute.get(i).getName());
-			if (i < numCities - 1) {
+		for (int i = 0; i < getNumCities(); ++i) {
+			System.out.print(getOverallBestRoute().get(i).getName());
+			if (i < getNumCities() - 1) {
 				System.out.print("->");
 			}
 		}
 	}
+
 }

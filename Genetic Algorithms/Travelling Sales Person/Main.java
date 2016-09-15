@@ -26,6 +26,7 @@ public class Main {
 		double crossoverRate = 80.0;
 		double mutationRate = 15.0;
 		double generationGap = 3.0;
+		int tournamentSize = 10;
 
 		// Read city.json file
 		JSONParser parser = new JSONParser();
@@ -45,8 +46,24 @@ public class Main {
 			populationList.add(new Route(path, true));
 		}
 
+		// RANDOM SELECTION STRATEGY
 		Genetics GA = new Genetics(new RandomStrategy(populationList, numPop, maxIter, crossoverRate, mutationRate,
 				generationGap, NUM_CITIES));
+
+		// RANK SELECTION STRATEGY
+		// Genetics GA = new Genetics(new RankStrategy(populationList, numPop,
+		// maxIter, crossoverRate, mutationRate,
+		// generationGap, NUM_CITIES));
+
+		// TOURNAMENT SELECTION STRATEGY
+		// Genetics GA = new Genetics(new TournamentStrategy(populationList,
+		// numPop, maxIter, crossoverRate, mutationRate,
+		// generationGap, NUM_CITIES, tournamentSize));
+
+		// ROULETTE SELECTION STRATEGY
+		// Genetics GA = new Genetics(new RouletteStrategy(populationList,
+		// numPop, maxIter, crossoverRate, mutationRate,
+		// generationGap, NUM_CITIES));
 
 		GA.start();
 	}

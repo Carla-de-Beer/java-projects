@@ -24,14 +24,7 @@ public class RandomStrategy extends Strategy {
 		// Outer while loop that runs for the number of generations required
 		while (counter < getMaxIter()) {
 			calculateOptimal();
-			if (counter < 9) {
-				System.out.println((counter + 1) + ":   " + getBestFitness());
-			} else if (counter >= 10 && counter < 99) {
-				System.out.println((counter + 1) + ":  " + getBestFitness());
-			} else if (counter >= 100 && counter < 999) {
-				System.out.println((counter + 1) + ": " + getBestFitness());
-			}
-
+			System.out.println(getBestFitness());
 			calculateBestEver();
 			generatePopulation();
 			counter++;
@@ -72,7 +65,7 @@ public class RandomStrategy extends Strategy {
 
 		nextPopulationList = new ArrayList<Route>(newPopulationList);
 
-		// Apply elitism if required
+		// Apply elitism, if required
 		if (getNumElite() > 0) {
 			setPopulationList(createEliteList(nextPopulationList));
 		} else {

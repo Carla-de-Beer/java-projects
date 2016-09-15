@@ -172,7 +172,6 @@ public abstract class Strategy {
 		} else {
 			System.out.println("Elitism applied: No");
 		}
-		// System.out.println("\nRESULTS:\n");
 		System.out.println("\nBest fitness level per generation:\n");
 	}
 

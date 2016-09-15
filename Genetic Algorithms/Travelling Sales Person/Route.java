@@ -1,3 +1,7 @@
+
+/**
+ * Class that calculates chromosome and the chromosome fitness value.
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -5,7 +9,6 @@ public class Route {
 
 	private ArrayList<City> chromosome;
 	private double fitness;
-	private double normFitness;
 
 	public Route(ArrayList<City> path, boolean isShuffle) {
 		this.chromosome = new ArrayList<City>(path);
@@ -46,14 +49,6 @@ public class Route {
 
 	public final ArrayList<City> getChromosome() {
 		return chromosome;
-	}
-
-	public final double getNormFitness() {
-		return normFitness;
-	}
-
-	public void setNormFitness(double input) {
-		normFitness = input;
 	}
 
 	public void setChromosome(ArrayList<City> chromosome) {

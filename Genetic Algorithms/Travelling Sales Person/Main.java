@@ -22,7 +22,7 @@ public class Main {
 	public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
 
 		int maxIter = 50;
-		int numPop = 750;
+		int numPop = 850;
 		double crossoverRate = 80.0;
 		double mutationRate = 15.0;
 		double generationGap = 3.0;
@@ -49,8 +49,5 @@ public class Main {
 				generationGap, NUM_CITIES));
 
 		GA.start();
-		GA.printDistanceTravelled();
-
 	}
-
 }

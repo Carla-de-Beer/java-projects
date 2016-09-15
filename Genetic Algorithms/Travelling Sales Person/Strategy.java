@@ -1,3 +1,8 @@
+
+/**
+ * Abstract class that contains algorithm information that is applicable across various selection strategy algorithms.
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,16 +45,7 @@ public abstract class Strategy {
 	// ABSTRACT METHODS
 	// ------------------------------------------
 
-	public void generatePopulation() {
-	}
-
 	public void runGA() {
-	}
-
-	public void printStartInfo() {
-	}
-
-	public void printResult() {
 	}
 
 	// ------------------------------------------
@@ -98,18 +94,6 @@ public abstract class Strategy {
 		int rand1 = myRandom.randomInt(numCities);
 		int rand2 = myRandom.randomInt(numCities);
 		Collections.swap(path, rand1, rand2);
-	}
-
-	public Route getOptimalRoute() {
-		return optimalRoute;
-	}
-
-	public ArrayList<City> getBestSolution() {
-		return optimalRoute.getChromosome();
-	}
-
-	public double getBestFitness() {
-		return optimalValue;
 	}
 
 	public void calculateBestEver() {
@@ -176,6 +160,40 @@ public abstract class Strategy {
 		}
 	}
 
+	public void printStartInfoStrategy() {
+		System.out.println("Population size: " + getNumPop());
+		System.out.println("Max number generations: " + getMaxIter());
+		System.out.println("1-point crossover strategy: MOX");
+		System.out.println("Crossover rate: " + getCrossOverRate() * 100 + "%");
+		System.out.println("Mutation rate: " + getMutationRate() * 100 + "%");
+		if (getNumElite() > 0) {
+			System.out.println("Elitism applied: Yes");
+			System.out.println("Generation gap: " + getNumElite() + " members");
+		} else {
+			System.out.println("Elitism applied: No");
+		}
+		// System.out.println("\nRESULTS:\n");
+		System.out.println("\nBest fitness level per generation:\n");
+	}
+
+	public void printResult() {
+		System.out.println("\nProcessing complete.\n");
+		System.out.println("\n****************************************************");
+		System.out.println("\nRESULTS:\n");
+		System.out.println("Optimal fitness value: " + getOverallBestFitness());
+		System.out.print("Optimal route: ");
+		for (int i = 0; i < getNumCities(); ++i) {
+			System.out.print(getOverallBestRoute().get(i).getName());
+			if (i < getNumCities() - 1) {
+				System.out.print("->");
+			}
+		}
+	}
+
+	// ------------------------------------------
+	// GETTERS AND SETTERS
+	// ------------------------------------------
+
 	public int getNumPop() {
 		return numPop;
 	}
@@ -188,7 +206,7 @@ public abstract class Strategy {
 		return numCities;
 	}
 
-	public int getnumElite() {
+	public int getNumElite() {
 		return numElite;
 	}
 
@@ -202,6 +220,18 @@ public abstract class Strategy {
 
 	public double getMutationRate() {
 		return mutationRate;
+	}
+
+	public Route getOptimalRoute() {
+		return optimalRoute;
+	}
+
+	public ArrayList<City> getBestSolution() {
+		return optimalRoute.getChromosome();
+	}
+
+	public double getBestFitness() {
+		return optimalValue;
 	}
 
 	public ArrayList<City> getOverallBestRoute() {

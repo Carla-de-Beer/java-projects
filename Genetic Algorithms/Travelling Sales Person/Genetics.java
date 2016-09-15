@@ -1,3 +1,9 @@
+
+/**
+ * Genetics class that enables the Strategy Design Pattern.
+ * Runs the GA and calculates the Haversine distance.
+ */
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -14,9 +20,10 @@ public class Genetics {
 	public void start() {
 		strategy.runGA();
 		strategy.printResult();
+		printDistanceTravelled();
 	}
 
-	public void printDistanceTravelled() {
+	private void printDistanceTravelled() {
 		calculateHaversine(strategy.getBestSolution());
 		System.out.println();
 		NumberFormat formatter = new DecimalFormat("#0.000");
@@ -36,5 +43,4 @@ public class Genetics {
 					path.get(i + 1).getLon());
 		}
 	}
-
 }

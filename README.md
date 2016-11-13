@@ -1,4 +1,11 @@
 Java
 ====
 
-Various Java projects, including algorithms and data structures such as Linked lists, binary search trees, graphs, recursive functions and the like.
+Various Java projects, including 
+* AI projects
+* algorithms
+ * recursive functions
+* data structures 
+ * linked lists
+ * binary search trees
+ * graphs

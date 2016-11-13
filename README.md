@@ -1,7 +1,7 @@
 Java
 ====
 
-Various Java projects, including 
+Various Java projects, including: 
 * AI projects
  * genetic algorithms
 * algorithms

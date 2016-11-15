@@ -1,12 +1,16 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+/**
+ * Class that executes the the Bayesian classifier's algorithm, including training and result generation.
+ * 
+ * @author cadebe Created: November 2016
+ *
+ */
+
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Bayes {
@@ -25,19 +29,16 @@ public class Bayes {
 	private String[] tokensCatX;
 
 	private DecimalFormat df = new DecimalFormat("0.###");
-	FileHandler fileHandler;
 
-	public Bayes(FileHandler fileHandler, String pathX) {
+	public Bayes(FileHandlerOutput output) {
 
-		fileHandler = new FileHandler(pathX);
+		tokensCatA = new String[output.getTokensCatA().length];
+		tokensCatB = new String[output.getTokensCatB().length];
+		tokensCatX = new String[output.getTokensCatX().length];
 
-		tokensCatA = new String[fileHandler.getTokensCatA().length];
-		tokensCatB = new String[fileHandler.getTokensCatB().length];
-		tokensCatX = new String[fileHandler.getTokensCatX().length];
-
-		copyArray(tokensCatA, fileHandler.getTokensCatA());
-		copyArray(tokensCatB, fileHandler.getTokensCatB());
-		copyArray(tokensCatX, fileHandler.getTokensCatX());
+		copyArray(tokensCatA, output.getTokensCatA());
+		copyArray(tokensCatB, output.getTokensCatB());
+		copyArray(tokensCatX, output.getTokensCatX());
 	}
 
 	private void copyArray(String[] self, String[] other) {
@@ -46,21 +47,28 @@ public class Bayes {
 		}
 	}
 
+	/**
+	 * Method that trains the classifier.
+	 */
 	public void train() {
 		countWords();
 		calculateProbabilities();
 	}
 
+	/**
+	 * Method that lists the words used in both of the training sets and their
+	 * respective occurrences within the dictionary HashMap.
+	 */
 	private void countWords() {
 
 		trainingText.put(tokensCatA, 'A');
 		trainingText.put(tokensCatB, 'B');
 
-		Iterator trainingIter = trainingText.entrySet().iterator();
+		Iterator<Entry<String[], Character>> trainingIter = trainingText.entrySet().iterator();
 
 		while (trainingIter.hasNext()) {
 
-			Map.Entry pair = (Map.Entry) trainingIter.next();
+			Entry<String[], Character> pair = trainingIter.next();
 			// System.out.println(pair.getKey() + " = " + pair.getValue());
 
 			String[] tokens = (String[]) pair.getKey();
@@ -83,7 +91,7 @@ public class Bayes {
 						dictionary.put(tokens[i], arrayB);
 					}
 				} else {
-					int[] valueArray = (int[]) dictionary.get(tokens[i]);
+					int[] valueArray = dictionary.get(tokens[i]);
 					if (category == 'A') {
 						int valA = ++valueArray[0];
 						int valB = valueArray[1];
@@ -105,10 +113,14 @@ public class Bayes {
 		// System.out.println("docCountB = " + docCountB);
 	}
 
+	/**
+	 * Method that calculates the frequency values for each of the words listed
+	 * in the dictionary by applying Bayes' Theorem.
+	 */
 	private void calculateProbabilities() {
-		Iterator dictionaryIter = dictionary.entrySet().iterator();
+		Iterator<Entry<String, int[]>> dictionaryIter = dictionary.entrySet().iterator();
 		while (dictionaryIter.hasNext()) {
-			Map.Entry pair = (Map.Entry) dictionaryIter.next();
+			Entry<String, int[]> pair = dictionaryIter.next();
 
 			String key = (String) pair.getKey();
 			int[] countArray = (int[]) pair.getValue();
@@ -137,6 +149,10 @@ public class Bayes {
 		return result.size();
 	}
 
+	/**
+	 * Method that cumulatively computes the probability values of the input
+	 * text being of either category A or category B.
+	 */
 	public void combineProbablities() {
 		// Combined probabilities
 		// http://www.paulgraham.com/naivebayes.html
@@ -145,9 +161,9 @@ public class Bayes {
 
 		// Multiply probabilities together
 		if (tokensCatX.length == 1) {
-			Iterator resultIter = result.entrySet().iterator();
+			Iterator<Entry<String, double[]>> resultIter = result.entrySet().iterator();
 			while (resultIter.hasNext()) {
-				Map.Entry pair = (Map.Entry) resultIter.next();
+				Entry<String, double[]> pair = resultIter.next();
 
 				String resultKey = (String) pair.getKey();
 				double[] resultValue = (double[]) pair.getValue();
@@ -175,10 +191,9 @@ public class Bayes {
 			for (int i = 0; i < tokensCatX.length; ++i) {
 				String newWord = tokensCatX[i];
 
-				Iterator resultIter = result.entrySet().iterator();
+				Iterator<Entry<String, double[]>> resultIter = result.entrySet().iterator();
 				while (resultIter.hasNext()) {
-					Map.Entry pair = (Map.Entry) resultIter.next();
-
+					Entry<String, double[]> pair = resultIter.next();
 					String resultKey = (String) pair.getKey();
 					double[] resultValue = (double[]) pair.getValue();
 
@@ -200,7 +215,10 @@ public class Bayes {
 		resB = (double) productB / (double) (productB + productA);
 	}
 
-	public void displayResult() {
+	/**
+	 * Method that displays the classification result.
+	 */
+	public void displayClassificationResult() {
 		System.out.println();
 		System.out.println("--------------------------------");
 		if (resA > resB) {
@@ -216,8 +234,8 @@ public class Bayes {
 	}
 
 	/**
-	 * Sorts the HashMap alphabetically, loops through the value array and
-	 * outputs the key and array for each entry.
+	 * Method that sorts the HashMap alphabetically, loops through the value
+	 * array and outputs the key and array for each entry.
 	 */
 	public void printDictionaryHashMap() {
 		Map<String, int[]> map = new TreeMap<String, int[]>(dictionary);
@@ -234,8 +252,8 @@ public class Bayes {
 	}
 
 	/**
-	 * Sorts the HashMap alphabetically, loops through the value array and
-	 * outputs the key and array for each entry.
+	 * Method that sorts the HashMap alphabetically, loops through the value
+	 * array and outputs the key and array for each entry.
 	 */
 	public void printResultHashMap() {
 		Map<String, double[]> map = new TreeMap<String, double[]>(result);
@@ -251,8 +269,12 @@ public class Bayes {
 		}
 	}
 
+	/**
+	 * Method that prints probability results of the input text being of either
+	 * category A or category B.
+	 */
 	public void printResultValues() {
-		System.out.println("resA: " + resA);
-		System.out.println("resB: " + resB);
+		System.out.println("p(A): " + resA);
+		System.out.println("p(B): " + resB);
 	}
 }

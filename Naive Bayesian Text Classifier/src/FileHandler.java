@@ -27,6 +27,10 @@ public class FileHandler {
 
 	public FileHandler(FileHandlerInput input) {
 
+		textA = "";
+		textB = "";
+		textX = "";
+
 		final File folderA = new File(input.getPathA());
 		listFilesForFolder(folderA, tokensCatA, input.getCategoryA(), input.getCharA());
 
@@ -40,7 +44,7 @@ public class FileHandler {
 		// System.out.println(tokensCatA[0]);
 		// System.out.println(tokensCatA.length);
 		// System.out.println(tokensCatB.length);
-		// System.out.println(tokensCatX.length);
+		// System.out.println(tokensCatX.length);]
 	}
 
 	/**
@@ -89,6 +93,7 @@ public class FileHandler {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				textA += line;
+				textA += " ";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -110,6 +115,7 @@ public class FileHandler {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				textB += line;
+				textB += " ";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -99,8 +99,7 @@ public class Main {
 		Bayes bayes = new Bayes(output);
 		bayes.train();
 		// bayes.printDictionaryHashMap();
-		// System.out.println("----- dictionary HashMap size: " +
-		// bayes.getDictionarySize());
+		System.out.println("----- dictionary HashMap size: " + bayes.getDictionarySize());
 		// bayes.printResultHashMap();
 		// System.out.println("----- result HashMap size: " +
 		// bayes.getResultSize());

@@ -198,10 +198,10 @@ public class Bayes {
 					double[] resultValue = (double[]) pair.getValue();
 
 					if (resultKey.equals(newWord)) {
-						if (resultValue[0] > 0.0) {
+						if (resultValue[0] != 0.0) {
 							productA *= resultValue[0];
 						}
-						if (resultValue[1] > 0.0) {
+						if (resultValue[1] != 0.0) {
 							productB *= resultValue[1];
 						}
 						// resultIter.remove();

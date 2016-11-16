@@ -28,6 +28,8 @@ public class Bayes {
 	private String[] tokensCatB;
 	private String[] tokensCatX;
 
+	private char resultCategory;
+
 	private DecimalFormat df = new DecimalFormat("0.###");
 
 	public Bayes(FileHandlerOutput output) {
@@ -220,17 +222,16 @@ public class Bayes {
 	 */
 	public void displayClassificationResult() {
 		System.out.println();
-		System.out.println("--------------------------------");
 		if (resA > resB) {
+			resultCategory = 'A';
 			System.out.println(
 					"Classification result: BUSINESS \nCertainty probablility: " + df.format(resA * 100) + "%");
 		} else if (resA < resB) {
+			resultCategory = 'B';
 			System.out.println("Classification result: SPORT \nCertainty probablility: " + df.format(resB * 100) + "%");
 		} else if (resA == resB) {
 			System.out.println("RESULT: There is an equal probability of the input text being of either category");
 		}
-		System.out.println("--------------------------------");
-		System.out.println("--------------------------------");
 	}
 
 	/**
@@ -276,5 +277,9 @@ public class Bayes {
 	public void printResultValues() {
 		System.out.println("p(A): " + resA);
 		System.out.println("p(B): " + resB);
+	}
+
+	public char getResultCategory() {
+		return resultCategory;
 	}
 }

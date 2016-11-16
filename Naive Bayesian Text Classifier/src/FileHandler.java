@@ -171,10 +171,8 @@ public class FileHandler {
 		for (int i = 0; i < array.length; ++i) {
 			array[i] = array[i].toLowerCase();
 		}
-
 		// for (int i = 0; i < array.length; ++i) {
 		// System.out.println(array[i]);
 		// }
 	}
-
 }

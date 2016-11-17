@@ -1,6 +1,8 @@
 
 /**
  * Client class executing the Naive Bayesian Classifier.
+ * The text files for the training an classification were taken from New York Times 
+ * archive articles (November 2016), relating to one of two categories: BUSINESS or SPORT.
  * 
  * @author cadebe Created: November 2016
  *

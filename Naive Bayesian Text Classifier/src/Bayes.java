@@ -186,6 +186,41 @@ public class Bayes {
 				}
 			}
 		} else if (tokensCatX.length > 1) {
+
+			boolean A = false;
+			boolean B = false;
+
+			double totalA = 0.0;
+			double totalB = 0.0;
+			for (int i = 0, l = tokensCatX.length; i < l; ++i) {
+				String newWord = tokensCatX[i];
+
+				Iterator<Entry<String, double[]>> resultIter = result.entrySet().iterator();
+				while (resultIter.hasNext()) {
+					Entry<String, double[]> pair = resultIter.next();
+					String resultKey = (String) pair.getKey();
+					double[] resultValue = (double[]) pair.getValue();
+
+					if (resultKey.equals(newWord)) {
+						totalA += resultValue[0];
+						totalB += resultValue[1];
+					}
+				}
+			}
+
+			// Make provision for all words being of the same category,
+			// or most of the words being of one, and fewer of the other,
+			// otherwise we are multiplying both sides by zero.
+			if (totalA > 0 && totalB == 0.0) {
+				A = true;
+			} else if (totalB > 0 && totalA == 0.0) {
+				B = true;
+			} else if (totalA > 0 && totalB > 0 && totalA > totalB) {
+				A = true;
+			} else if (totalA > 0 && totalB > 0 && totalB > totalA) {
+				B = true;
+			}
+
 			for (int i = 0; i < tokensCatX.length; ++i) {
 				String newWord = tokensCatX[i];
 
@@ -196,22 +231,36 @@ public class Bayes {
 					double[] resultValue = (double[]) pair.getValue();
 
 					if (resultKey.equals(newWord)) {
-						if (resultValue[0] > 0.0) {
-							productA *= resultValue[0];
+
+						if (A && !B) {
+							if (resultValue[0] > 0) {
+								productA *= resultValue[0];
+							}
+							productB = 0;
+						} else if (!A && B) {
+							if (resultValue[1] > 0) {
+								productB *= resultValue[1];
+							}
+							productA = 0;
+						} else if ((!A && !B) || (A && B)) {
+							if (resultValue[0] > 0) {
+								productA *= resultValue[0];
+							}
+							if (resultValue[1] > 0) {
+								productB *= resultValue[1];
+							}
 						}
-						if (resultValue[1] > 0.0) {
-							productB *= resultValue[1];
-						}
-						// resultIter.remove();
 					}
 				}
 			}
 		}
-		System.out.println("tokensCatX.length = " + tokensCatX.length);
+
+		// System.out.println("tokensCatX.length = " + tokensCatX.length);
 
 		// Apply formula
 		resA = (double) productA / (double) (productA + productB);
 		resB = (double) productB / (double) (productB + productA);
+
 	}
 
 	/**

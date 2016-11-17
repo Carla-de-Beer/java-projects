@@ -28,8 +28,7 @@ public class Bayes {
 	private String[] tokensCatB;
 	private String[] tokensCatX;
 
-	private char resultCategory;
-
+	private char resultCategory = ' ';
 	private DecimalFormat df = new DecimalFormat("0.###");
 
 	public Bayes(FileHandlerOutput output) {
@@ -127,11 +126,11 @@ public class Bayes {
 			String key = (String) pair.getKey();
 			int[] countArray = (int[]) pair.getValue();
 
-			double freqA = ((double) countArray[0]) / docCountA; // countA
-			double freqB = ((double) countArray[1]) / docCountB; // countB
+			double freqA = ((double) countArray[0]) / docCountA;
+			double freqB = ((double) countArray[1]) / docCountB;
 
 			// Probability via Bayes rule
-			if (freqA + freqB != 0) {
+			if (freqA + freqB > 0.0) {
 				double probA = freqA / (freqA + freqB);
 				double probB = 1 - probA;
 				double[] resultArray = { probA, probB };
@@ -166,25 +165,22 @@ public class Bayes {
 			Iterator<Entry<String, double[]>> resultIter = result.entrySet().iterator();
 			while (resultIter.hasNext()) {
 				Entry<String, double[]> pair = resultIter.next();
-
 				String resultKey = (String) pair.getKey();
 				double[] resultValue = (double[]) pair.getValue();
 
-				for (int i = 0; i < resultValue.length; ++i) {
-					if (resultKey.equals(tokensCatX[0])) {
-						if (resultValue[0] == 1 && resultValue[1] < 0.00000001) {
-							productA = 1;
-							productB = 0;
-						} else if (resultValue[1] == 1 && resultValue[0] < 0.00000001) {
-							productA = 0;
-							productB = 1;
-						} else {
-							if (resultValue[0] > 0.0) {
-								productA *= resultValue[0];
-							}
-							if (resultValue[1] > 0.0) {
-								productB *= resultValue[1];
-							}
+				if (resultKey.equals(tokensCatX[0])) {
+					if (resultValue[0] == 1.0 && resultValue[1] == 0.0) {
+						productA = 1.0;
+						productB = 0.0;
+					} else if (resultValue[0] == 0.0 && resultValue[1] == 1) {
+						productA = 0.0;
+						productB = 1.0;
+					} else {
+						if (resultValue[0] > 0.0) {
+							productA *= resultValue[0];
+						}
+						if (resultValue[1] > 0.0) {
+							productB *= resultValue[1];
 						}
 					}
 				}
@@ -200,10 +196,10 @@ public class Bayes {
 					double[] resultValue = (double[]) pair.getValue();
 
 					if (resultKey.equals(newWord)) {
-						if (resultValue[0] != 0.0) {
+						if (resultValue[0] > 0.0) {
 							productA *= resultValue[0];
 						}
-						if (resultValue[1] != 0.0) {
+						if (resultValue[1] > 0.0) {
 							productB *= resultValue[1];
 						}
 						// resultIter.remove();
@@ -211,6 +207,7 @@ public class Bayes {
 				}
 			}
 		}
+		System.out.println("tokensCatX.length = " + tokensCatX.length);
 
 		// Apply formula
 		resA = (double) productA / (double) (productA + productB);

@@ -144,7 +144,8 @@ public class Main {
 		System.out.println();
 		System.out.println("CLASSIFICATION ACCURACY:");
 		System.out.println(length + " runs");
-		System.out.println(average + "%");
+		System.out.println(average + "% correct");
+		System.out.println();
 		System.out.println("-------------------------------------");
 		System.out.println("-------------------------------------");
 	}

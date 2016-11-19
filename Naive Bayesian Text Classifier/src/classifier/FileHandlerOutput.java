@@ -1,3 +1,4 @@
+package classifier;
 
 /**
  * Class that creates an object containing the input parameters for the Bayes

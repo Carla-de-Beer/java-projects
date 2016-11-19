@@ -1,3 +1,4 @@
+package classifier;
 
 /**
  * Class that reads the folders specified via a FileHandlerInput object and provides relevant 
@@ -12,6 +13,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+
+import enums.Text;
 
 public class FileHandler {
 
@@ -71,12 +74,12 @@ public class FileHandler {
 			if (fileEntry.isDirectory()) {
 				listFilesForFolder(fileEntry, tokensCat, folderName, z);
 			} else {
-				if (!fileEntry.getName().equals(".DS_Store")) {
+				if (!fileEntry.getName().equals(Text.DS_STORE.toString())) {
 					if (z == 'A') {
-						readFilesA("./sourceFiles/" + folderName + "/" + fileEntry.getName());
+						readFilesA(Text.DIRECTORY.toString() + folderName + "/" + fileEntry.getName());
 						tokeniseTextA(textA);
 					} else if (z == 'B') {
-						readFilesB("./sourceFiles/" + folderName + "/" + fileEntry.getName());
+						readFilesB(Text.DIRECTORY.toString() + folderName + "/" + fileEntry.getName());
 						tokeniseTextB(textB);
 					}
 				}

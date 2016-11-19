@@ -1,3 +1,4 @@
+package classifier;
 
 /**
  * Client class executing the Naive Bayesian Classifier.
@@ -13,6 +14,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import enums.Path;
+import enums.Text;
+
 public class Main {
 
 	private static String text = "";
@@ -20,18 +24,18 @@ public class Main {
 	private static char[] tokenChars;
 	private static int incorrect = 0;
 
-	private static String folderPathA = "./sourceFiles/Business";
-	private static String folderPathB = "./sourceFiles/Sport";
-	private static String filePathX = "./sourceFiles/CategoryX/X-01.txt";
-	private static String resultFile = "./sourceFiles/Results/results.txt";
+	private static String folderPathA = Path.FOLDERPATH_A.toString();
+	private static String folderPathB = Path.FOLDERPATH_B.toString();
+	private static String folderPathX = Path.FOLDERPATH_X.toString();
+	private static String filePathX = Path.FILEPATH_X.toString();
+	private static String resultFile = Path.RESULT_FILE.toString();
 
-	private static String categoryA = "Business";
-	private static String categoryB = "Sport";
+	private static String categoryA = Text.CAT_A.toString();
+	private static String categoryB = Text.CAT_B.toString();
 
 	private static char A = 'A';
 	private static char B = 'B';
 
-	private static String folderPathX = "./sourceFiles/CategoryX/";
 	private static final File folder = new File(folderPathX);
 
 	public static void main(String[] args) {
@@ -91,11 +95,11 @@ public class Main {
 			if (fileEntry.isDirectory()) {
 				listFilesForFolder(fileEntry, folderPathA, folderPathB, folderPathX, categoryA, categoryB, A, B);
 			} else {
-				if (!fileEntry.getName().equals(".DS_Store")) {
+				if (!fileEntry.getName().equals(Text.DS_STORE.toString())) {
 					// Set the input values
 
 					String filePathX = folderPathX + fileEntry.getName();
-					System.out.println("File path:\n" + filePathX);
+					System.out.println(Text.FILE_PATH + filePathX);
 
 					FileHandlerInput input = new FileHandlerInput();
 					input.setPathA(folderPathA);
@@ -122,16 +126,16 @@ public class Main {
 					bayes.displayClassificationResult();
 					System.out.println();
 					char result = bayes.getResultCategory();
-					System.out.println("Classification: Category " + result);
+					System.out.println(Text.CLASSIFICATION.toString() + result);
 					if (result != tokenChars[count]) {
-						System.out.println("INCORRECT RESULT");
+						System.out.println(Text.INCORRECT);
 						incorrect++;
 					} else {
-						System.out.println("CORRECT RESULT");
+						System.out.println(Text.CORRECT);
 					}
 
 					System.out.println();
-					System.out.println("-------------------------------------");
+					System.out.println(Text.LINES);
 					System.out.println();
 					count++;
 				}
@@ -142,14 +146,14 @@ public class Main {
 	private static void printAverageResult() {
 		double average = 100 - ((double) incorrect / tokenChars.length) * 100;
 		String length = String.valueOf(tokenChars.length);
-		System.out.println("-------------------------------------");
+		System.out.println(Text.LINES);
 		System.out.println();
-		System.out.println("CLASSIFICATION ACCURACY:");
-		System.out.println(length + " runs");
-		System.out.println(average + "% correct");
+		System.out.println(Text.ACCURACY);
+		System.out.println(length + Text.RUNS);
+		System.out.println(average + Text.PERCENTAGE.toString());
 		System.out.println();
-		System.out.println("-------------------------------------");
-		System.out.println("-------------------------------------");
+		System.out.println(Text.LINES);
+		System.out.println(Text.LINES);
 	}
 
 	public static void runSingleBayes(String folderPathA, String folderPathB, String filePathX, String categoryA,
@@ -174,17 +178,17 @@ public class Main {
 		Bayes bayes = new Bayes(output);
 		bayes.train();
 		// bayes.printDictionaryHashMap();
-		System.out.println("Dictionary HashMap size: " + bayes.getDictionarySize());
+		System.out.println(Text.DICTIONARY_SIZE.toString() + bayes.getDictionarySize());
 		// bayes.printResultHashMap();
-		// System.out.println("----- result HashMap size: " +
+		// System.out.println(Text.RESULT_SIZE.toString()+
 		// bayes.getResultSize());
 		bayes.combineProbablities();
 		System.out.println();
 		bayes.printResultValues();
 		bayes.displayClassificationResult();
 		System.out.println();
-		System.out.println("-------------------------------------");
-		System.out.println("-------------------------------------");
+		System.out.println(Text.LINES);
+		System.out.println(Text.LINES);
 	}
 
 }

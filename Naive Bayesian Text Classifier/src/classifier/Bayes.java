@@ -1,3 +1,4 @@
+package classifier;
 
 /**
  * Class that executes the the Bayesian classifier's algorithm, including training and result generation.
@@ -11,6 +12,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import enums.Text;
+
 import java.util.TreeMap;
 
 public class Bayes {
@@ -270,13 +274,12 @@ public class Bayes {
 		System.out.println();
 		if (resA > resB) {
 			resultCategory = 'A';
-			System.out.println(
-					"Classification result: BUSINESS \nCertainty probablility: " + df.format(resA * 100) + "%");
+			System.out.println(Text.RESULT_CAT_A + df.format(resA * 100) + Text.PERCENT);
 		} else if (resA < resB) {
 			resultCategory = 'B';
-			System.out.println("Classification result: SPORT \nCertainty probablility: " + df.format(resB * 100) + "%");
+			System.out.println(Text.RESULT_CAT_B + df.format(resB * 100) + Text.PERCENT);
 		} else if (resA == resB) {
-			System.out.println("RESULT: There is an equal probability of the input text being of either category");
+			System.out.println(Text.RESULT_EITHER);
 		}
 	}
 
@@ -321,8 +324,8 @@ public class Bayes {
 	 * category A or category B.
 	 */
 	public void printResultValues() {
-		System.out.println("p(A): " + resA);
-		System.out.println("p(B): " + resB);
+		System.out.println(Text.PROB_A.toString() + resA);
+		System.out.println(Text.PROB_B.toString() + resB);
 	}
 
 	public char getResultCategory() {

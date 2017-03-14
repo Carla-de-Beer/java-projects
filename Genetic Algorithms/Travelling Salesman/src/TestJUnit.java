@@ -51,20 +51,20 @@ public class TestJUnit {
 		ArrayList<City> path2 = new ArrayList<City>();
 
 		String[] names1 = { "F", "E", "C", "A", "B", "D" };
-		double[] lat1 = { 10.6, 10.5, 10.3, 10.1, 10.2, 10.4 };
-		double[] lon1 = { 20.6, 20.5, 20.3, 20.1, 20.2, 20.4 };
+		double[] lon1 = { 10.6, 10.5, 10.3, 10.1, 10.2, 10.4 };
+		double[] lat1 = { 20.6, 20.5, 20.3, 20.1, 20.2, 20.4 };
 		for (int i = 0; i < names1.length; ++i) {
-			double x1 = lat1[i];
-			double y1 = lon1[i];
+			double x1 = lon1[i];
+			double y1 = lat1[i];
 			path1.add(new City(x1, y1, names1[i]));
 		}
 
 		String[] names2 = { "D", "C", "B", "A", "F", "E" };
-		double[] lat2 = { 10.4, 10.3, 10.2, 10.1, 10.6, 10.5 };
-		double[] lon2 = { 20.4, 20.3, 20.2, 20.1, 20.6, 20.5 };
+		double[] lon2 = { 10.4, 10.3, 10.2, 10.1, 10.6, 10.5 };
+		double[] lat2 = { 20.4, 20.3, 20.2, 20.1, 20.6, 20.5 };
 		for (int i = 0; i < names2.length; ++i) {
-			double x2 = lat2[i];
-			double y2 = lon2[i];
+			double x2 = lon2[i];
+			double y2 = lat2[i];
 			path2.add(new City(x2, y2, names2[i]));
 		}
 
@@ -84,13 +84,13 @@ public class TestJUnit {
 		assertEquals(routeList.get(1).getName(), "E");
 		assertEquals(routeList.get(2).getName(), "C");
 
-		assertEquals(routeList.get(0).getLat(), 10.6, 0.01);
-		assertEquals(routeList.get(1).getLat(), 10.5, 0.01);
-		assertEquals(routeList.get(2).getLat(), 10.3, 0.01);
+		assertEquals(routeList.get(0).getLon(), 10.6, 0.01);
+		assertEquals(routeList.get(1).getLon(), 10.5, 0.01);
+		assertEquals(routeList.get(2).getLon(), 10.3, 0.01);
 
-		assertEquals(routeList.get(0).getLon(), 20.6, 0.01);
-		assertEquals(routeList.get(1).getLon(), 20.5, 0.01);
-		assertEquals(routeList.get(2).getLon(), 20.3, 0.01);
+		assertEquals(routeList.get(0).getLat(), 20.6, 0.01);
+		assertEquals(routeList.get(1).getLat(), 20.5, 0.01);
+		assertEquals(routeList.get(2).getLat(), 20.3, 0.01);
 
 		ArrayList<City> parentA, parentB;
 		ArrayList<City> child = new ArrayList<City>();

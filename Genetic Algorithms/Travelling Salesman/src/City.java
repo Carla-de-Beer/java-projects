@@ -9,12 +9,12 @@
 
 public class City {
 
-	private double lat, lon;
+	private double lon, lat;
 	private String name;
 
-	public City(double lat, double lon, String name) {
-		this.lat = lat;
+	public City(double lon, double lat, String name) {
 		this.lon = lon;
+		this.lat = lat;
 		this.name = name;
 	}
 

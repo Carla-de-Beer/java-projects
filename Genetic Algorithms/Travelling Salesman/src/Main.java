@@ -34,10 +34,10 @@ public class Main {
 		for (Object obj : array) {
 			JSONObject data = (JSONObject) obj;
 			String cityName = (String) data.get("city");
-			double cityLat = (Double) data.get("latitude");
 			double cityLon = (Double) data.get("longitude");
+			double cityLat = (Double) data.get("latitude");
 
-			path.add(new City(cityLat, cityLon, cityName));
+			path.add(new City(cityLon, cityLat, cityName));
 		}
 
 		// Create population list to start off with

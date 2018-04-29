@@ -13,4 +13,5 @@ Uncomment/comment out the relevant method required.
 
 		// ... or classify a single input file
 		runSingleBayes(folderPathA, folderPathB, filePathX, categoryA, categoryB, A, B);
-		```
+```
+		

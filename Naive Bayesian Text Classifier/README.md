@@ -8,10 +8,10 @@ The classifier is executed via Main.java. The main() method allows for the runni
 Uncomment/comment out the relevant method required.
 
 ```Java
-		// Either run the classifier against all of the files inside the given folder ...
-		batchClassification();
+	// Either run the classifier against all of the files inside the given folder ...
+	batchClassification();
 
-		// ... or classify a single input file
-		runSingleBayes(folderPathA, folderPathB, filePathX, categoryA, categoryB, A, B);
+	// ... or classify a single input file
+	runSingleBayes(folderPathA, folderPathB, filePathX, categoryA, categoryB, A, B);
 ```
 		

@@ -3,7 +3,9 @@
 This folder contains the following programs:
 
 * [Binary Search Tree:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Binary%20Search%20Tree) Binary Search Tree implementation that inserts and deletes nodes
-* [Circular and Self-Organising Linked Lists:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Circular%20and%20Self-Organising%20Linked%20Lists) Circular linked list and self-organising linked list
+* [Linked Lists:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Linked%20Lists) Various linked list examples
+  * [Circular and Self-Organising Linked Lists](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Linked%20Lists/Circular%20and%20Self-Organising%20Linked%20Lists)
+  * [Single Linked List](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Linked%20Lists/Single%20Linked%20List)
 * [Graph Builder:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Graph%20Builder%20-%20Dijkstra%2C%20cycle%20detection%2C%20strongly%20connected%20search) Graphs: Dijkstra's shortest path algorithm, cycle detection, strongly connected search
 * [Leftist Binary Tree:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Leftist%20Binary%20Tree) Leftist Binary Tree
 * [Lexicographic Order:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/LexicographicOrder) Program that generates the lexicographic ordering for a given character array

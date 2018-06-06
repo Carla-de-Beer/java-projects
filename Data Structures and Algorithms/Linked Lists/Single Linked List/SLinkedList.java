@@ -113,10 +113,34 @@ public class SLinkedList<T extends Comparable<T>> {
 	}
 
 	public void deleteNode(T info) {
+		if (isEmpty()) {
+			return;
+		}
+
+		Node<T> curr = head;
+		Node<T> prev = null;
+
+		// If head node contains the data to be removed
+		if (curr != null && info.compareTo(curr.info) == 0) {
+			head = curr.next;
+			count--;
+			return;
+		}
+
+		// Else continue to traverse the list
+		while (curr != null && info.compareTo(curr.info) != 0) {
+			prev = curr;
+			curr = curr.next;
+		}
+
+		if (curr == null)
+			return;
+
+		prev.next = curr.next;
+
 	}
 
 	public void copyList(T other) {
 
 	}
-
 }

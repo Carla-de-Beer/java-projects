@@ -7,10 +7,10 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		CircularDLList<Integer> list1 = new CircularDLList<Integer>();
-		CircularDLList<Integer> emptyList = new CircularDLList<Integer>();
-		SOCircularDLList<Integer> so = new SOCircularDLList<Integer>();
-		SOCircularDLList<Integer> emptySOList = new SOCircularDLList<Integer>();
+		CircularLList<Integer> list1 = new CircularLList<Integer>();
+		CircularLList<Integer> emptyList = new CircularLList<Integer>();
+		SOCircularLList<Integer> so = new SOCircularLList<Integer>();
+		SOCircularLList<Integer> emptySOList = new SOCircularLList<Integer>();
 
 		list1.addToHead(5);
 		list1.addToHead(3);
@@ -115,4 +115,3 @@ public class Main {
 
 	}
 }
-

@@ -2,6 +2,7 @@
 
 This folder contains the following programs:
 
+* [Binary Search:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Binary%20Search) Recursive binary search
 * [Binary Search Tree:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Binary%20Search%20Tree) Binary search tree implementation that inserts and deletes nodes
 * [Linked Lists:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Linked%20Lists) Various linked list examples
   * [Circular and Self-Organising Linked Lists:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Linked%20Lists/Circular%20and%20Self-Organising%20Linked%20Lists) Circular and self-organising linked lists

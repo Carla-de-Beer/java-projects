@@ -1,4 +1,10 @@
-// Runtime complexity is O(log n)
+// Carla de Beer
+// Date created: 09/06/2018
+
+/**
+ * Recursive binary search implementation.
+ * Runtime complexity is O(log n)
+ */
 
 public class BinarySearch<T extends Comparable<T>> {
 

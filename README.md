@@ -1,6 +1,5 @@
 # Java
-
-[![GitHub issues](https://img.shields.io/github/issues/Carla-de-Beer/Java.svg?style=flat-square)](https://github.com/Carla-de-Beer/Processing/issues)
+[![GitHub issues](https://img.shields.io/github/issues/Carla-de-Beer/Java.svg?style=flat-square)](https://github.com/Carla-de-Beer/Java/issues)
 
 This repository contains a number of Java projects.
 

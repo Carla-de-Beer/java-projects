@@ -115,12 +115,12 @@ public class SLinkedList<T extends Comparable<T>> {
 	}
 
 	public void destroyList() {
-		Node<T> current = head;
-		Node<T> next = null;
 		if (!isEmpty()) {
+			Node<T> current = head;
+			Node<T> next = null;
 			while (current != null) {
 				next = current.next;
-				current = next;
+				current = current.next;
 				head = next;
 				count--;
 			}

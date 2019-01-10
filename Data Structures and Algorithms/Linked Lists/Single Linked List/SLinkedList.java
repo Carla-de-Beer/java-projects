@@ -1,6 +1,6 @@
-//Carla de Beer
-//Single Linked list
-//Date created: 06/06/2018
+// Carla de Beer
+// Singly-linked linked list
+// Date created: 06/06/2018
 
 public class SLinkedList<T extends Comparable<T>> {
 
@@ -17,8 +17,37 @@ public class SLinkedList<T extends Comparable<T>> {
 		this.count = 0;
 	}
 
-	public Boolean isEmpty() {
+	public boolean isEmpty() {
 		return (head == null);
+	}
+
+	public int length() {
+		return count;
+	}
+
+	public boolean addToHead(T info) {
+		Node<T> temp = new Node<T>();
+		temp.info = info;
+
+		if (isEmpty()) {
+			head = temp;
+			head.next = null;
+			count++;
+			return true;
+		} else {
+			temp.next = head;
+			head = temp;
+			count++;
+			return true;
+		}
+	}
+
+	public Node<T> head() {
+		return head;
+	}
+
+	public Node<T> tail() {
+		return null;
 	}
 
 	public String printList() {
@@ -41,17 +70,57 @@ public class SLinkedList<T extends Comparable<T>> {
 		return node.info.toString();
 	}
 
-	public int length() {
-		return count;
+	public boolean search(T info) {
+		if (!isEmpty()) {
+			Node<T> current = head;
+			while (current != null) {
+				if (current.info == info) {
+					return true;
+				} else {
+					current = current.next;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean deleteNode(T info) {
+		if (isEmpty()) {
+			return false;
+		}
+
+		// If head node contains the data to be removed
+		if (info.compareTo(head.info) == 0) {
+			head = head.next;
+			count--;
+			return true;
+		}
+
+		Node<T> current = head;
+		Node<T> previous = null;
+
+		// Else continue to traverse the list
+		while (current != null && info.compareTo(current.info) != 0) {
+			previous = current;
+			current = current.next;
+		}
+
+		if (current == null) {
+			return false;
+		}
+
+		previous.next = current.next;
+		count--;
+		return true;
 	}
 
 	public void destroyList() {
-		Node<T> curr = head;
+		Node<T> current = head;
 		Node<T> next = null;
 		if (!isEmpty()) {
-			while (curr != null) {
-				next = curr.next;
-				curr = next;
+			while (current != null) {
+				next = current.next;
+				current = next;
 				head = next;
 				count--;
 			}
@@ -59,85 +128,20 @@ public class SLinkedList<T extends Comparable<T>> {
 		}
 	}
 
-	public void addToHead(T info) {
-		Node<T> temp = new Node<T>();
-		temp.info = info;
-
-		if (isEmpty()) {
-			head = temp;
-			head.next = null;
-		} else {
-			temp.next = head;
-			head = temp;
-		}
-		count++;
-	}
-
 	public void reverseList() {
-		Node<T> prev = null;
-		Node<T> next = null;
-		Node<T> curr = head;
-		while (curr != null) {
-			next = curr.next;
-			curr.next = prev;
-			prev = curr;
-			curr = next;
-		}
-
-		head = prev;
-	}
-
-	public Node<T> front() {
-		return head;
-	}
-
-	public Node<T> back() {
-		return null;
-	}
-
-	public Boolean search(T info) {
-		Boolean found = false;
-		if (!isEmpty()) {
-			Node<T> curr = head;
+		if (!isEmpty() && count > 1) {
+			Node<T> current = head;
+			Node<T> previous = null;
 			Node<T> next = null;
-			while (curr != null) {
-				if (curr.info == info) {
-					return true;
-				} else {
-					next = curr.next;
-					curr = next;
-				}
+			while (current != null) {
+				next = current.next;
+				current.next = previous;
+				previous = current;
+				current = next;
 			}
+
+			head = previous;
 		}
-		return found;
-	}
-
-	public void deleteNode(T info) {
-		if (isEmpty()) {
-			return;
-		}
-
-		Node<T> curr = head;
-		Node<T> prev = null;
-
-		// If head node contains the data to be removed
-		if (curr != null && info.compareTo(curr.info) == 0) {
-			head = curr.next;
-			count--;
-			return;
-		}
-
-		// Else continue to traverse the list
-		while (curr != null && info.compareTo(curr.info) != 0) {
-			prev = curr;
-			curr = curr.next;
-		}
-
-		if (curr == null)
-			return;
-
-		prev.next = curr.next;
-
 	}
 
 	public void copyList(T other) {

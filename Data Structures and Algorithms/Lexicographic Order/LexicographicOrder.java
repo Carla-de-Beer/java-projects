@@ -1,7 +1,7 @@
 // Carla de Beer
-// August 2016
 // Program that generates the lexicographic ordering for a given character array
 // Based on: https://www.quora.com/How-would-you-explain-an-algorithm-that-generates-permutations-using-lexicographic-ordering
+// Created: August 2016
 
 public class LexicographicOrder {
 
@@ -51,10 +51,8 @@ public class LexicographicOrder {
 	}
 
 	public static void main(String[] args) {
-
 		char[] order = { 'A', 'B', 'C', 'D', 'E' };
 		int count = 0;
-
 		int total = factorial(order.length);
 
 		System.out.println("There are " + total + " permutations for this input sequence:");
@@ -90,7 +88,6 @@ public class LexicographicOrder {
 			order = neworder;
 			printCount(count);
 			printOutput(order);
-
 		}
 	}
 }

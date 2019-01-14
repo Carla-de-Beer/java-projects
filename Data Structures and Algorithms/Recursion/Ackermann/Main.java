@@ -1,11 +1,10 @@
 // Carla de Beer
-// Akckermann function and Knapsack algorithm
+// Ackermann function
 // Date created: 17/02/2014
 
 public class Main {
 
 	public static void main(String[] args) {
-
 		System.out.println("Ackermann function:");
 
 		Ackermann w = new Ackermann();
@@ -22,14 +21,5 @@ public class Main {
 
 		// ack = w.ackermann(4, 5); // stackoverflow occurs here
 		// System.out.println(ack);
-
-		System.out.println();
-		System.out.println("Knapsack algorithm: ");
-
-		Knapsack k = new Knapsack();
-		double answer;
-
-		answer = k.start();
-		System.out.println(answer);
 	}
 }

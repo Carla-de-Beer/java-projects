@@ -1,7 +1,7 @@
 // Carla de Beer
 // The Knapsack Problem is a well known problem of combinatorial optimisation. 
-// This code provides a naive recursive implementation to the Knapsack Problem.
-// Time complexity for this algorithm is O(n^2)
+// This code provides a naive recursive implementation to this problem.
+// Time complexity for this algorithm is O(n^2).
 // Date created: 17/02/2014; revised: January 2019
 
 public class Knapsack {

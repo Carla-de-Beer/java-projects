@@ -20,6 +20,7 @@ The following is a list of the projects included in this repository:
   * [Ackermann + Knapsack algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion%20-%20Ackermann%20%2B%20Knapsack%20algorithms) Ackermann function and Knapsack recursive algorithms.
   * [Recursive Bubble Sorter:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursive%20Bubble%20Sorter) Recursively implemented bubble sorter.
   * [Simple Graph Builder:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Simple%20graph%20Builder) Simple graph builder.
+    * [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Simple%20Sorting%20Algorithms) Simple sorting algorithms.
   * [Sparse Matrix:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sparse%20Matrix) Sparse matrix as calendar.
 * [Genetic Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms) Genetic algorithms.
   * [Renko Stock Trader:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms/Renko%20Stock%20Trader) Genetic Algorithm, and hill climber optimiser, to determine the best stock market trader based on historic Renko chart trading data from a set of four companies.

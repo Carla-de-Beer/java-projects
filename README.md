@@ -29,6 +29,7 @@ The following is a list of the projects included in this repository:
   	* [List in terms of a Queue in terms of a Stack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Stacks%20and%20Queues/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) List class implemented in terms of a queue implemented in terms of a stack.
 * [Design Patterns:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/) A subset of commonly used Design Patterns.
   * [Singleton:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/Singleton) The Singleton pattern.
+  * [Strategy Pattern:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/Strategy%20Pattern) The Strategy pattern.
 * [Genetic Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms) Genetic algorithms.
   * [Renko Stock Trader:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms/Renko%20Stock%20Trader) Genetic Algorithm, and hill climber optimiser, to determine the best stock market trader based on historic Renko chart trading data from a set of four companies.
   * [Travelling Salesman:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms/Travelling%20Salesman) Travelling salesman.

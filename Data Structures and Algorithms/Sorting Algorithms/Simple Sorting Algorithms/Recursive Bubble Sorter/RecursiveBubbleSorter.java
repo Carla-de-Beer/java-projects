@@ -1,8 +1,8 @@
-import java.util.Arrays;
-
 // Carla de Beer
-// Recursively implemented Bubble Sorter
+// Recursively implemented bubble sorter
 // Date created: 06/05/2014
+
+import java.util.Arrays;
 
 public class RecursiveBubbleSorter<T extends Comparable<? super T>> {
 
@@ -13,7 +13,7 @@ public class RecursiveBubbleSorter<T extends Comparable<? super T>> {
 
 		if (l.length > 0) {
 
-			for (int j = l.length - 1; j > 0; j--) {
+			for (int j = l.length - 1; j > 0; --j) {
 
 				if (l[j].compareTo(l[j - 1]) < 0) {
 					T currentNumber = l[j];
@@ -36,7 +36,6 @@ public class RecursiveBubbleSorter<T extends Comparable<? super T>> {
 	static int i = 0;
 
 	protected static int increment() {
-
 		return i++;
 	}
 
@@ -44,7 +43,7 @@ public class RecursiveBubbleSorter<T extends Comparable<? super T>> {
 
 	void collectOutput(T[] l) {
 		output += "[";
-		for (int i = 0; i < l.length; i++) {
+		for (int i = 0; i < l.length; ++i) {
 			output += l[i].toString() + ",";
 		}
 

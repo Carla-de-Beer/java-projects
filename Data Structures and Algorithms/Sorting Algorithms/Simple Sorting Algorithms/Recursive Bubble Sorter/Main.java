@@ -22,28 +22,12 @@ public class Main {
 		intSorter.clearOutput();
 		System.out.println();
 
-		for (int i = 0; i < array.length; ++i)
+		for (int i = 0; i < array.length; ++i) {
 			System.out.print(array[i] + " ");
-
-		// intSorter.sort(reverse);
-		// System.out.println(intSorter.getOutput());
-		// intSorter.clearOutput();
-		// System.out.println();
-		//
-		// intSorter.sort(single);
-		// System.out.println(intSorter.getOutput());
-		// intSorter.clearOutput();
-		// System.out.println();
-		//
-		// intSorter.sort(empty);
-		// System.out.println(intSorter.getOutput());
-		// intSorter.clearOutput();
-		// System.out.println();
+		}
 
 		System.out.println();
-
 		intSorter.sort(same);
-
 		System.out.println();
 
 		charSorter.sort(chars);

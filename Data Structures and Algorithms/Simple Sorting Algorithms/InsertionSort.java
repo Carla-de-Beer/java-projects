@@ -18,14 +18,14 @@ public class InsertionSort {
 	}
 
 	public static void main(String[] args) {
-		int[] array = { 5, 4, 3, 2, 1 };
-		System.out.println("Array Before Insertion Sort");
+		int[] array = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+		System.out.println("Array before insertion sort");
 		printArray(array);
 
 		insertionSort(array);
 
 		System.out.println();
-		System.out.println("Array After Insertion Sort");
+		System.out.println("Array after insertion sort");
 		printArray(array);
 	}
 

@@ -19,15 +19,15 @@ public class BubbleSort {
 	}
 
 	public static void main(String[] args) {
-		int[] array = { 5, 4, 3, 2, 1 };
+		int[] array = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
 
-		System.out.println("Array Before Bubble Sort");
+		System.out.println("Array before bubble sort");
 		printArray(array);
 		System.out.println();
 
 		bubbleSort(array);
 
-		System.out.println("Array After Bubble Sort");
+		System.out.println("Array after bubble sort");
 		printArray(array);
 	}
 

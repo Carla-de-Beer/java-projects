@@ -19,14 +19,14 @@ public class SelectionSort {
 	}
 
 	public static void main(String[] args) {
-		int[] array = { 5, 4, 3, 2, 1 };
-		System.out.println("Array Before Selection Sort");
+		int[] array = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+		System.out.println("Array before selection sort:");
 		printArray(array);
 
 		selectionSort(array);
 
 		System.out.println();
-		System.out.println("Array After Selection Sort");
+		System.out.println("Array after selection sort:");
 		printArray(array);
 	}
 
@@ -36,4 +36,5 @@ public class SelectionSort {
 		}
 		System.out.println();
 	}
+
 }

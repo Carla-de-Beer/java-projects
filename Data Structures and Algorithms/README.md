@@ -13,5 +13,6 @@ This folder contains the following programs:
 * [List in terms of a Queue in terms of a Stack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) List class implemented in terms of a queue implemented in terms of a stack
 * [Ackermann + Knapsack algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion%20-%20Ackermann%20%2B%20Knapsack%20algorithms) Ackermann function and Knapsack recursive algorithms
 * [Recursive Bubble Sorter:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursive%20Bubble%20Sorter) Recursively implemented bubble sorter
-* [Simple Graph Builder:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Simple%20graph%20Builder) Simple graph builder
+* [Simple Graph Builder:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Simple%20Graph%20Builder) Simple graph builder
+* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Simple%20Sorting%20Algorithms) Simple sortin algorithms
 * [Sparse Matrix:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sparse%20Matrix) Sparse matrix as calendar

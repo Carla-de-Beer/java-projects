@@ -45,7 +45,7 @@ Input-output processing:
   * [Image to Binary:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing/Image%20to%20Binary) Class that converts an image into a binary file.
   * [JSON Converter:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing/JSON%20Converter) Class that converts data in JSON format to a txt format.
 
-## [Machine learning](https://github.com/Carla-de-Beer/Java/tree/master/Machine%20Learning/Naive%20Bayesian%20Text%20Classifier)
+## [Machine Learning](https://github.com/Carla-de-Beer/Java/tree/master/Machine%20Learning/Naive%20Bayesian%20Text%20Classifier)
   Various machine learning projects:
   * [Naive Bayesian Text Classifier:](https://github.com/Carla-de-Beer/Java/tree/master/Machine%20Learning/Naive%20Bayesian%20Text%20Classifier) Naive Bayesian text classifier.
 

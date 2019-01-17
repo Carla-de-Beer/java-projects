@@ -7,7 +7,8 @@ This repository contains a number of Java projects.
 
 The following is a list of the projects included in this repository:
 
-* [Data Structures and Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms) A subset of common data structures and algorithms.
+## [Data Structures and Algorithms](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms)
+ A subset of common data structures and algorithms:
   * [Binary Search:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Binary%20Search) Recursive binary search.
   * [Binary Search Tree:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Binary%20Search%20Tree) Binary search tree implementation that inserts and deletes nodes.
   * [Graphs:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Graphs) Various graphs.
@@ -27,16 +28,27 @@ The following is a list of the projects included in this repository:
   * [Sparse Matrix:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sparse%20Matrix) Sparse matrix as calendar.
   * [Stacks and Queues:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Stacks%20and%20Queues/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) Stack and queue implementations.
   	* [List in terms of a Queue in terms of a Stack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Stacks%20and%20Queues/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) List class implemented in terms of a queue implemented in terms of a stack.
-* [Design Patterns:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/) A subset of commonly used Design Patterns.
+
+## [Design Patterns](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/)
+A subset of commonly used Design Patterns:
   * [Singleton:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/Singleton) The Singleton pattern.
   * [Strategy Pattern:](https://github.com/Carla-de-Beer/Java/tree/master/Design%20Patterns/Strategy%20Pattern) The Strategy pattern.
-* [Genetic Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms) Genetic algorithms.
+
+## [Genetic Algorithms](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms)
+Genetic algorithms:
   * [Renko Stock Trader:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms/Renko%20Stock%20Trader) Genetic Algorithm, and hill climber optimiser, to determine the best stock market trader based on historic Renko chart trading data from a set of four companies.
   * [Travelling Salesman:](https://github.com/Carla-de-Beer/Java/tree/master/Genetic%20Algorithms/Travelling%20Salesman) Travelling salesman.
-* [Input-Output Processing:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing) Input-output processing.
+
+## [Input-Output Processing](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing)
+Input-output processing:
   * [BufferedImage Test:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing/BufferedImage%20Test) Class that gets the RGB values of an image and calculates the bin classes for each image.
   * [Image to Binary:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing/Image%20to%20Binary) Class that converts an image into a binary file.
   * [JSON Converter:](https://github.com/Carla-de-Beer/Java/tree/master/Input-Output%20Processing/JSON%20Converter) Class that converts data in JSON format to a txt format.
-* [Mathematics:](https://github.com/Carla-de-Beer/Java/tree/master/Mathematics) Various mathematics-inspired programs.
+
+## [Machine learning](https://github.com/Carla-de-Beer/Java/tree/master/Mathematics)
+  Various machine learning projects:
+  * [Naive Bayesian Text Classifier:](https://github.com/Carla-de-Beer/Java/tree/master/Machine%20Learning/Naive%20Bayesian%20Text%20Classifier) Naive Bayesian text classifier.
+
+## [Mathematics](https://github.com/Carla-de-Beer/Java/tree/master/Mathematics)
+Various mathematics-inspired programs:
   * [Kaprekar:](https://github.com/Carla-de-Beer/Java/blob/master/Mathematics/Kaprekar.java) Program to calculate the number of iterations needed in order to find the Kaprekar constant for a 4-digit number with at least three different digits.
-* [Naive Bayesian Text Classifier:](https://github.com/Carla-de-Beer/Java/tree/master/Naive%20Bayesian%20Text%20Classifier) Naive Bayesian text classifier.

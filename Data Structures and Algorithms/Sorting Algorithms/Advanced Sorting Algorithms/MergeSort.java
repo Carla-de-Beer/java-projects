@@ -38,12 +38,13 @@ public class MergeSort {
 		}
 	}
 
-	private static void sort(int[] arr, int begin, int end) {
+	private static void sort(int[] array, int begin, int end) {
 		if (begin < end) {
 			int mid = (begin + end) / 2;
-			sort(arr, begin, mid);
-			sort(arr, mid + 1, end);
-			mergeSort(arr, begin, mid, end);
+			sort(array, begin, mid);
+			sort(array, mid + 1, end);
+			mergeSort(array, begin, mid, end);
+			printArray(array);
 		}
 	}
 
@@ -59,11 +60,27 @@ public class MergeSort {
 		System.out.println("Array before merge sort:");
 		printArray(array);
 
+		System.out.println();
+
 		sort(array, 0, array.length - 1);
 
 		System.out.println();
-		System.out.println("Array after merge sort:");
+		System.out.println("Array sorted:");
 		printArray(array);
+
+		System.out.println();
+
+		int[] array2 = { 6, 5, 3, 1, 8, 7, 2, 4 };
+		System.out.println("Array before merge sort:");
+		printArray(array2);
+
+		System.out.println();
+
+		sort(array2, 0, array2.length - 1);
+
+		System.out.println();
+		System.out.println("Array sorted:");
+		printArray(array2);
 	}
 
 }

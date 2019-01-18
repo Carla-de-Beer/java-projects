@@ -2,44 +2,57 @@
 // Date created: 09/06/2018
 
 /**
- * Recursive binary search implementation using generics. 
- * The runtime complexity for this algorithm is O(log n). 
- * Note, the array must be sorted.
+ * Recursive binary search implementation using generics. The runtime complexity
+ * for this algorithm is O(log n). Note, the array must be sorted.
  */
 
 public class BinarySearch<T extends Comparable<T>> {
 
-	public int binarySearch(T[] arr, T x, int len, int pos) {
-		if (len < pos) {
+	public int binarySearch(T[] arr, T x, int begin, int len) {
+		if (len < begin) {
 			return -1;
 		}
 
-		int mid = pos + (len - pos) / 2;
+		int mid = begin + (len - begin) / 2;
 
+		// If element is present in the middle
 		if (arr[mid].compareTo(x) == 0) {
 			return mid;
 		}
 
 		// If element is present in left sub-array
 		else if (arr[mid].compareTo(x) > 0) {
-			return binarySearch(arr, x, mid - 1, pos);
+			return binarySearch(arr, x, begin, mid - 1);
 		}
 
 		// If element is present in right sub-array
-		return binarySearch(arr, x, len, mid + 1);
+		return binarySearch(arr, x, mid + 1, len);
 	}
 
 	public static void main(String args[]) {
 		System.out.println("Integer search:");
 
 		BinarySearch<Integer> binarySearch = new BinarySearch<Integer>();
-		Integer arr[] = { 2, 3, 4, 10, 40, 55, 70, 85, 90, 100 };
-		int result = binarySearch.binarySearch(arr, 90, arr.length - 1, 0);
+		Integer array[] = { 2, 3, 4, 10, 40, 55, 70, 85, 90, 100 };
+		int n = 90;
+		int result = binarySearch.binarySearch(array, n, 0, array.length - 1);
 
 		if (result == -1) {
-			System.out.println("Value not found");
+			System.out.println("Value " + n + " not found.");
 		} else {
-			System.out.println("Value found at index: " + result);
+			System.out.println("Value " + n + " found at index: " + result + ".");
+		}
+
+		System.out.println();
+		System.out.println("Integer search (value not present):");
+
+		n = 0;
+		int result2 = binarySearch.binarySearch(array, 93, 0, array.length - 1);
+
+		if (result2 == -1) {
+			System.out.println("Value " + n + " not found.");
+		} else {
+			System.out.println("Value " + n + " found at index: " + result2 + ".");
 		}
 
 		System.out.println();
@@ -47,12 +60,25 @@ public class BinarySearch<T extends Comparable<T>> {
 
 		BinarySearch<Double> binarySearchDouble = new BinarySearch<Double>();
 		Double arrDouble[] = { 3.43, 3.54, 5.85, 7.83, 8.55, 8.90, 9.01, 9.32, 9.87, 9.99 };
-		int resultDouble = binarySearchDouble.binarySearch(arrDouble, 8.55, arrDouble.length - 1, 0);
+		double m = 8.55;
+		int result3 = binarySearchDouble.binarySearch(arrDouble, 8.55, 0, arrDouble.length - 1);
 
-		if (resultDouble == -1) {
-			System.out.println("Value not found");
+		if (result3 == -1) {
+			System.out.println("Value " + m + " not found.");
 		} else {
-			System.out.println("Value found at index: " + resultDouble);
+			System.out.println("Value " + m + " found at index: " + result3 + ".");
+		}
+
+		System.out.println();
+		System.out.println("Double search (value not present):");
+
+		m = 8.75;
+		int result4 = binarySearchDouble.binarySearch(arrDouble, 8.75, 0, arrDouble.length - 1);
+
+		if (result4 == -1) {
+			System.out.println("Value " + m + " not found.");
+		} else {
+			System.out.println("Value " + m + " found at index: " + result4 + ".");
 		}
 	}
 }

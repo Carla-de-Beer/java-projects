@@ -10,9 +10,8 @@ This folder contains the following simple sorting algorithms:
 </br>
 
 <img src="Images/BubbleSort.png" width="250px"/>
-<figcaption>Fig.1 - Bubble sort</figcaption>
+<figcaption>Fig.1: Bubble sort</figcaption>
 <img src="Images/InsertionSort.png" width="250px"/>
-<figcaption>Fig.2 - Insertion sort</figcaption>
+<figcaption>Fig.2: Insertion sort</figcaption>
 <img src="Images/SelectionSort.png" width="250px"/>
-<figcaption>Fig.3 - Selection sort</figcaption>
-
+<figcaption>Fig.3: Selection sort</figcaption>

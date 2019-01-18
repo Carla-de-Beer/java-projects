@@ -22,9 +22,14 @@ The following is a list of the projects included in this repository:
   * [Recursion:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion) Recursive algorithms.
   	* [Ackermann:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion/Ackermann) Ackermann algorithm
   	* [Knapsack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion/Knapsack) Knapsack algorithm.
-  * [Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms) Simple sorting algorithms.
-  	* [Advanced Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms) Advanced sorting algorithms with a lower runtime complexity.
-  	* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms) Simple sorting algorithms with a higher runtime complexity.
+    * [Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms) Simple sorting algorithms.
+    	* [Advanced Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms) Advanced sorting algorithms with a lower runtime complexity.
+    		* [Merge Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Advanced%20Algorithms/Simple%20Sorting%20Algorithms/MergeSort.java) Merge sort.
+    		* [Quick Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Advanced%20Algorithms/Simple%20Sorting%20Algorithms/QuickSort.java) Quick sort.
+    	* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms) Simple sorting algorithms with a higher runtime complexity.
+    		* [Bubble Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/BubbleSort.java) Bubble sort (and reverse bubble sort).
+    		* [Insertion Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/InsertionSort.java) Insertion sort (and reverse insertion sort).
+    		* [Selection Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/SelectionSort.java) Selection sort (and reverse selection sort).
   * [Sparse Matrix:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sparse%20Matrix) Sparse matrix as calendar.
   * [Stacks and Queues:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Stacks%20and%20Queues/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) Stack and queue implementations.
   	* [List in terms of a Queue in terms of a Stack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Stacks%20and%20Queues/List%20in%20terms%20of%20a%20Queue%20in%20terms%20of%20a%20Stack) List class implemented in terms of a queue implemented in terms of a stack.

@@ -17,8 +17,8 @@ This folder contains the following programs:
 	* [Knapsack:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Recursion/Knapsack) Knapsack algorithm.
 * [Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms) Simple sorting algorithms.
 	* [Advanced Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms) Advanced sorting algorithms with a lower runtime complexity.
-		* [Merge Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Advanced%20Algorithms/Simple%20Sorting%20Algorithms/MergeSort.java) Merge sort.
-		* [Quick Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Advanced%20Algorithms/Simple%20Sorting%20Algorithms/QuickSort.java) Quick sort.
+		* [Merge Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms/MergeSort.java) Merge sort.
+		* [Quick Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms/QuickSort.java) Quick sort.
 	* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java/tree/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms) Simple sorting algorithms with a higher runtime complexity.
 		* [Bubble Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/BubbleSort.java) Bubble sort (and reverse bubble sort).
 		* [Insertion Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/InsertionSort.java) Insertion sort (and reverse insertion sort).

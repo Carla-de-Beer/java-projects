@@ -62,15 +62,12 @@ public class Puzzle {
 
 	// O(2^n). Since each leaf will take O(1) to compute, this is closer to O(1.6^n)
 	public static int fibonacciRecursive(int n) {
-		int fib = 0;
 		if (n == 0) {
 			return 0;
 		} else if (n == 1) {
 			return 1;
-		} else {
-			fib = fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
 		}
-		return fib;
+		return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
 	}
 
 	// O(n)
@@ -122,7 +119,7 @@ public class Puzzle {
 
 		for (int i = 2; i * i <= n; ++i) {
 			if (primes[i]) {
-				for (int j = i * 2; j <= n; j += i) {
+				for (int j = i * i; j <= n; j += i) {
 					primes[j] = false;
 				}
 			}
@@ -143,7 +140,7 @@ public class Puzzle {
 		for (int i = 2; i <= n; ++i) {
 			while (n % i == 0 && n > 0) {
 				list.add(i);
-				n = n / i;
+				n /= i;
 			}
 		}
 		return list;

@@ -1,5 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -71,7 +72,7 @@ public class Main {
 		System.out.println("---------------------------------------------");
 		n = 55;
 		System.out.println("Find the prime numbers <= " + n + ": ");
-		ArrayList<Integer> primes = Puzzle.sieveOfEratosthenes(n);
+		List<Integer> primes = Puzzle.sieveOfEratosthenes(n);
 		printArrayList(primes);
 
 		System.out.println();
@@ -80,7 +81,7 @@ public class Main {
 		System.out.println("---------------------------------------------");
 		n = 533;
 		System.out.println("Find the prime factors of " + n + ":");
-		ArrayList<Integer> primeFactors = Puzzle.getPrimeFactors(n);
+		List<Integer> primeFactors = Puzzle.getPrimeFactors(n);
 		printArrayList(primeFactors);
 
 		System.out.println();
@@ -88,7 +89,7 @@ public class Main {
 		System.out.println("Count occurrences in an array:");
 		System.out.println("---------------------------------------------");
 		int[] array3 = { 1, 2, 8, 7, 3, 2, 2, 2, 5, 1 };
-		HashMap<Integer, Integer> map = Puzzle.calculateFrequency(array3);
+		Map<Integer, Integer> map = Puzzle.calculateFrequency(array3);
 		printHashMap(map);
 
 		System.out.println();
@@ -153,14 +154,14 @@ public class Main {
 		System.out.println();
 	}
 
-	private static void printArrayList(ArrayList<Integer> list) {
+	private static void printArrayList(List<Integer> list) {
 		for (int i = 0; i < list.size(); ++i) {
 			System.out.print(list.get(i) + " ");
 		}
 		System.out.println();
 	}
 
-	private static void printHashMap(HashMap<Integer, Integer> map) {
+	private static void printHashMap(Map<Integer, Integer> map) {
 		for (HashMap.Entry<Integer, Integer> entry : map.entrySet()) {
 			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}

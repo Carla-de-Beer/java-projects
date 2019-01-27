@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Puzzle {
 
@@ -112,8 +114,8 @@ public class Puzzle {
 	}
 
 	// O(n*log(log(n)))
-	public static ArrayList<Integer> sieveOfEratosthenes(int n) {
-		ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
+	public static List<Integer> sieveOfEratosthenes(int n) {
+		List<Integer> primeNumbers = new ArrayList<Integer>();
 		boolean[] primes = new boolean[n + 1];
 		Arrays.fill(primes, true);
 
@@ -135,8 +137,8 @@ public class Puzzle {
 	}
 
 	// O(n * m)
-	public static ArrayList<Integer> getPrimeFactors(long n) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+	public static List<Integer> getPrimeFactors(long n) {
+		List<Integer> list = new ArrayList<Integer>();
 		for (int i = 2; i <= n; ++i) {
 			while (n % i == 0 && n > 0) {
 				list.add(i);
@@ -147,8 +149,8 @@ public class Puzzle {
 	}
 
 	// O(n * m)
-	public static HashMap<Integer, Integer> calculateFrequency(int[] array) {
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+	public static Map<Integer, Integer> calculateFrequency(int[] array) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		int len = array.length;
 		int count = 0;
 

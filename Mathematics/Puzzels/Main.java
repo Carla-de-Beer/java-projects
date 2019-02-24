@@ -2,61 +2,82 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@FunctionalInterface
+interface TextMessage {
+	void printMessage(String str);
+}
+
+@FunctionalInterface
+interface MessageOneParam {
+	void printMessage(int n);
+}
+
+@FunctionalInterface
+interface MessageTwoParams {
+	void printMessage(int n, int m);
+}
+
+@FunctionalInterface
+interface MessageNoParams {
+	void printMessage();
+}
+
 public class Main {
 
 	public static void main(String[] args) {
 
-		int n = 153;
+		TextMessage headerText = m -> {
+			System.out.println("---------------------------------------------");
+			System.out.println(m + ":");
+			System.out.println("---------------------------------------------");
+		};
 
-		System.out.println("---------------------------------------------");
-		System.out.println("Armstrong numbers:");
-		System.out.println("---------------------------------------------");
-		System.out.print("Is " + n + " an Armstrong number? ");
-		System.out.println(Puzzle.isArmstrong(n));
+		// ---------------------- Armstrong numbers
+		headerText.printMessage("Armstrong numbers");
+		MessageOneParam armstrongMessage = m -> System.out
+				.println("Is " + m + " an Armstrong number? " + Puzzle.isArmstrong(m));
+
+		int n = 153;
+		armstrongMessage.printMessage(n);
 
 		n = 99;
-		System.out.print("Is " + n + " an Armstrong number? ");
-		System.out.println(Puzzle.isArmstrong(n));
+		armstrongMessage.printMessage(n);
 
 		n = 371;
-		System.out.print("Is " + n + " an Armstrong number? ");
-		System.out.println(Puzzle.isArmstrong(n));
+		armstrongMessage.printMessage(n);
 
+		// ---------------------- Palindromic numbers
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Palindromic numbers:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Palindromic numbers");
+		MessageOneParam palindromeMessage = m -> System.out
+				.println("Is " + m + " an palindromic number? " + Puzzle.isPalindrome(m));
 		n = 1551;
-		System.out.print("Is " + n + " an palindromic number? ");
-		System.out.println(Puzzle.isPalindrome(n));
+		palindromeMessage.printMessage(n);
 
 		n = 1553;
-		System.out.print("Is " + n + " an palindromic number? ");
-		System.out.println(Puzzle.isPalindrome(n));
+		palindromeMessage.printMessage(n);
 
 		n = 1;
-		System.out.print("Is " + n + " an palindromic number? ");
-		System.out.println(Puzzle.isPalindrome(n));
+		palindromeMessage.printMessage(n);
 
+		// ---------------------- Fibonacci numbers
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Fibonacci numbers (iterative):");
-		System.out.println("---------------------------------------------");
-		n = 8;
-		System.out.print("Fibonacci number " + n + ": ");
-		System.out.println(Puzzle.fibonacciIterative(n));
+		headerText.printMessage("Fibonacci numbers");
 
-		System.out.println("Fibonacci numbers (recursive):");
-		n = 8;
-		System.out.print("Fibonacci number " + n + ": ");
-		System.out.println(Puzzle.fibonacciRecursive(n));
+		MessageOneParam fibMessageIterative = m -> System.out
+				.println("Iterative: " + "Fibonacci number " + m + ": " + Puzzle.fibonacciIterative(m));
+		MessageOneParam fibMessageRecursive = m -> System.out
+				.println("Recursive: " + "Fibonacci number " + m + ": " + Puzzle.fibonacciRecursive(m));
+		MessageNoParams fibMessageMemoized = () -> System.out.println("Memoized: ");
 
-		System.out.println("Fibonacci numbers (recursive):");
+		n = 8;
+		fibMessageIterative.printMessage(n);
+		fibMessageRecursive.printMessage(n);
+
 		n = 40;
-		System.out.print("Fibonacci number " + n + ": ");
-		System.out.println(Puzzle.fibonacciRecursive(n));
+		fibMessageRecursive.printMessage(n);
 
-		System.out.println("Fibonacci numbers (memoized):");
+		fibMessageMemoized.printMessage();
 		n = 40;
 		int[] memo = new int[n + 1];
 		for (int i = 1; i <= n; ++i) {
@@ -66,82 +87,88 @@ public class Main {
 			}
 		}
 
+		// ---------------------- Sieve of Eratosthenes
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Sieve of Eratosthenes:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Sieve of Eratosthenes");
+
 		n = 55;
 		System.out.println("Find the prime numbers <= " + n + ": ");
 		List<Integer> primes = Puzzle.sieveOfEratosthenes(n);
 		printArrayList(primes);
 
+		// ---------------------- Prime factors
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Prime factors:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Prime factors");
+
 		n = 533;
 		System.out.println("Find the prime factors of " + n + ":");
 		List<Integer> primeFactors = Puzzle.getPrimeFactors(n);
 		printArrayList(primeFactors);
 
+		// ---------------------- Count occurrences in an array
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Count occurrences in an array:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Count occurrences in an array");
+
 		int[] array3 = { 1, 2, 8, 7, 3, 2, 2, 2, 5, 1 };
 		Map<Integer, Integer> map = Puzzle.calculateFrequency(array3);
 		printHashMap(map);
 
+		// ---------------------- Left rotate array
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Left rotate array:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Left rotate array");
+
 		int[] array4 = { 1, 2, 3, 4, 5, 6 };
+		n = 2;
 		printArray(array4);
-		Puzzle.leftRotateArray(array4, 2);
+		System.out.println("Rotate from position " + n + ":");
+		Puzzle.leftRotateArray(array4, n);
 		printArray(array4);
 
+		// ---------------------- Calculate GCD
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Calculate GCD:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Calculate GCD");
+
+		MessageTwoParams gcdMessage = (p, q) -> System.out.println("gcd(" + p + ", " + q + "): " + Puzzle.gcd(p, q));
 		int a = 24;
 		int b = 54;
-		System.out.println("gcd(" + a + ", " + b + "): " + Puzzle.gcd(a, b));
+		gcdMessage.printMessage(a, b);
 
 		a = 48;
 		b = 180;
-		System.out.println("gcd(" + a + ", " + b + "): " + Puzzle.gcd(a, b));
+		gcdMessage.printMessage(a, b);
 
+		// ---------------------- Calculate LCM
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Calculate LCM:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Calculate LCM");
+
+		MessageTwoParams lcdMessage = (p, q) -> System.out.println("lcm(" + p + ", " + q + "): " + Puzzle.lcm(p, q));
 		a = 24;
 		b = 54;
-		System.out.println("lcm(" + a + ", " + b + "): " + Puzzle.lcm(a, b));
+		lcdMessage.printMessage(a, b);
 
+		// ---------------------- Calculate a^b
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Calculate a^b:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Calculate a^b");
+
+		MessageTwoParams exponentiationMessage = (p, q) -> System.out
+				.println(p + "^" + q + ": " + Puzzle.exponentiation(p, q));
 		int c = 2;
 		int d = 16;
-		System.out.println(c + "^" + d + ": " + Puzzle.exponentiation(c, d));
+		exponentiationMessage.printMessage(c, d);
 
+		// ---------------------- Reverse array in place
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Reverse array in place:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Reverse array in place");
+
 		int[] array5 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		printArray(array5);
 		Puzzle.arrayReverse(array5);
 		printArray(array5);
 
+		// ---------------------- Staircase
 		System.out.println();
-		System.out.println("---------------------------------------------");
-		System.out.println("Staircase:");
-		System.out.println("---------------------------------------------");
+		headerText.printMessage("Staircase");
+
 		n = 5;
 		System.out.println("Staircase diagram for " + n + ": ");
 		Puzzle.staircase(n);

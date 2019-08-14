@@ -61,6 +61,6 @@ Various mathematics-inspired programs:
   * [Matrix Library:](https://github.com/Carla-de-Beer/Java/tree/master/Mathematics/Matrix%20Library) Various elementary matrix operations.
   * [Puzzles:](https://github.com/Carla-de-Beer/Java/tree/master/Mathematics/Puzzels) Various mathematical puzzles (Armstrong numbers, Sieve of Eratosthenes etc).
 
-## [Miscelleaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscelleaneous)
+## [Miscellaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous)
   Various other projects:
-  * [Java8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscelleaneous/Java8.java) Various Java8 functionalities.
+  * [Java8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java8 functionalities.

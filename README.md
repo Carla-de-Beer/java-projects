@@ -63,7 +63,7 @@ Various mathematics-inspired programs:
 
 ## [Miscellaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous)
   Various other projects:
-  * [Java8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java8 functionalities.
+  * [Java 8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java 8 functionalities.
 
 ## [Spring Boot](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot)
 Various Spring Boot projects:

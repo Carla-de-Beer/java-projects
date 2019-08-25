@@ -64,3 +64,7 @@ Various mathematics-inspired programs:
 ## [Miscellaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous)
   Various other projects:
   * [Java8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java8 functionalities.
+
+## [Spring Boot](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot)
+Various Spring Boot projects:
+  * [Student List](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Student%20List) A simple Java 8 Spring Boot starter project with local mock data.

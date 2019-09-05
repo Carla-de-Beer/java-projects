@@ -34,16 +34,14 @@ The API can be tested with the following CLI curl CRUD commands:
   * ```curl -i http://localhost:8080/api/v1/pets/```
   * ```curl -i http://localhost:8080/api/v1/pets/<ObjectId>```
 
+
 * UPDATE/EDIT:
-  * ```
-  curl -i -H "Content-Type: application/json" -X PUT -d '{  "name" : "Spot",
-  "species" : "dog","breed" : "terrier"}' http://localhost:8080/api/v1/pets/<ObjectId>
-  ```
+  * ```curl -i -H "Content-Type: application/json" -X PUT -d '{  "name" : "Spot","species" : "dog","breed" : "terrier"}' http://localhost:8080/api/v1/pets/<ObjectId>```
+
 
 * CREATE/ADD:
-  * ```
-  curl -i -H "Content-Type: application/json" -X POST -d '{  "name" : "Cocky","species" : "bird","breed" : "cockatoo"}' http://localhost:8080/api/v1/pets/
-  ```
+  * ```curl -i -H "Content-Type: application/json" -X POST -d '{  "name" : "Cocky","species" : "bird","breed" : "cockatoo"}' http://localhost:8080/api/v1/pets/```
+
 
 * DELETE:
   * ```curl -i -X DELETE http://localhost:8080/api/v1/pets/<ObjectId>```

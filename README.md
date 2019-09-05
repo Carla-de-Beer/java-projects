@@ -67,4 +67,5 @@ Various mathematics-inspired programs:
 
 ## [Spring Boot](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot)
 Various Spring Boot projects:
-  * [Student List](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Student%20List) A simple Java 8 Spring Boot starter project with local mock data.
+  * [Pet List API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Pet%20List%20API) A simple Spring Boot starter project with with both local mock data and a connection to a MongoDB database.
+  * [Student List](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Student%20List) A simple Spring Boot starter project with local mock data.

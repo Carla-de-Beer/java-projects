@@ -47,3 +47,8 @@ The API can be tested with the following CLI curl CRUD commands:
 
 * DELETE:
   * ```curl -i -X DELETE http://localhost:8080/api/v1/pets/<ObjectId>```
+
+</br>
+<p align="center">
+  <img src="images/screenShot-01.png"/>
+</p>

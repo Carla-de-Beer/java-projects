@@ -11,5 +11,4 @@ This project makes use of the [EGit project](https://www.eclipse.org/egit/), imp
 </br>
 <p align="center">
   <img src="images/screenShot-01.png"/>
-  <img src="images/screenShot-02.png"/>
 </p>

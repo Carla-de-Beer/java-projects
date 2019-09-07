@@ -1,0 +1,48 @@
+body {
+    margin: 50px;
+    padding: 0;
+    overflow: scroll;
+}
+
+h1 {
+    color: coral;
+    text-align: center;
+    font-size: 20px;
+    font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    color: coral;
+    text-align: center;
+    font-size: 17px;
+    font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
+}
+
+p, .frequencies {
+    top: 0;
+    margin: 10px;
+    text-align: center;
+    color: #5a5a5a;
+    font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+#inner {
+    display: table;
+    margin: 0 auto;
+}
+
+.info {
+    color: royalblue;
+    font-size: 17px;
+}
+
+.italic {
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.bold {
+    color: royalblue;
+    font-weight: bold;
+}

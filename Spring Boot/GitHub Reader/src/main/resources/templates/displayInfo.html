@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>GitHub Reader</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+
+<h1>GitHub User Account Info</h1>
+
+</br>
+<div>
+    <p class="bold info" th:text="${user.userName}"></p>
+    <a th:href="@{${user.url}}"><p class="bold info" th:text="${user.url}"></p></a>
+</div>
+</br>
+<p class="italic" th:text="'Found the following ' + ${repoCount} + ' repositories:'"></p>
+</br>
+<div th:if="${repoList != null}">
+    <p th:each="repo : ${repoList}">
+        <span class="bold" th:text="${repoStat.count} + '. ' + ${repo.getRepoName()}"></span>
+        </br></br>
+        <span th:text="${repo.getUrlLink()}"></span>
+        </br>
+        <span th:text="${repo.getDescription()}"></span>
+        </br>
+        <span th:text="'Language: ' + ${repo.getLanguage()}"></span>
+        </br></br>
+    </p>
+</div>
+</br>
+<div>
+    <h2>Programming Language Analysis</h2>
+</div>
+</br>
+<div id="inner" th:each="map : ${frequencies}">
+    <div th:each="entry : ${map}">
+        <span class="frequencies" th:text="${entry.key} + ':'"></span>
+        <span class="frequencies" th:text="${entry.value} + '%'"></span>
+    </div>
+</div>
+
+</body>
+
+</html>

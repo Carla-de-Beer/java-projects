@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <title>GitHub Reader</title>
+</head>
+<body>
+
+<h1>GitHub User Account Info</h1>
+</br>
+<form action="#" th:action="@{/}" th:object="${token}" method="post">
+    <p>Enter personal access token: <input type="text" th:field="*{tokenString}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+</body>
+</html>

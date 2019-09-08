@@ -3,6 +3,7 @@ package com.cadebe.github_reader.controller;
 import com.cadebe.github_reader.model.Repository;
 import com.cadebe.github_reader.model.Token;
 import com.cadebe.github_reader.service.ReaderService;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +17,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping(ReaderController.BASE_URL)
 public class ReaderController {
 
     static final String BASE_URL = "/";
     private static ReaderService readerService;
-    private static String token = "";
 
     @Autowired
     public ReaderController(ReaderService readerService) {
@@ -36,15 +37,21 @@ public class ReaderController {
     }
 
     @PostMapping("/")
-    public String greetingSubmit(@ModelAttribute Token input, Model model) throws IOException {
-        token = input.getTokenString();
-        com.cadebe.github_reader.model.User user = ReaderController.readerService.getUser(createGitHubClient(token));
-        List<Repository> repos = ReaderController.readerService.buildRepositoryList(createGitHubClient(token));
-        Map<String, Double> map = ReaderController.readerService.getLanguageFrequencies(createGitHubClient(token));
-        model.addAttribute("user", user);
-        model.addAttribute("repoCount", repos.size());
-        model.addAttribute("repoList", repos);
-        model.addAttribute("frequencies", map);
+    public String greetingSubmit(@ModelAttribute Token input, Model model) {
+        try {
+            String token = input.getTokenString();
+            GitHubClient client = createGitHubClient(token);
+            com.cadebe.github_reader.model.User user = ReaderController.readerService.getUser(client);
+            List<Repository> repos = ReaderController.readerService.buildRepositoryList(client);
+            Map<String, Double> map = ReaderController.readerService.getLanguageFrequencies(client);
+            model.addAttribute("user", user);
+            model.addAttribute("repoCount", repos.size());
+            model.addAttribute("repoList", repos);
+            model.addAttribute("frequencies", map);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return "displayInfo";
     }
 
@@ -53,5 +60,4 @@ public class ReaderController {
         client.setOAuth2Token(token);
         return client;
     }
-
 }

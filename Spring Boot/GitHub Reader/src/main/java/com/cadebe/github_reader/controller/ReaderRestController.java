@@ -71,5 +71,4 @@ public class ReaderRestController {
         client.setOAuth2Token(token);
         return client;
     }
-
 }

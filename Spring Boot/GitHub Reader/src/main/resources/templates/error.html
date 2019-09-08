@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Reader Error</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+
+<h1>An error has occurred accessing the GitHub account</h1>
+
+</br>
+<div>
+    <p>The following error status code has been received:
+    <p class="errorLink" th:text="${errorMsg}"></p></p>
+    </br>
+    <a href="/"><p class="errorLink">Back to landing page</p></a>
+</div>
+</br>
+<div>
+    <p>Please ensure that you have entered a valid GitHub account personal access token.</p>
+    <a href="https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line"><p class="errorLink">Example here</p></a>
+</div>
+</br>
+
+</body>
+</html>

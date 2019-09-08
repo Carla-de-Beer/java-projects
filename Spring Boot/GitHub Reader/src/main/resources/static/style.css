@@ -37,6 +37,11 @@ p, .frequencies {
     font-size: 17px;
 }
 
+.errorLink {
+    color: royalblue;
+    font-size: 15px;
+}
+
 .italic {
     font-style: italic;
     font-weight: lighter;

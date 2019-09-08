@@ -10,15 +10,15 @@ import java.util.Map;
 
 public interface Service {
 
-    List<Repository> buildRepositoryList(GitHubClient client) throws IOException;
+    List<org.eclipse.egit.github.core.Repository> getAllRepositories(String token) throws IOException;
 
     User getUser(GitHubClient client) throws IOException;
 
     int countAllRepositories(GitHubClient client) throws IOException;
 
-    List<org.eclipse.egit.github.core.Repository> getAllRepositories(String token) throws IOException;
-
-    Map<String, Double> getLanguageFrequencies(GitHubClient client) throws IOException;
+    List<Repository> buildRepositoryList(GitHubClient client) throws IOException;
 
     Map<String, Integer> getAllLanguages(GitHubClient client) throws IOException;
+
+    Map<String, Double> getLanguageFrequencies(GitHubClient client) throws IOException;
 }

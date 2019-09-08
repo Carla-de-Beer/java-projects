@@ -16,20 +16,13 @@ import java.util.*;
 public class ReaderService implements com.cadebe.github_reader.service.Service {
 
     @Override
-    public List<com.cadebe.github_reader.model.Repository> buildRepositoryList(GitHubClient client) throws IOException {
-        List<Repository> repositories = getRepositoryList(client);
-        List<com.cadebe.github_reader.model.Repository> list = new ArrayList<>();
-
-        for (int i = 0; i < repositories.size(); ++i) {
-            log.info("Repo {}, name {}", i, repositories.get(i).getGitUrl());
-            list.add(new com.cadebe.github_reader.model.Repository(
-                    repositories.get(i).getName(),
-                    repositories.get(i).getUrl(),
-                    repositories.get(i).getDescription(),
-                    repositories.get(i).getLanguage()
-            ));
-        }
-        return list;
+    public List<Repository> getAllRepositories(String token) throws IOException {
+        GitHubClient client = new GitHubClient();
+        client.setOAuth2Token(token);
+        RepositoryService service = new RepositoryService(client);
+        List<Repository> repositories = service.getRepositories();
+        System.out.println(repositories.get(0).getGitUrl());
+        return repositories;
     }
 
     @Override
@@ -52,13 +45,20 @@ public class ReaderService implements com.cadebe.github_reader.service.Service {
     }
 
     @Override
-    public List<Repository> getAllRepositories(String token) throws IOException {
-        GitHubClient client = new GitHubClient();
-        client.setOAuth2Token(token);
-        RepositoryService service = new RepositoryService(client);
-        List<Repository> repositories = service.getRepositories();
-        System.out.println(repositories.get(0).getGitUrl());
-        return repositories;
+    public List<com.cadebe.github_reader.model.Repository> buildRepositoryList(GitHubClient client) throws IOException {
+        List<Repository> repositories = getRepositoryList(client);
+        List<com.cadebe.github_reader.model.Repository> list = new ArrayList<>();
+
+        for (int i = 0; i < repositories.size(); ++i) {
+            log.info("Repo {}, name {}", i, repositories.get(i).getGitUrl());
+            list.add(new com.cadebe.github_reader.model.Repository(
+                    repositories.get(i).getName(),
+                    repositories.get(i).getUrl(),
+                    repositories.get(i).getDescription(),
+                    repositories.get(i).getLanguage()
+            ));
+        }
+        return list;
     }
 
     @Override
@@ -72,7 +72,6 @@ public class ReaderService implements com.cadebe.github_reader.service.Service {
             a = Math.round(a * 1000.0) / 1000.0;
             resultMap.put(i, a);
         }
-
         return resultMap;
     }
 

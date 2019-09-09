@@ -19,9 +19,9 @@ Postman integration tests, written for the `ReaderRestController`-API, can be fo
 
 ### TODO
 
-  - [x] Integration tests
-  - [ ] Unit tests
   - [x] Error handling
+  - [x] Postman tests
+  - [ ] Unit tests
 
 </br>
 <p align="center">

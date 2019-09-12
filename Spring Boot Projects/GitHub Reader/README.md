@@ -17,12 +17,6 @@ This project makes use of the [EGit project](https://www.eclipse.org/egit/), imp
 
 Postman integration tests, written for the `ReaderRestController`-API, can be found in the directory `src/test/resources/Postman tests`. Replace the `<ENTER_TOKEN_HERE>` sections with a personal access token before executing them in the test runner.
 
-### TODO
-
-  - [x] Error handling
-  - [x] Postman tests
-  - [ ] Unit tests
-
 </br>
 <p align="center">
   <img src="images/screenShot-01.png"/>

@@ -48,8 +48,7 @@ public class ReaderController {
             model.addAttribute("repoCount", repos.size());
             model.addAttribute("repoList", repos);
             model.addAttribute("frequencies", map);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return "displayInfo";

@@ -24,12 +24,24 @@ public class ReaderRestController {
         ReaderRestController.readerService = readerService;
     }
 
+    @RequestMapping(value = "/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Repository> getAllRepositories(@PathVariable("token") String token) throws IOException {
+        return ReaderRestController.readerService.getAllRepositories(token);
+    }
+
     @RequestMapping(value = "/repos/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.OK)
     public @ResponseBody
     List<com.cadebe.github_reader.model.Repository>
     getRepositoryList(@PathVariable("token") String token) throws IOException {
         return ReaderRestController.readerService.buildRepositoryList(createGitHubClient(token));
+    }
+
+    @RequestMapping(value = "/repos/count/{token}", method = RequestMethod.GET)
+    @ResponseStatus(code = HttpStatus.OK)
+    public int countAllRepositories(@PathVariable("token") String token) throws IOException {
+        return ReaderRestController.readerService.countAllRepositories(createGitHubClient(token));
     }
 
     @RequestMapping(value = "/languages/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,22 +60,10 @@ public class ReaderRestController {
         return ReaderRestController.readerService.getLanguageFrequencies(createGitHubClient(token));
     }
 
-    @RequestMapping(value = "/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(code = HttpStatus.OK)
-    public List<Repository> getAllRepositories(@PathVariable("token") String token) throws IOException {
-        return ReaderRestController.readerService.getAllRepositories(token);
-    }
-
     @RequestMapping(value = "/user/{token}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.OK)
     public com.cadebe.github_reader.model.User getUser(@PathVariable("token") String token) throws IOException {
         return ReaderRestController.readerService.getUser(createGitHubClient(token));
-    }
-
-    @RequestMapping(value = "/repos/count/{token}", method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
-    public int countAllRepositories(@PathVariable("token") String token) throws IOException {
-        return ReaderRestController.readerService.countAllRepositories(createGitHubClient(token));
     }
 
     private GitHubClient createGitHubClient(String token) {

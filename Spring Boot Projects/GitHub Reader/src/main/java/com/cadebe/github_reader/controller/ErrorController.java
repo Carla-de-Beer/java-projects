@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
-public class ExceptionController {
+public class ErrorController {
 
     @ExceptionHandler(value = Exception.class)
-    public String handleError(Exception exception,  Model model) {
-        log.error("Raised exception '{}' when trying to access the Reader", exception.getMessage());
+    public String handleError(Exception exception, Model model) {
+        log.error("Raised exception '{}' when trying to access the Reader.", exception.getMessage());
         model.addAttribute("errorMsg", exception.getCause().getMessage());
         return "error";
     }

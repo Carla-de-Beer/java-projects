@@ -34,7 +34,7 @@ public class ReaderService implements com.cadebe.github_reader.service.Service {
             userName = list.get(0).getOwner().getLogin();
             url = list.get(0).getOwner().getHtmlUrl();
         } catch (IOError error) {
-            log.error("Could not read repository list to obtain username and URL data");
+            log.error("Could not read repository list to obtain username and URL data.");
         }
         return new User(userName, url);
     }
@@ -50,7 +50,7 @@ public class ReaderService implements com.cadebe.github_reader.service.Service {
         List<com.cadebe.github_reader.model.Repository> list = new ArrayList<>();
 
         for (int i = 0; i < repositories.size(); ++i) {
-            log.info("Repo {}, name {}", i, repositories.get(i).getGitUrl());
+            // log.info("Repo {}, name {}.", i, repositories.get(i).getGitUrl());
             list.add(new com.cadebe.github_reader.model.Repository(
                     repositories.get(i).getName(),
                     repositories.get(i).getUrl(),

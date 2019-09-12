@@ -65,8 +65,8 @@ Various mathematics-inspired programs:
   Various other projects:
   * [Java 8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java 8 functionalities.
 
-## [Spring Boot](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot)
+## [Spring Boot Projects](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot)
 Various Spring Boot projects:
-  * [GitHub Reader:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/GitHub%20Reader) A web-based reader to obtain GitHub information of a specific GitHub user, given a personal access token.
-  * [Pet List API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Pet%20List%20API) A simple Spring Boot starter project with with both local mock data and a connection to a MongoDB database.
-  * [Student List API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot/Student%20List%20API) A simple Spring Boot starter project with local mock data.
+  * [GitHub Reader:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/GitHub%20Reader) A web-based reader to obtain GitHub information of a specific GitHub user, given a personal access token.
+  * [Persons API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Persons%20API) A Spring Boot API project operating on both locally stored mock data and a connection to a MySQL database.
+  * [Pets API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Pet%20List%20API) A Spring Boot API project operating on both locally stored mock data and a connection to a MongoDB database.

@@ -9,17 +9,17 @@ class ColorMapTest extends Specification {
     @Subject
     def colorMap = new ColorMap()
 
-    def "ColorMap getOrdinalFromEnum()"() {
+    def "ColorMap getOrdinalFromString()"() {
         given:
 
-        when: "calling getOrdinalFromEnum()"
-        int result = ColorMap.getOrdinalFromEnum(color)
+        when: "calling getOrdinalFromString()"
+        int result = ColorMap.getOrdinalFromString(colorName)
 
-        then: "getOrdinalFromEnum() has been successfully called"
+        then: "getOrdinalFromString() has been successfully called"
         result == expected
 
         where:
-        color             | expected
+        colorName         | expected
         "Blue"            | 0
         "Green"           | 1
         "Purple"          | 2
@@ -30,5 +30,27 @@ class ColorMapTest extends Specification {
         "WHITE"           | 6
         "wHITe"           | 6
         "Some string ..." | -1
+    }
+
+    def "ColorMap getStringFromOrdinal()"() {
+        given:
+
+        when: "calling getStringFromOrdinal()"
+        String result = ColorMap.getStringFromOrdinal(colorCode)
+
+        then: "getStringFromOrdinal() has been successfully called"
+        result == expected
+
+        where:
+        colorCode | expected
+        0         | "Blue"
+        1         | "Green"
+        2         | "Purple"
+        3         | "Red"
+        4         | "Lemon yellow"
+        5         | "Turquoise"
+        6         | "White"
+        -1        | null
+        -1        | null
     }
 }

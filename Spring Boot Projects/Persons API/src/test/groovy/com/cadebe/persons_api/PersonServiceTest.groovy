@@ -27,7 +27,7 @@ class PersonServiceTest extends Specification {
         given:
 
         when: "calling getAllPersonsByColor()"
-        def result = personService.findAllByColorPreference(color)
+        def result = personService.findAllByColorPreference(colorCode)
 
         then: "getAllPersonsByColor() has been successfully called"
         result != null
@@ -35,7 +35,7 @@ class PersonServiceTest extends Specification {
         result.getClass() == ArrayList
 
         where:
-        color | hasSomething
+        colorCode | hasSomething
         1     | true
         14    | false
     }

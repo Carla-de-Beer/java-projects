@@ -31,15 +31,16 @@ public class CSVWriter {
             builder.append(p.getFirstName());
             builder.append(DELIMITER);
 
-            builder.append(p.getZipcode());
+            builder.append(p.getZipCode());
             builder.append(" ");
             builder.append(p.getCity());
             builder.append(DELIMITER);
 
-            builder.append(p.getColor());
+            builder.append(p.getColorCode());
             builder.append(DELIMITER);
             builder.append("\n");
         }
+        assert writer != null;
         writer.write(builder.toString());
         writer.close();
     }

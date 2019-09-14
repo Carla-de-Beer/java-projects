@@ -1,7 +1,7 @@
 package com.cadebe.persons_api.dao;
 
 import com.cadebe.persons_api.model.Person;
-import com.cadebe.persons_api.util.CSVWriter;
+import com.cadebe.persons_api.util.ColorMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,25 +18,32 @@ public class PersonDaoJPAImpl implements PersonDao {
 
     @Override
     public Person save(Person person) {
-        List<Person> list = findAll();
         // Exclude duplicate new entries
-        for (Person p : list) {
+        for (Person p : findAll()) {
             if (p.getFirstName().equals(person.getFirstName()) && p.getLastName().equals(person.getLastName())
-                    && p.getCity().equals(person.getCity()) && p.getZipcode().equals(person.getZipcode())) {
+                    && p.getCity().equals(person.getCity()) && p.getZipCode().equals(person.getZipCode())) {
                 return null;
             }
         }
+
+        PersonDaoJPAImpl.addColorCode(person);
         return personDao.save(person);
     }
 
     @Override
     public List<Person> findAll() {
-        return (List<Person>) this.personDao.findAll();
+        List<Person> list = (List<Person>) this.personDao.findAll();
+        for (Person person : list) {
+            PersonDaoJPAImpl.addColorString(person);
+        }
+        return list;
     }
 
     @Override
-    public Optional findById(UUID id) {
-        return personDao.findById(id);
+    public Optional<Person> findById(UUID id) {
+        Optional<Person> person = personDao.findById(id);
+        person.ifPresent(value -> PersonDaoJPAImpl.addColorString((Person) value));
+        return person;
     }
 
     @Override
@@ -44,7 +51,8 @@ public class PersonDaoJPAImpl implements PersonDao {
         List<Person> list = (List<Person>) this.personDao.findAll();
         List<Person> resultList = new ArrayList<>();
         for (Person person : list) {
-            if (person.getColor() == color) {
+            if (person.getColorCode() == color) {
+                PersonDaoJPAImpl.addColorString(person);
                 resultList.add(person);
             }
         }
@@ -54,16 +62,25 @@ public class PersonDaoJPAImpl implements PersonDao {
     @Override
     public Person updateById(UUID id, Person updatedPerson) {
         Optional<Person> person = findById(id);
-        if (person.isPresent()) {
+        person.map((x) -> {
             updatedPerson.setId(id);
+            updatedPerson.setColorCode(ColorMap.getOrdinalFromString(updatedPerson.getColorName()));
             personDao.save(updatedPerson);
-            return person.get();
-        }
+            return updatedPerson;
+        });
         return null;
     }
 
     @Override
     public void deleteById(UUID id) {
         personDao.deleteById(id);
+    }
+
+    private static void addColorString(Person person) {
+        person.setColorName(ColorMap.getStringFromOrdinal(person.getColorCode()));
+    }
+
+    private static void addColorCode(Person person) {
+        person.setColorCode(ColorMap.getOrdinalFromString(person.getColorName()));
     }
 }

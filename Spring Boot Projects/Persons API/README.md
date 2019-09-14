@@ -7,22 +7,24 @@ The project was built with Java 8 and Maven. Units tests were built with the Spo
 ## Mock data
 
 By default, the project is configured to read mock data from a locally stored CSV file. This file is located under `src/main/resources/sourceData/mockData.csv`. All CRUD calls operate on this file.
-The file, in the format ``<lastName>, <firstName>, <zipcode city>, <color>``, is initially populated with the following data:
+The file, in the format ``<last_name>, <first_name>, <zip_code city>, <color_code>``, is initially populated with the following data:
 
 ```
 Green    ,Joe     ,11068  New York   ,1,
 Sara     ,Greenway,15456  Newark     ,1,
 Redstone ,Sara    ,28340  Seattle    ,3,
-Weissmann,Peter   ,45630  Minneapolis,7,
+Weissmann,Peter   ,45630  Minneapolis,6,
 Blauert  ,Ed      ,23497  Chicago    ,5,
 
 ```
+
+The `color_code` field denotes a colour value associated with each entry.
 
 ### MySQL database access
 
 To swap the option of locally stored mock data out for the MySQL database access, carry out the following steps:
 
-* Inside the PersonService class, change the `@Qualifier()` property to either `"mockDao"` or `"JPA_dao"`.
+* Inside the PersonService class, change the `@Qualifier()` property from `"mockDao"` to `"JPA_Dao"`.
 * Create a MySQL database, activate its server, and populate it with data via the following SQL query:
 
         DROP TABLE IF EXISTS person;
@@ -31,13 +33,13 @@ To swap the option of locally stored mock data out for the MySQL database access
         `id` BINARY(16) NOT NULL primary key,
         `first_name` VARCHAR(255),
         `last_name` VARCHAR(255),
-        `zipcode` VARCHAR(255),
+        `zip_code` VARCHAR(255),
         `city` VARCHAR(255),
-        `color` INT) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        `color_code` INT) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Joe', 'Green', '11068', 'New York', 1);
-        INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Ed', 'White', '23497', 'Chicago', 7);
-        INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Frank', 'Goldman', '14457', 'Boston', 6);
+        INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Ed', 'White', '23497', 'Chicago', 6);
+        INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Frank', 'Goldman', '14457', 'Boston', 4);
         INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Moses', 'Blauer', '10810', 'New York', 0);
         INSERT INTO person values(unhex(replace(uuid(),'-','')), 'Edna', 'Greenblatt', '34597', 'Philadelphia', 1);
 
@@ -55,12 +57,12 @@ Start the project server by running the command `mvn spring-boot:run`. The API c
 
 * UPDATE/EDIT:
 
-  * ```curl -i -H "Content-Type: application/json" -X PUT -d '{"firstName": "Greenway","lastName": "Sara","zipcode": "15456","city":"Newark","color": 5}' http://localhost:8080/api/v1/persons/<personId>```
+  * ```curl -i -H "Content-Type: application/json" -X PUT -d '{"firstName": "Greenway","lastName": "Sara","zipCode": "15456","city":"Newark","color": 5}' http://localhost:8080/api/v1/persons/<personId>```
 
 
 * CREATE/ADD:
 
-  * ```curl -i -H "Content-Type: application/json" -X POST -d '{"firstName":"Carmen","lastName":"Redway","zipcode":"75450","city":"Phoenix","color": 3 }' http://localhost:8080/api/v1/persons/```
+  * ```curl -i -H "Content-Type: application/json" -X POST -d '{"firstName":"Carmen","lastName":"Redway","zipCode":"75450","city":"Phoenix","color": 3 }' http://localhost:8080/api/v1/persons/```
 
 
 * DELETE:

@@ -15,6 +15,17 @@
 						"exec": [
 							"postman.setGlobalVariable(\"personId\", pm.response.json()[0].id);",
 							"",
+							"function findJoe() {",
+							"    for (var i = 0; i < pm.response.json().length; ++i) {",
+							"       if (pm.response.json()[i].firstName === \"Joe\" && pm.response.json()[i].lastName == \"Green\") {",
+							"           return pm.response.json()[i].id;",
+							"       } ",
+							"    }",
+							"    return \"\";",
+							"}",
+							"",
+							"postman.setGlobalVariable(\"joeGreenId\", findJoe());",
+							"",
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -271,6 +282,57 @@
 			"response": []
 		},
 		{
+			"name": "Update a person for a given id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6a2e737-3a8b-45e3-b72c-334278f46368",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check if target is an object\", function () { ",
+							"    pm.expect({a: 1}).to.be.an('object');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"firstName\": \"Joe\",\n        \"lastName\": \"Green\",\n        \"zipCode\": \"11068\",\n        \"city\": \"New York\",\n        \"colorName\": \"Purple\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/persons/{{joeGreenId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"persons",
+						"{{joeGreenId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create new person entry",
 			"event": [
 				{
@@ -302,7 +364,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"firstName\": \"Carmen\",\n\t\"lastName\": \"Redway\",\n\t\"zipcode\": \"75450\",\n\t\"city\": \"Phoenix\",\n\t\"color\": 3\n}"
+					"raw": "{\n\t\"firstName\": \"Carmen\",\n\t\"lastName\": \"Redway\",\n\t\"zipCode\": \"75450\",\n\t\"city\": \"Phoenix\",\n\t\"colorName\": \"Red\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/v1/persons/",

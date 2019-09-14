@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,15 +27,15 @@ public class CSVReader {
                 person.setId(personId);
                 resultMap.put(personId, person);
             }
-        } catch (IOException | NumberFormatException e) {
-            log.error("Exception '{}' occurred trying to read the input file", e.getMessage());
+        } catch (Exception e) {
+            log.error("Exception '{}' occurred trying to read the input file", e.getCause().getMessage());
             e.printStackTrace();
         } finally {
             if (br != null) {
                 try {
                     br.close();
-                } catch (IOException e) {
-                    log.error("Exception '{}' occurred trying to read the input file", e.getMessage());
+                } catch (Exception e) {
+                    log.error("Exception '{}' occurred trying to read the input file", e.getCause().getMessage());
                     e.printStackTrace();
                 }
             }
@@ -45,11 +44,16 @@ public class CSVReader {
     }
 
     private static Person createPerson(String line) {
-        String[] entry = line.split(FileData.DELIMETER.toString());
-        String address = entry[2].trim();
-        int index = address.indexOf(" ");
-        String zipcode = address.substring(0, index);
-        String city = address.substring(index);
-        return new Person(null, entry[1].trim(), entry[0].trim(), zipcode, city, Integer.parseInt(entry[3].trim()));
+        try {
+            String[] entry = line.split(FileData.DELIMETER.toString());
+            String address = entry[2].trim();
+            int index = address.indexOf(" ");
+            String zipCode = address.substring(0, index).trim();
+            String city = address.substring(index).trim();
+            return new Person(entry[1].trim(), entry[0].trim(), zipCode, city, Integer.parseInt(entry[3].trim()));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            log.error("ArrayIndexOutOfBoundsException '{}' occurred trying to read the input file", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

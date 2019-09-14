@@ -16,12 +16,12 @@ public class PersonService {
     private PersonDao personDao;
 
     @Autowired
-    public PersonService(@Qualifier("mockDao") PersonDao personDao) {
+    public PersonService(@Qualifier("JPA_Dao") PersonDao personDao) {
         this.personDao = personDao;
     }
 
     public List<Person> findAll() {
-        return (List<Person>) personDao.findAll();
+        return personDao.findAll();
     }
 
     public Person save(Person person) {
@@ -36,8 +36,8 @@ public class PersonService {
         return personDao.findById(id);
     }
 
-    public List<Person> findAllByColorPreference(int color) {
-        return personDao.findAllByColorPreference(color);
+    public List<Person> findAllByColorPreference(int colorCode) {
+        return personDao.findAllByColorPreference(colorCode);
     }
 
     public void deleteById(UUID id) {

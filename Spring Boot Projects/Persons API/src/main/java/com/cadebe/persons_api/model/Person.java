@@ -1,6 +1,10 @@
 package com.cadebe.persons_api.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,7 +15,6 @@ import java.util.UUID;
 @Table(name = "person")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Person {
 
@@ -24,7 +27,22 @@ public class Person {
 
     String firstName;
     String lastName;
-    String zipcode;
+    String zipCode;
     String city;
-    int color;
+
+    @Setter
+    @JsonIgnore
+    int colorCode;
+
+    @Transient
+    @Setter
+    String colorName;
+
+    public Person(String firstName, String lastName, String zipCode, String city, int colorCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.colorCode = colorCode;
+    }
 }

@@ -10,9 +10,9 @@ public interface PersonDao {
 
     List<Person> findAll();
 
-    List<Person> findAllByColorPreference(int color);
+    List<Person> findAllByColorPreference(int colorCode);
 
-    Optional findById(UUID id);
+    Optional<Person> findById(UUID id);
 
     Person save(Person person);
 

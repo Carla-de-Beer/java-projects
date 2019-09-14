@@ -41,17 +41,17 @@ public class PersonController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "{id}")
     public Person findById(@PathVariable("id") String id) {
         UUID uuid = UUID.fromString(id.toLowerCase());
-        Optional<Person> person = personService.findById(uuid);
+        Optional person = personService.findById(uuid);
         if (!person.isPresent()) {
             handleError(uuid);
             return null;
         }
-        return person.get();
+        return (Person) person.get();
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/color/{color}")
-    public List<Person> getAllPersonsByColor(@PathVariable("color") String inputColor) {
-        int colorCode = ColorMap.getOrdinalFromEnum(inputColor);
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/color/{colorCode}")
+    public List<Person> getAllPersonsByColor(@PathVariable("colorCode") String inputColor) {
+        int colorCode = ColorMap.getOrdinalFromString(inputColor);
         return this.personService.findAllByColorPreference(colorCode);
     }
 

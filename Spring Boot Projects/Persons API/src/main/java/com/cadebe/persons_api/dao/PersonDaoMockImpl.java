@@ -3,6 +3,7 @@ package com.cadebe.persons_api.dao;
 import com.cadebe.persons_api.model.Person;
 import com.cadebe.persons_api.util.CSVReader;
 import com.cadebe.persons_api.util.CSVWriter;
+import com.cadebe.persons_api.util.ColorMap;
 import com.cadebe.persons_api.util.FileData;
 import org.springframework.stereotype.Repository;
 
@@ -23,14 +24,14 @@ public class PersonDaoMockImpl implements PersonDao {
 
     @Override
     public Person save(Person person) {
-        List<Person> list = findAll();
         // Exclude duplicate new entries
-        for (Person p : list) {
+        for (Person p : findAll()) {
             if (p.getFirstName().equals(person.getFirstName()) && p.getLastName().equals(person.getLastName())
-                    && p.getCity().equals(person.getCity()) && p.getZipcode().equals(person.getZipcode())) {
+                    && p.getCity().equals(person.getCity()) && p.getZipCode().equals(person.getZipCode())) {
                 return null;
             }
         }
+        PersonDaoMockImpl.addColorCode(person);
         this.database.put(person.getId(), person);
         writeNewEntryToCSVFile(person);
         return person;
@@ -38,13 +39,22 @@ public class PersonDaoMockImpl implements PersonDao {
 
     @Override
     public List<Person> findAll() {
-        return new ArrayList<>(this.database.values());
+        List<Person> list = new ArrayList<>(this.database.values());
+        for (Person person : list) {
+            PersonDaoMockImpl.addColorString(person);
+        }
+        return list;
     }
 
     @Override
     public Optional<Person> findById(UUID personId) {
         Person person = this.database.get(personId);
-        return Optional.ofNullable(person);
+        Optional<Person> optional = Optional.ofNullable(person);
+        if (optional.isPresent()) {
+            PersonDaoMockImpl.addColorString(optional.get());
+            return optional;
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -52,7 +62,8 @@ public class PersonDaoMockImpl implements PersonDao {
         List<Person> resultList = new ArrayList<>();
         List<Person> personsList = findAll();
         for (Person person : personsList) {
-            if (person.getColor() == color) {
+            if (person.getColorCode() == color) {
+                PersonDaoMockImpl.addColorString(person);
                 resultList.add(person);
             }
         }
@@ -62,12 +73,13 @@ public class PersonDaoMockImpl implements PersonDao {
     @Override
     public Person updateById(UUID id, Person updatedPerson) {
         Optional<Person> person = findById(id);
-        if (person.isPresent()) {
+        person.map((x) -> {
             updatedPerson.setId(id);
-            this.database.put(person.get().getId(),updatedPerson);
+            updatedPerson.setColorCode(ColorMap.getOrdinalFromString(updatedPerson.getColorName()));
+            this.database.put(person.get().getId(), updatedPerson);
             CSVWriter.writeCSVFile(findAll());
-            return person.get();
-        }
+            return updatedPerson;
+        });
         return null;
     }
 
@@ -87,10 +99,18 @@ public class PersonDaoMockImpl implements PersonDao {
                      new BufferedWriter(new FileWriter(FileData.FILE_NAME.toString(), true));
              PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
             String line = person.getLastName() + ", " + person.getFirstName() + ", " +
-                    person.getZipcode() + " " + person.getCity() + ", " + person.getColor() + ", ";
+                    person.getZipCode() + " " + person.getCity() + ", " + person.getColorCode() + ", ";
             printWriter.println(line);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void addColorString(Person person) {
+        person.setColorName(ColorMap.getStringFromOrdinal(person.getColorCode()));
+    }
+
+    private static void addColorCode(Person person) {
+        person.setColorCode(ColorMap.getOrdinalFromString(person.getColorName()));
     }
 }

@@ -18,7 +18,17 @@ Blauert  ,Ed      ,23497  Chicago    ,5,
 
 ```
 
-The `color_code` field denotes a colour value associated with each entry.
+The `color_code` field denotes a colour value associated with each entry. The colour values are as follows:
+
+```
+0: "Blue"
+1: "Green"
+2: "Purple"
+3: "Red"
+4: "Lemon yellow"
+5: "Turquoise"
+6: "White"
+```
 
 ### MySQL database access
 
@@ -47,13 +57,15 @@ To swap the option of locally stored mock data out for the MySQL database access
 
 ## Getting started
 
-Start the project server by running the command `mvn spring-boot:run`. The API can be called with any of the following cURL CRUD-based requests:
+Download or clone the project. Build the project and start the project server by running the command `mvn spring-boot:run`. The API can be called with any of the following cURL CRUD-based requests:
 
 * GET/READ:
 
   * ```curl -i http://localhost:8080/api/v1/persons/```
   * ```curl -i http://localhost:8080/api/v1/persons/<personId>```
+  * ```curl -i http://localhost:8080/api/v1/persons/color/<colorName>```
 
+  The third GET-call provides a list of all the persons associated with a particular colour where the given colour name is one of those listed above).
 
 * UPDATE/EDIT:
 
@@ -74,7 +86,7 @@ Alternatively, import and run the Postman test collection. These can be found un
 ## Troubleshooting
 If using the locally stored dataset and the Spring Boot server runs into errors at the time of starting up, check the CSV file for (syntax) errors.
 
-</br>
+
 <p align="center">
   <img src="images/screenShot-01.png"/>
   <img src="images/screenShot-02.png"/>

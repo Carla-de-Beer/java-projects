@@ -30,7 +30,7 @@ The `color_code` field denotes a colour value associated with each entry. The co
 6: "White"
 ```
 
-### MySQL database access
+## MySQL database access
 
 To swap the option of locally stored mock data out for the MySQL database access, carry out the following steps:
 

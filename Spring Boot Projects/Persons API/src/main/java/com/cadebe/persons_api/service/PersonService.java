@@ -16,7 +16,7 @@ public class PersonService {
     private PersonDao personDao;
 
     @Autowired
-    public PersonService(@Qualifier("JPA_Dao") PersonDao personDao) {
+    public PersonService(@Qualifier("mockDao") PersonDao personDao) {
         this.personDao = personDao;
     }
 

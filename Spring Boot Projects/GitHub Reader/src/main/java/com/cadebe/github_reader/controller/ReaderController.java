@@ -1,19 +1,18 @@
 package com.cadebe.github_reader.controller;
 
-import com.cadebe.github_reader.model.Repository;
-import com.cadebe.github_reader.model.Token;
+import com.cadebe.github_reader.model.GitHubRepository;
+import com.cadebe.github_reader.model.User;
 import com.cadebe.github_reader.service.ReaderService;
+import com.google.gson.JsonArray;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.egit.github.core.client.GitHubClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,31 +31,25 @@ public class ReaderController {
 
     @GetMapping("/")
     public String greetingForm(Model model) {
-        model.addAttribute("token", new Token());
+        model.addAttribute("gitHubName", "");
         return "index";
     }
 
     @PostMapping("/")
-    public String greetingSubmit(@ModelAttribute Token input, Model model) {
-        try {
-            String token = input.getTokenString();
-            GitHubClient client = createGitHubClient(token);
-            com.cadebe.github_reader.model.User user = ReaderController.readerService.getUser(client);
-            List<Repository> repos = ReaderController.readerService.buildRepositoryList(client);
-            Map<String, Double> map = ReaderController.readerService.getLanguageFrequencies(client);
-            model.addAttribute("user", user);
-            model.addAttribute("repoCount", repos.size());
-            model.addAttribute("repoList", repos);
-            model.addAttribute("frequencies", map);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return "displayInfo";
-    }
+    public String greetingSubmit(@RequestParam String gitHubName, Model model) {
+        JsonArray getJsonArray = ReaderController.readerService.getJsonArray(gitHubName);
+        List<GitHubRepository> repoList = ReaderController.readerService.getAllRepositories(getJsonArray);
+        int repoCount = ReaderController.readerService.countAllRepositories(repoList);
 
-    private GitHubClient createGitHubClient(String token) {
-        GitHubClient client = new GitHubClient();
-        client.setOAuth2Token(token);
-        return client;
+        User user = ReaderController.readerService.getUser(getJsonArray.get(0));
+
+        Map<String, Integer> langMap = ReaderController.readerService.getAllLanguages(repoList);
+        Map<String, Double> freqMap = ReaderController.readerService.getLanguageFrequencies(langMap, repoCount);
+
+        model.addAttribute("user", user);
+        model.addAttribute("repoCount", repoCount);
+        model.addAttribute("repoList", repoList);
+        model.addAttribute("frequencies", freqMap);
+        return "displayInfo";
     }
 }

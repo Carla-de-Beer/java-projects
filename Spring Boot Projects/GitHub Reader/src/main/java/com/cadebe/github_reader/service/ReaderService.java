@@ -1,86 +1,117 @@
 package com.cadebe.github_reader.service;
 
+import com.cadebe.github_reader.model.GitHubRepository;
 import com.cadebe.github_reader.model.User;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.RepositoryService;
 import org.springframework.stereotype.Service;
 
-import java.io.IOError;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 @Service
 @Slf4j
-public class ReaderService implements com.cadebe.github_reader.service.Service {
+public class ReaderService {
 
-    @Override
-    public List<Repository> getAllRepositories(String token) throws IOException {
-        GitHubClient client = new GitHubClient();
-        client.setOAuth2Token(token);
-        RepositoryService service = new RepositoryService(client);
-        List<Repository> repositories = service.getRepositories();
-        System.out.println(repositories.get(0).getGitUrl());
+    private static final String GITHUB_PREFIX = "https://api.github.com/users/";
+    private static final String GITHUB_SUFFIX = "/repos";
+
+    public JsonArray getJsonArray(String name) {
+        String nameModified = name.replace(" ", "-");
+        String sURL = GITHUB_PREFIX + nameModified + GITHUB_SUFFIX;
+        JsonElement root = null;
+        try {
+            // Connect to the URL using Java's native library
+            URL url = new URL(sURL);
+            URLConnection request = url.openConnection();
+            request.connect();
+
+            // Convert to a JSON object to print data with gson
+            JsonParser jp = new JsonParser();
+            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        } catch (IOException e) {
+            log.error("Could not link to GitHub account '{}'.", e.getMessage());
+            throw new RuntimeException();
+        }
+        assert root != null;
+        return root.getAsJsonArray();
+    }
+
+    public List<GitHubRepository> getAllRepositories(JsonArray jArray) {
+        List<GitHubRepository> repositories = new ArrayList<>();
+
+        for (int i = 0; i < jArray.size(); ++i) {
+            JsonElement element = jArray.get(i);
+
+            String name = "";
+            if (!element.getAsJsonObject().get("name").toString().equals("null")) {
+                name = element.getAsJsonObject().get("name").getAsString();
+            }
+
+            String htmlUrl = "";
+            if (!element.getAsJsonObject().get("html_url").toString().equals("null")) {
+                htmlUrl = element.getAsJsonObject().get("html_url").getAsString();
+            }
+
+            String description = "";
+            if (!element.getAsJsonObject().get("description").toString().equals("null")) {
+                description = element.getAsJsonObject().get("description").getAsString();
+            }
+
+            String language = "";
+            if (!element.getAsJsonObject().get("language").toString().equals("null")) {
+                language = element.getAsJsonObject().get("language").getAsString();
+            }
+
+            GitHubRepository repo = GitHubRepository.builder()
+                    .repoName(name)
+                    .urlLink(htmlUrl)
+                    .description(description)
+                    .language(language)
+                    .build();
+
+            repositories.add(repo);
+        }
         return repositories;
     }
 
-    @Override
-    public User getUser(GitHubClient client) throws IOException {
-        List<Repository> list = getRepositoryList(client);
+    public User getUser(JsonElement element) {
+        JsonElement owner = element.getAsJsonObject().get("owner");
         String userName = "";
-        String url = "";
-        try {
-            userName = list.get(0).getOwner().getLogin();
-            url = list.get(0).getOwner().getHtmlUrl();
-        } catch (IOError error) {
-            log.error("Could not read repository list to obtain username and URL data.");
+        String urlUser = "";
+        String avatarUrl = "";
+
+        if (!owner.toString().equals("null") && !owner.getAsJsonObject().get("login").toString().equals("null")) {
+            userName = owner.getAsJsonObject().get("login").getAsString();
+            if (!owner.getAsJsonObject().getAsJsonObject().get("html_url").toString().equals("null")) {
+                urlUser = owner.getAsJsonObject().get("html_url").getAsString();
+            }
+
+            if (!owner.getAsJsonObject().getAsJsonObject().get("avatar_url").toString().equals("null")) {
+                avatarUrl = owner.getAsJsonObject().get("avatar_url").getAsString();
+            }
         }
-        return new User(userName, url);
+
+        return User.builder()
+                .userName(userName)
+                .url(urlUser)
+                .avatarUrl(avatarUrl)
+                .build();
     }
 
-    @Override
-    public int countAllRepositories(GitHubClient client) throws IOException {
-        return getRepositoryList(client).size();
+    public int countAllRepositories(List<GitHubRepository> repositories) {
+        return repositories.size();
     }
 
-    @Override
-    public List<com.cadebe.github_reader.model.Repository> buildRepositoryList(GitHubClient client) throws IOException {
-        List<Repository> repositories = getRepositoryList(client);
-        List<com.cadebe.github_reader.model.Repository> list = new ArrayList<>();
-
-        for (int i = 0; i < repositories.size(); ++i) {
-            // log.info("Repo {}, name {}.", i, repositories.get(i).getGitUrl());
-            list.add(new com.cadebe.github_reader.model.Repository(
-                    repositories.get(i).getName(),
-                    repositories.get(i).getUrl(),
-                    repositories.get(i).getDescription(),
-                    repositories.get(i).getLanguage()
-            ));
-        }
-        return list;
-    }
-
-    @Override
-    public Map<String, Double> getLanguageFrequencies(GitHubClient client) throws IOException {
-        int langCount = getTotalLanguageCount(client);
-        Map<String, Integer> langMap = getAllLanguages(client);
-        Map<String, Double> resultMap = new TreeMap<>();
-
-        for (String i : langMap.keySet()) {
-            double a = ((double) langMap.get(i) / langCount) * 100;
-            a = Math.round(a * 1000.0) / 1000.0;
-            resultMap.put(i, a);
-        }
-        return resultMap;
-    }
-
-    @Override
-    public Map<String, Integer> getAllLanguages(GitHubClient client) throws IOException {
-        List<Repository> repositories = getRepositoryList(client);
+    public Map<String, Integer> getAllLanguages(List<GitHubRepository> repositories) {
         List<String> languages = new ArrayList<>();
-
-        for (Repository repository : repositories) {
+        for (GitHubRepository repository : repositories) {
             languages.add(repository.getLanguage());
         }
 
@@ -92,22 +123,14 @@ public class ReaderService implements com.cadebe.github_reader.service.Service {
         return map;
     }
 
-    private List<Repository> getRepositoryList(GitHubClient client) throws IOException {
-        RepositoryService service = new RepositoryService(client);
-        return service.getRepositories();
-    }
-
-    private int getTotalLanguageCount(GitHubClient client) throws IOException {
-        Map<String, Integer> langMap = getAllLanguages(client);
-        int count = 0;
-
-        Iterator iter = langMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry pair = (Map.Entry) iter.next();
-            count += ((int) pair.getValue());
-            iter.remove();
+    public Map<String, Double> getLanguageFrequencies(Map<String, Integer> langMap, int langCount) {
+        Map<String, Double> resultMap = new TreeMap<>();
+        for (String i : langMap.keySet()) {
+            double a = ((double) langMap.get(i) / langCount) * 100;
+            a = Math.round(a * 1000.0) / 1000.0;
+            resultMap.put(i, a);
         }
-        return count;
+        return resultMap;
     }
 }
 

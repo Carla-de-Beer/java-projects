@@ -11,8 +11,13 @@
 
 </br>
 <div>
-    <p class="bold info" th:text="${user.userName}"></p>
-    <a th:href="@{${user.url}}"><p class="bold info" th:text="${user.url}"></p></a>
+    <p class="bold info" th:text="${user.getUserName()}"></p>
+    <a th:href="@{${user.getUrl()}}"><p class="bold info" th:text="${user.getUrl()}"></p></a>
+    </br>
+    <img class="center"
+         th:if="${user.getAvatarUrl() != null}"
+         th:src="${user.getAvatarUrl()}"
+         alt="avatar image">
 </div>
 </br>
 <p class="italic" th:text="'Found the following ' + ${repoCount} + ' repositories:'"></p>
@@ -21,9 +26,9 @@
     <p th:each="repo : ${repoList}">
         <span class="bold" th:text="${repoStat.count} + '. ' + ${repo.getRepoName()}"></span>
         </br></br>
-        <span th:text="${repo.getUrlLink()}"></span>
+        <span th:if="${repo.getUrlLink() != null}" th:text="${repo.getUrlLink()}"></span>
         </br>
-        <span th:text="${repo.getDescription()}"></span>
+        <span th:if="${repo.getDescription() != null}" th:text="${repo.getDescription()}"></span>
         </br>
         <span th:text="'Language: ' + ${repo.getLanguage()}"></span>
         </br></br>

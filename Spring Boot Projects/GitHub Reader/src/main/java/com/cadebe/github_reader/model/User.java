@@ -1,20 +1,22 @@
 package com.cadebe.github_reader.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
+@Builder
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     String userName;
     String url;
+    String avatarUrl;
 
-    public User(@JsonProperty("userName") String userName,
-                @JsonProperty("webLink") String url) {
+    public User(String userName, String url, String avatarUrl) {
         this.userName = userName;
         this.url = url;
+        this.avatarUrl = avatarUrl;
     }
 }

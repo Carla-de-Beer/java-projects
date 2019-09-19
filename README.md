@@ -67,6 +67,6 @@ Various mathematics-inspired programs:
 
 ## [Spring Boot Projects](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects)
 Various Spring Boot projects:
-  * [GitHub Reader:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/GitHub%20Reader) A web-based reader to obtain GitHub information of a specific GitHub user, given a personal access token.
-  * [Persons API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Persons%20API) A Spring Boot API project operating on both locally stored mock data and a connection to a MySQL database.
-  * [Pets API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Pets%20API) A Spring Boot API project operating on both locally stored mock data and a connection to a MongoDB database.
+  * [GitHub Reader:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/GitHub%20Reader) A web-based reader to obtain GitHub information of a specific GitHub user, given a GitHub user name.
+  * [Persons API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Persons%20API) A Spring Boot API project operating on either locally stored mock data or a connection to a MySQL database.
+  * [Pets API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Pets%20API) A Spring Boot API project operating on either locally stored mock data or a connection to a MongoDB database.

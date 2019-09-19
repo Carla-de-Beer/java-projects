@@ -1,6 +1,6 @@
 # Pets API
 
-This is a Spring Boot project that makes use of locally stored mock data as well as a MongoDB connection in order to provide a list of pets.
+This is a Spring Boot API project that allows for the option of loading data either from a locally stored CSV file or from a MySQL database.
 
 Based the online tutorial "REST API: Java Spring Boot and MongoDB": https://www.codementor.io/gtommee97/rest-api-java-spring-boot-and-mongodb-j7nluip8d
 

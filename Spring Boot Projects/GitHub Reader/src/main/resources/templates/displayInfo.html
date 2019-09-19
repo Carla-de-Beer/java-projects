@@ -8,11 +8,15 @@
 <body>
 
 <h1>GitHub User Account Info</h1>
-
 </br>
 <div>
+    <h2>GitHub Profile</h2>
+</div>
+<div>
     <p class="bold info" th:text="${user.getUserName()}"></p>
-    <a th:href="@{${user.getUrl()}}"><p class="bold info" th:text="${user.getUrl()}"></p></a>
+    <a th:href="@{${user.getHtmlUrl()}}"><p class="bold info" th:text="${user.getHtmlUrl()}"></p></a>
+    <p class="italic" th:text="'Followers: ' + ${user.getNumFollowers()}"></p>
+    <p class="italic" th:text="'On GitHub since ' + ${user.getYearCreated()}"></p>
     </br>
     <img class="center"
          th:if="${user.getAvatarUrl() != null}"
@@ -20,17 +24,26 @@
          alt="avatar image">
 </div>
 </br>
-<p class="italic" th:text="'Found the following ' + ${repoCount} + ' repositories:'"></p>
+<div>
+    <h2>Repositories</h2>
+</div>
+<p class="italic"
+   th:text="'Found the following ' + ${repoCount} + ' public repositories associated with this account'"></p>
+<p class="italic">(including subscriptions, if any):</p>
 </br>
 <div th:if="${repoList != null}">
     <p th:each="repo : ${repoList}">
-        <span class="bold" th:text="${repoStat.count} + '. ' + ${repo.getRepoName()}"></span>
+        <span class="bold" th:text="${repoStat.count} + '. ' + ${repo.getRepoName()} +
+        ' (' + ${repo.createdYear} + ' - ' + ${repo.getUpdatedYear() + ')'}"></span>
         </br></br>
-        <span th:if="${repo.getUrlLink() != null}" th:text="${repo.getUrlLink()}"></span>
+        <a th:href="@{${repo.getUrlLink()}}"><span th:text="${repo.getUrlLink()}"></span></a>
         </br>
-        <span th:if="${repo.getDescription() != null}" th:text="${repo.getDescription()}"></span>
+        <span th:text="${repo.getDescription() != ''} ? ${repo.getDescription()} : '-'"></span>
         </br>
-        <span th:text="'Language: ' + ${repo.getLanguage()}"></span>
+        <span th:text="${repo.getLanguage() != ''} ? 'Language: ' + ${repo.getLanguage()} : 'Language: -'"></span>
+        </br>
+        <span th:text="${repo.isFork() != '' && repo.isFork()} ? 'Fork: &#10004;' : ''"></span>
+        <span th:text="${repo.isOwner() != '' && repo.isOwner()} ? 'Owner: &#10004;' : ''"></span>
         </br></br>
     </p>
 </div>
@@ -38,7 +51,6 @@
 <div>
     <h2>Programming Language Analysis</h2>
 </div>
-</br>
 <div id="inner" th:each="map : ${frequencies}">
     <div th:each="entry : ${map}">
         <span class="frequencies" th:text="${entry.key} + ':'"></span>

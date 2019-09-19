@@ -4,6 +4,7 @@ import com.cadebe.github_reader.model.GitHubRepository;
 import com.cadebe.github_reader.model.User;
 import com.cadebe.github_reader.service.ReaderService;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,14 +38,21 @@ public class ReaderController {
 
     @PostMapping("/")
     public String greetingSubmit(@RequestParam String gitHubName, Model model) {
-        JsonArray getJsonArray = ReaderController.readerService.getJsonArray(gitHubName);
-        List<GitHubRepository> repoList = ReaderController.readerService.getAllRepositories(getJsonArray);
-        int repoCount = ReaderController.readerService.countAllRepositories(repoList);
+        String userName = gitHubName.trim().replace(" ", "-");
 
-        User user = ReaderController.readerService.getUser(getJsonArray.get(0));
+        JsonArray jsonArrayRepos = ReaderController.readerService.getJsonArrayRepos(userName);
+        JsonArray jsonArraySubscriptions = ReaderController.readerService.getJsonArraySubscriptions(userName);
+
+        List<JsonElement> list = ReaderController.readerService.buildDistinctCombinedRepoList(jsonArrayRepos, jsonArraySubscriptions);
+        List<GitHubRepository> repoList = ReaderController.readerService.getAllRepositories(list, userName);
+
+        int repoCount = ReaderController.readerService.countAllRepositories(repoList);
+        int reposWithLanguages = ReaderController.readerService.countAllRepositoriesWithLanguages(repoList);
+
+        User user = ReaderController.readerService.getUser(userName);
 
         Map<String, Integer> langMap = ReaderController.readerService.getAllLanguages(repoList);
-        Map<String, Double> freqMap = ReaderController.readerService.getLanguageFrequencies(langMap, repoCount);
+        Map<String, Double> freqMap = ReaderController.readerService.getLanguageFrequencies(langMap, reposWithLanguages);
 
         model.addAttribute("user", user);
         model.addAttribute("repoCount", repoCount);

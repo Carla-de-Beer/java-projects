@@ -11,7 +11,7 @@ public class ErrorController {
 
     @ExceptionHandler(value = Exception.class)
     public String handleError(Exception exception, Model model) {
-        log.error("Raised  a Runtime Exception when trying to access the Reader for the GitHub account {}.", exception.getMessage());
+        log.error("An exception was caught in accessing the GitHubReader. Exception info: '{}'.", exception.getMessage());
         model.addAttribute("errorMsg", exception.getMessage());
         return "error";
     }

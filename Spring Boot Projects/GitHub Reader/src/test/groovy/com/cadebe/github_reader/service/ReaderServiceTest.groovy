@@ -1,8 +1,8 @@
 package com.cadebe.github_reader.service
 
 import com.cadebe.github_reader.model.GitHubRepository
+import com.cadebe.github_reader.model.User
 import com.google.gson.JsonArray
-import com.google.gson.JsonParser
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
@@ -10,10 +10,16 @@ import spock.lang.Subject
 class ReaderServiceTest extends Specification {
 
     @Shared
+    def mockUserName = "octocat"
+
+    @Shared
     def language1 = "language1"
 
     @Shared
     def language2 = "language2"
+
+    @Shared
+    def numLanguages = 2
 
     @Shared
     List<GitHubRepository> repoList
@@ -25,51 +31,66 @@ class ReaderServiceTest extends Specification {
                 .urlLink("urlLink1")
                 .description("description1")
                 .language(language1)
+                .createdYear("2012")
                 .build())
         repoList.add(GitHubRepository.builder()
                 .repoName("repoName2")
-                .urlLink("urlLink2")
                 .description("description2")
                 .language(language2)
                 .build())
         repoList.add(GitHubRepository.builder()
                 .repoName("repoName3")
                 .urlLink("urlLink3")
-                .description("description3")
                 .language(language1)
+                .build())
+        repoList.add(GitHubRepository.builder()
+                .repoName("repoName4")
+                .urlLink("urlLink4")
+                .description("description4")
                 .build())
     }
 
     @Subject
     def readerService = new ReaderService()
 
-    def "ReaderService: getJsonArray()"() {
+    def "ReaderService: getJsonArrayRepos()"() {
         given: "A name"
-        def name = "octocat"
 
-        when: "calling getJsonArray()"
-        JsonArray result = readerService.getJsonArray(name)
+        when: "calling getJsonArrayRepos()"
+        JsonArray result = readerService.getJsonArrayRepos(mockUserName)
 
-        then: "getJsonArray() successfully called"
+        then: "getJsonArrayRepos() successfully called"
         result != null
         result.getClass() == JsonArray
         result.size() > 1
     }
 
-    def "ReaderService: getAllRepositories()"() {
-        given: "A JsonArray"
-        def jsonArray = new JsonArray()
-        def list = new JsonArray()
+    def "ReaderService: getJsonArraySubscriptions()"() {
+        given: "A name"
 
-        JsonParser parser = new JsonParser()
-        Object object = parser.parse(new FileReader("src/test/resources/com/cadebe/service/data.json"))
-        list.add(object)
-        when: "calling getAllRepositories()"
-        List<GitHubRepository> result = readerService.getAllRepositories(jsonArray)
+        when: "calling getJsonArraySubscriptions()"
+        JsonArray result = readerService.getJsonArraySubscriptions(mockUserName)
 
-        then: "getAllRepositories() successfully called"
+        then: "getJsonArraySubscriptions() successfully called"
         result != null
-        result.size() == 0
+        result.getClass() == JsonArray
+        result.size() > 1
+    }
+
+    def "ReaderService: getUser()"() {
+        given: "A list of GitHubRepositories"
+
+        when: "calling getUser()"
+        User result = readerService.getUser(mockUserName)
+
+        then: "getUser() successfully called"
+        result != null
+        result.getClass() == User
+        result.getUserName() == "The Octocat"
+        result.getUrl() == "https://github.com/octocat"
+        result.getAvatarUrl() == "https://avatars3.githubusercontent.com/u/583231?v=4"
+        result.getYearCreated() == "2011"
+        result.getNumFollowers() == 30
     }
 
     def "ReaderService: countAllRepositories()"() {
@@ -82,6 +103,16 @@ class ReaderServiceTest extends Specification {
         result == repoList.size()
     }
 
+    def "ReaderService: countAllRepositoriesWithLanguages()"() {
+        given: "A list of GitHubRepositories"
+
+        when: "calling countAllRepositoriesWithLanguages()"
+        int result = readerService.countAllRepositoriesWithLanguages(repoList)
+
+        then: "countAllRepositoriesWithLanguages() successfully called"
+        result == 3
+    }
+
     def "ReaderService: getAllLanguages()"() {
         given: "A list of GitHubRepositories"
 
@@ -92,6 +123,7 @@ class ReaderServiceTest extends Specification {
         result != null
         result.get(language1) == 2
         result.get(language2) == 1
+        result.size() == numLanguages
     }
 
     def "ReaderService: getLanguageFrequencies()"() {

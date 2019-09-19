@@ -14,11 +14,8 @@ public class GitHubRepository {
     String urlLink;
     String description;
     String language;
-
-    public GitHubRepository(String repoName, String urlLink, String description, String language) {
-        this.repoName = repoName;
-        this.urlLink = urlLink;
-        this.description = description;
-        this.language = language;
-    }
+    String createdYear;
+    String updatedYear;
+    boolean isFork;
+    boolean isOwner;
 }

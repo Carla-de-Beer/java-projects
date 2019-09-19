@@ -11,12 +11,8 @@ import lombok.experimental.FieldDefaults;
 public class User {
 
     String userName;
-    String url;
+    String htmlUrl;
     String avatarUrl;
-
-    public User(String userName, String url, String avatarUrl) {
-        this.userName = userName;
-        this.url = url;
-        this.avatarUrl = avatarUrl;
-    }
+    String yearCreated;
+    int numFollowers;
 }

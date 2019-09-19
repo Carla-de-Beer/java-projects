@@ -4,6 +4,7 @@ import com.cadebe.github_reader.model.GitHubRepository;
 import com.cadebe.github_reader.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,66 +15,76 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ReaderService {
 
     private static final String GITHUB_PREFIX = "https://api.github.com/users/";
-    private static final String GITHUB_SUFFIX = "/repos";
+    private static final String GITHUB_SUBSCRIPTIONS_SUFFIX = "/subscriptions";
+    private static final String GITHUB_REPOS_SUFFIX = "/repos";
+    private static final String GITHUB_FOLLOWERS_SUFFIX = "/followers";
 
-    public JsonArray getJsonArray(String name) {
-        String nameModified = name.replace(" ", "-");
-        String sURL = GITHUB_PREFIX + nameModified + GITHUB_SUFFIX;
-        JsonElement root = null;
-        try {
-            // Connect to the URL using Java's native library
-            URL url = new URL(sURL);
-            URLConnection request = url.openConnection();
-            request.connect();
-
-            // Convert to a JSON object to print data with gson
-            JsonParser jp = new JsonParser();
-            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-        } catch (IOException e) {
-            log.error("Could not link to GitHub account '{}'.", e.getMessage());
-            throw new RuntimeException();
-        }
+    public JsonArray getJsonArrayRepos(String userName) {
+        String sURL = GITHUB_PREFIX + userName + GITHUB_REPOS_SUFFIX;
+        JsonElement root = ReaderService.readURL(sURL);
         assert root != null;
         return root.getAsJsonArray();
     }
 
-    public List<GitHubRepository> getAllRepositories(JsonArray jArray) {
+    public JsonArray getJsonArraySubscriptions(String userName) {
+        String sURL = GITHUB_PREFIX + userName + GITHUB_SUBSCRIPTIONS_SUFFIX;
+        JsonElement root = ReaderService.readURL(sURL);
+        assert root != null;
+        return root.getAsJsonArray();
+    }
+
+    public List<JsonElement> buildDistinctCombinedRepoList(JsonArray array1, JsonArray array2) {
+        Map<JsonElement, JsonElement> map = new HashMap<>();
+
+        for (int i = 0; i < array1.size(); ++i) {
+            map.put(array1.get(i).getAsJsonObject().get("name"), array1.get(i));
+        }
+
+        for (int i = 0; i < array2.size(); ++i) {
+            map.put(array2.get(i).getAsJsonObject().get("name"), array2.get(i));
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    public List<GitHubRepository> getAllRepositories(List<JsonElement> list, String userName) {
         List<GitHubRepository> repositories = new ArrayList<>();
 
-        for (int i = 0; i < jArray.size(); ++i) {
-            JsonElement element = jArray.get(i);
+        for (JsonElement element : list) {
+            JsonElement nameElement = element.getAsJsonObject().get("name");
+            JsonElement htmlUrlElement = element.getAsJsonObject().get("html_url");
+            JsonElement descriptionElement = element.getAsJsonObject().get("description");
+            JsonElement languageElement = element.getAsJsonObject().get("language");
+            JsonElement forkElement = element.getAsJsonObject().get("fork");
+            JsonElement createdElement = element.getAsJsonObject().get("created_at");
+            JsonElement updatedElement = element.getAsJsonObject().get("updated_at");
+            JsonElement ownerElement = element.getAsJsonObject().get("owner");
 
-            String name = "";
-            if (!element.getAsJsonObject().get("name").toString().equals("null")) {
-                name = element.getAsJsonObject().get("name").getAsString();
-            }
-
-            String htmlUrl = "";
-            if (!element.getAsJsonObject().get("html_url").toString().equals("null")) {
-                htmlUrl = element.getAsJsonObject().get("html_url").getAsString();
-            }
-
-            String description = "";
-            if (!element.getAsJsonObject().get("description").toString().equals("null")) {
-                description = element.getAsJsonObject().get("description").getAsString();
-            }
-
-            String language = "";
-            if (!element.getAsJsonObject().get("language").toString().equals("null")) {
-                language = element.getAsJsonObject().get("language").getAsString();
-            }
+            String repoName = nameElement instanceof JsonNull ? "" : nameElement.getAsString();
+            String htmlUrl = htmlUrlElement instanceof JsonNull ? "" : htmlUrlElement.getAsString();
+            String description = descriptionElement instanceof JsonNull ? "" : descriptionElement.getAsString();
+            String language = languageElement instanceof JsonNull ? "" : languageElement.getAsString();
+            String createdYear = languageElement instanceof JsonNull ? "" : createdElement.getAsString();
+            String updatedYear = languageElement instanceof JsonNull ? "" : updatedElement.getAsString();
+            boolean isForked = !(forkElement instanceof JsonNull) && forkElement.getAsBoolean();
+            boolean isOwner = !(ownerElement instanceof JsonNull) &&
+                    ownerElement.getAsJsonObject().get("login").getAsString().equals(userName);
 
             GitHubRepository repo = GitHubRepository.builder()
-                    .repoName(name)
+                    .repoName(repoName)
                     .urlLink(htmlUrl)
                     .description(description)
                     .language(language)
+                    .createdYear(createdYear.length() > 4 ? createdYear.substring(0, 4) : "")
+                    .updatedYear(updatedYear.length() > 4 ? updatedYear.substring(0, 4) : "")
+                    .isFork(isForked)
+                    .isOwner(isOwner)
                     .build();
 
             repositories.add(repo);
@@ -81,27 +92,40 @@ public class ReaderService {
         return repositories;
     }
 
-    public User getUser(JsonElement element) {
-        JsonElement owner = element.getAsJsonObject().get("owner");
+    public User getUser(String userNameInput) {
+        String sURL = GITHUB_PREFIX + userNameInput;
+        JsonElement element = ReaderService.readURL(sURL);
+
         String userName = "";
-        String urlUser = "";
+        String htmlUrl = "";
         String avatarUrl = "";
+        String yearCreated = "";
 
-        if (!owner.toString().equals("null") && !owner.getAsJsonObject().get("login").toString().equals("null")) {
-            userName = owner.getAsJsonObject().get("login").getAsString();
-            if (!owner.getAsJsonObject().getAsJsonObject().get("html_url").toString().equals("null")) {
-                urlUser = owner.getAsJsonObject().get("html_url").getAsString();
+        JsonElement owner = element.getAsJsonObject().get("owner");
+        JsonElement nameElement = element.getAsJsonObject().get("name");
+        JsonElement htmlUrlElement = element.getAsJsonObject().get("html_url");
+        JsonElement avatarUrlElement = element.getAsJsonObject().get("avatar_url");
+        JsonElement yearCreatedElement = element.getAsJsonObject().get("created_at");
+
+        if (!(owner instanceof JsonNull) && !(nameElement instanceof JsonNull)) {
+            userName = nameElement.getAsString();
+            if (!(htmlUrlElement instanceof JsonNull)) {
+                htmlUrl = htmlUrlElement.getAsString();
             }
-
-            if (!owner.getAsJsonObject().getAsJsonObject().get("avatar_url").toString().equals("null")) {
-                avatarUrl = owner.getAsJsonObject().get("avatar_url").getAsString();
+            if (!(avatarUrlElement instanceof JsonNull)) {
+                avatarUrl = avatarUrlElement.getAsString();
+            }
+            if (!(yearCreatedElement instanceof JsonNull)) {
+                yearCreated = yearCreatedElement.getAsString();
             }
         }
 
         return User.builder()
                 .userName(userName)
-                .url(urlUser)
+                .htmlUrl(htmlUrl)
                 .avatarUrl(avatarUrl)
+                .yearCreated(yearCreated.length() > 4 ? yearCreated.substring(0, 4) : "")
+                .numFollowers(ReaderService.getNumFollowers(userNameInput))
                 .build();
     }
 
@@ -109,10 +133,22 @@ public class ReaderService {
         return repositories.size();
     }
 
+    public int countAllRepositoriesWithLanguages(List<GitHubRepository> repositories) {
+        int count = 0;
+        for (GitHubRepository repo : repositories) {
+            if (repo.getLanguage() != null && !repo.getLanguage().isEmpty()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public Map<String, Integer> getAllLanguages(List<GitHubRepository> repositories) {
         List<String> languages = new ArrayList<>();
         for (GitHubRepository repository : repositories) {
-            languages.add(repository.getLanguage());
+            if (repository.getLanguage() != null && !repository.getLanguage().isEmpty()) {
+                languages.add(repository.getLanguage());
+            }
         }
 
         Map<String, Integer> map = new HashMap<>();
@@ -124,13 +160,46 @@ public class ReaderService {
     }
 
     public Map<String, Double> getLanguageFrequencies(Map<String, Integer> langMap, int langCount) {
-        Map<String, Double> resultMap = new TreeMap<>();
+        Map<String, Double> map = new HashMap<>();
+
         for (String i : langMap.keySet()) {
             double a = ((double) langMap.get(i) / langCount) * 100;
-            a = Math.round(a * 1000.0) / 1000.0;
-            resultMap.put(i, a);
+            a = Math.round(a * 10.0) / 10.0;
+            map.put(i, a);
         }
-        return resultMap;
+
+        return map.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (a, b) -> a,
+                        LinkedHashMap::new));
+    }
+
+    private static JsonElement readURL(String sURL) {
+        JsonElement root = null;
+        try {
+            // Connect to the URL using Java's native library
+            URL url = new URL(sURL);
+            URLConnection request = url.openConnection();
+            request.connect();
+
+            // Convert to a JSON object to print data with gson
+            JsonParser jp = new JsonParser();
+            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        } catch (IOException e) {
+            log.error("IOException caught. Could not link to GitHub account:'{}'.", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return root;
+    }
+
+    private static int getNumFollowers(String userName) {
+        String sURL = GITHUB_PREFIX + userName + GITHUB_FOLLOWERS_SUFFIX;
+        JsonElement root = ReaderService.readURL(sURL);
+        assert root != null;
+        return root.getAsJsonArray().size();
     }
 }
 

@@ -64,9 +64,3 @@ Various mathematics-inspired programs:
 ## [Miscellaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous)
   Various other projects:
   * [Java 8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java 8 functionalities.
-
-## [Spring Boot Projects](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects)
-Various Spring Boot projects:
-  * [GitHub Reader:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/GitHub%20Reader) A web-based reader to obtain GitHub information of a specific GitHub user, given a GitHub user name.
-  * [Persons API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Persons%20API) A Spring Boot API project operating on either locally stored mock data or a connection to a MySQL database.
-  * [Pets API:](https://github.com/Carla-de-Beer/Java/tree/master/Spring%20Boot%20Projects/Pets%20API) A Spring Boot API project operating on either locally stored mock data or a connection to a MongoDB database.

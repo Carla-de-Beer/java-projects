@@ -64,3 +64,4 @@ Various mathematics-inspired programs:
 ## [Miscellaneous](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous)
   Various other projects:
   * [Java 8:](https://github.com/Carla-de-Beer/Java/tree/master/Miscellaneous/Java8.java) Various Java 8 functionalities.
+  * [Lambda Expressions:](https://github.com/Carla-de-Beer/Java/blob/master/Miscellaneous/Lambda%20Expressions.java) Lambda expressions

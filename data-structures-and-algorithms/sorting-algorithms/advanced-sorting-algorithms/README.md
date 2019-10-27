@@ -2,8 +2,8 @@
 
 This folder contains the following advanced sorting algorithms:
 
-* [Merge Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms/MergeSort.java) Merge sort.
-* [Quick Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Advanced%20Sorting%20Algorithms/QuickSort.java) Quick sort.
+* [Merge Sort:](https://github.com/Carla-de-Beer/Java/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/merge-sort) Merge sort.
+* [Quick Sort:](https://github.com/Carla-de-Beer/Java/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/quick-sort) Quick sort.
 
 </br>
 <img src="Images/MergeSort.png" width="250px"/>

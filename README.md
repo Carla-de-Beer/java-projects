@@ -17,21 +17,21 @@ The following is a list of the projects included in this repository:
   * [Leftist Binary Tree:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/leftist-binary-tree) Leftist binary tree.
   * [Lexicographic Order:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/lexicographic-order) Program that generates the lexicographic ordering for a given character array.
   * [Linked Lists:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/linked-lists) Various linked list examples.
-    * [Circular and Self-Organising Linked Lists:](https://github.com/Carla-de-Beer/Java/tree/master/data-structures-and-algorithms/linked-lists/circular-and-self-organising-linked-lists) Circular and self-organising linked lists.
-    * [Single Linked List:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/linked-lists/singly-linked-list) Singly-linked linked list.
+    * [Circular and Self-Organising Linked Lists:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/linked-lists/circular-self-organising-linked-lists) Circular and self-organising linked lists.
+    * [Singly Linked List:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/linked-lists/singly-linked-list) Singly-linked linked list.
   * [Recursion:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/recursion) Recursive algorithms.
   	* [Ackermann:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/recursion/ackermann) Ackermann algorithm
   	* [Knapsack:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/recursion/knapsack) Knapsack algorithm.
     * [Sorting Algorithms:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sorting-algorithms) Simple sorting algorithms.
-    	* [Advanced Sorting Algorithms:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sorting-algorithms/Advanced%20sorting-algorithms) Advanced sorting algorithms with a lower runtime complexity.
-    		* [Merge Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/MergeSort.java) Merge sort.
-    		* [Quick Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/QuickSort.java) Quick sort.
-    	* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sorting-algorithms/Simple%20sorting-algorithms) Simple sorting algorithms with a higher runtime complexity.
+    	* [Advanced Sorting Algorithms:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms) Advanced sorting algorithms with a lower runtime complexity.
+    		* [Merge Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/merge-sort) Merge sort.
+    		* [Quick Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/advanced-sorting-algorithms/quick-sort) Quick sort.
+    	* [Simple Sorting Algorithms:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms) Simple sorting algorithms with a higher runtime complexity.
     		* [Bubble Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/aimple-sorting-algorithms/BubbleSort.java) Bubble sort (and reverse bubble sort).
     		* [Insertion Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms/InsertionSort.java) Insertion sort (and reverse insertion sort).
     		* [Selection Sort:](https://github.com/Carla-de-Beer/Java-Projects/blob/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms/SelectionSort.java) Selection sort (and reverse selection sort).
   * [Sparse Matrix:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/sparse-matrix) Sparse matrix as calendar.
-  * [Stacks and Queues:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/stacks-and-Queues/list-as-queue-as-stack) Stack and queue implementations.
+  * [Stacks and Queues:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/stacks-and-queues) Stack and queue implementations.
   	* [List in terms of a Queue in terms of a Stack:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/data-structures-and-algorithms/stacks-and-queues/list-as-queue-as-stack) List class implemented in terms of a queue implemented in terms of a stack.
 
 ## [Design Patterns](https://github.com/Carla-de-Beer/Java-Projects/tree/master/design-patterns/)
@@ -47,7 +47,7 @@ Genetic algorithms:
 
 ## [Input-Output Processing](https://github.com/Carla-de-Beer/Java-Projects/tree/master/input-output-processing)
 Input-output processing:
-  * [BufferedImage Test:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/input-output-processing/buffered-image) Class that gets the RGB values of an image and calculates the bin classes for each image.
+  * [Buffered Image:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/input-output-processing/buffered-image) Class that gets the RGB values of an image and calculates the bin classes for each image.
   * [Image to Binary:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/input-output-processing/image-to-binary) Class that converts an image into a binary file.
   * [JSON Converter:](https://github.com/Carla-de-Beer/Java-Projects/tree/master/input-output-processing/JSON-converter) Class that converts data in JSON format to a txt format.
 

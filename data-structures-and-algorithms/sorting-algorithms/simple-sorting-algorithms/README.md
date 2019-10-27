@@ -2,9 +2,9 @@
 
 This folder contains the following simple sorting algorithms:
 
-* [Bubble Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/BubbleSort.java) Bubble sort (and reverse bubble sort).
-* [Insertion Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/InsertionSort.java) Insertion sort (and reverse insertion sort).
-* [Selection Sort:](https://github.com/Carla-de-Beer/Java/blob/master/Data%20Structures%20and%20Algorithms/Sorting%20Algorithms/Simple%20Sorting%20Algorithms/SelectionSort.java) Selection sort (and reverse selection sort).
+* [Bubble Sort:](https://github.com/Carla-de-Beer/Java/blob/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms/bubbleSort) Bubble sort (and reverse bubble sort).
+* [Insertion Sort:](https://github.com/Carla-de-Beer/Java/blob/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms/InsertionSort) Insertion sort (and reverse insertion sort).
+* [Selection Sort:](https://github.com/Carla-de-Beer/Java/blob/master/data-structures-and-algorithms/sorting-algorithms/simple-sorting-algorithms/SelectionSort) Selection sort (and reverse selection sort).
 
 
 </br>
